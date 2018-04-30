@@ -1,0 +1,198 @@
+<menu-root></menu-root>
+<br>
+<br>
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <!-- bread crumb -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/menu">Menu</a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+
+        <div class="card">
+
+            <!-- buttons -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button id="btnChangePriceUnit" class="btn btn-primary" (click)="btnChangePriceUnitClick()">
+                                <i class="fa fa-eraser fa-fw"></i> Update Prices
+                            </button>
+                            <button id="btnCSVUnit" class="btn btn-primary" (click)="btnCSVUnitClick()">
+                                <i class="fa fa-file-excel-o fa-fw"></i> CSV
+                            </button>
+                            <button class="btn btn-primary" (click)="btnAddUnitClick()" id="btnAddUnit">
+                                <i class="fa fa-plus fa-fw"></i> Add
+                            </button>
+                            <button id="btnCloseUnit" class="btn btn-danger" routerLink="/menu">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- dropdown filters -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 25%;">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    Project:
+                                </span>
+                                <wj-combo-box #cmbProjects [itemsSource]="cmbProjectsData" [placeholder]="'Select Project'" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'project'" [selectedValuePath]="'id'" (selectedIndexChanged)="cmbProjectsChange()">
+                                </wj-combo-box>
+                            </div>
+                        </td>
+                        <td style="width: 75%;"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- flexgrid -->
+            <div class="card-body">
+                <wj-flex-grid #fgdUnits [itemsSource]="fgdUnitsCollection" [selectionMode]="3" [frozenColumns]="2">
+                    <wj-flex-grid-filter></wj-flex-grid-filter>
+                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditUnitClick()">
+                                <i class="fa fa-edit fa-fw"></i> Edit
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteUnitClick()">
+                                <i class="fa fa-trash fa-fw"></i> Delete
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Code'" [binding]="'unitCode'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Block'" [binding]="'block'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Lot'" [binding]="'lot'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'House Model'" [binding]="'houseModel'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Floor Area'" [binding]="'tfa'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Lot Area'" [binding]="'tla'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true" [width]="150"></wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
+
+            <!-- navigation buttons -->
+            <div class="card-footer">
+                <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                    <button type="button" class="btn btn-secondary" (click)="fgdUnitsCollection.moveToFirstPage()">
+                        <i class="fa fa-fast-backward"></i> First
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdUnitsCollection.moveToPreviousPage()">
+                        <i class="fa fa-step-backward"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                        {{ fgdUnitsCollection.pageIndex + 1 }} / {{ fgdUnitsCollection.pageCount }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdUnitsCollection.moveToNextPage()">
+                        Next
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdUnitsCollection.moveToLastPage()">
+                        Last
+                        <i class="fa fa-fast-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- user and time stamp -->
+    <app-footer [data]="fgdUnitsCollection"></app-footer>
+</div>
+
+<!-- delete unit modal -->
+<div id="mdlUnitDelete" class="modal fade" role="dialog" [ngStyle]="{'display': mdlUnitDeleteShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Unit</h4>
+            </div>
+            <div class="modal-body">
+                Delete {{fgdUnitsCollection.currentItem != null ? fgdUnitsCollection.currentItem.unitCode : ""}}?
+            </div>
+            <div class="modal-footer" align="right">
+                <button id="btnOkUnitDeleteModal" class="btn btn-danger" (click)="btnOkUnitDeleteModalClick()">
+                    <i class="fa fa-trash fa-fw"></i> Ok
+                </button>
+                <button id="btnCloseUnitDeleteModal" class="btn btn-primary" (click)="btnCloseUnitDeleteModalClick()">
+                    <i class="fa fa-close fa-fw"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- change unit price modal -->
+<div id="mdlChangeBulkUnitPrice" class="modal fade" role="dialog" [ngStyle]="{'display': mdlChangeBulkUnitPriceShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Change Unit Price</h4>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-header">
+                        <label class="btn btn-primary" [hidden]="btnUploadCSVFileHide">
+                            <input type="file" (change)="btnUploadCSVFileClick($event)" name="btnUploadCSVFile" accept="csv/*" style="display:none;"> Upload CSV File
+                        </label>
+                    </div>
+                    <div class="card-body">
+                        <wj-flex-grid #fgdUnitPrices [itemsSource]="fgdUnitPricesCollection" [selectionMode]="3">
+                            <wj-flex-grid-filter></wj-flex-grid-filter>
+                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unit'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                        </wj-flex-grid>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                            <button type="button" class="btn btn-secondary" (click)="fgdUnitPricesCollection.moveToFirstPage()">
+                                <i class="fa fa-fast-backward"></i> First
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="fgdUnitPricesCollection.moveToPreviousPage()">
+                                <i class="fa fa-step-backward"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                                {{ fgdUnitPricesCollection.pageIndex + 1 }} / {{ fgdUnitPricesCollection.pageCount }}
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="fgdUnitPricesCollection.moveToNextPage()">
+                                Next
+                                <i class="fa fa-step-forward"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="fgdUnitPricesCollection.moveToLastPage()">
+                                Last
+                                <i class="fa fa-fast-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" align="right">
+                <button id="btnOkChangeBulkUnitPriceModal" class="btn btn-primary" (click)="btnOkChangeBulkUnitPriceModalClick()">
+                    <i class="fa fa-eraser fa-fw"></i> Update Prices
+                </button>
+                <button id="btnCloseChangeBulkUnitPriceModal" class="btn btn-danger" (click)="btnCloseChangeBulkUnitPriceModalClick()">
+                    <i class="fa fa-close fa-fw"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

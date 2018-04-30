@@ -1,0 +1,373 @@
+<menu-root></menu-root>
+
+<br>
+<br>
+
+<div class="content-wrapper">
+
+    <div class="container-fluid">
+
+        <!-- crumbs -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/menu">Menu</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/broker">Broker List</a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+
+
+        <div class="card">
+
+            <!-- detail operations, print, lock, unlock, save, close -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 50%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 49%;" align="right">
+                            <button [disabled]="!broker.isLocked" class="btn btn-primary" (click)="btnPrintBrokerClick()" id="btnPrintBroker">
+                                <i class="fa fa-print fa-fw"></i> Print
+                            </button>
+                            <button [disabled]="broker.isLocked" class="btn btn-primary" (click)="btnLockBrokerClick()" id="btnLockBroker">
+                                <i class="fa fa-lock fa-fw"></i> Lock
+                            </button>
+                            <button [disabled]="!broker.isLocked" class="btn btn-primary" (click)="btnUnlockBrokerClick()" id="btnUnlockBroker">
+                                <i class="fa fa-unlock fa-fw"></i> Unlock
+                            </button>
+                            <button [disabled]="broker.isLocked" class="btn btn-primary" (click)="btnSaveBrokerClick()" id="btnSaveBroker">
+                                <i class="fa fa-save fa-fw"></i> Save
+                            </button>
+                            <button class="btn btn-danger" routerLink="/broker">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- detail -->
+            <div class="card-body">
+                <ul class="nav nav-tabs" role="tablist" style="width:100%">
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)" data-toggle="tab" role="tab">Broker Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)" data-toggle="tab" role="tab">Realty Firm Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[2], 'nav-link': true }" (click)="tabDetail1Click(2)" data-toggle="tab" role="tab">Attachments</a>
+                    </li>
+                </ul>
+                <br>
+                <div class="tab-content" style="width:100%">
+
+                    <!-- Information -->
+                    <div [ngClass]="{'active': tabDetail1[0], 'tab-pane': true }" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Code</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.brokerCode" [disabled]=true type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Last Name</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.lastName" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">First Name</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.firstName" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Middle Name</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.middleName" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">License No.</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.licenseNumber" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Address</label>
+                                    <div class="col-sm-8">
+                                        <textarea [disabled]="broker.isLocked" [(ngModel)]="broker.address" rows="3" class="form-control">
+                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Phone No.</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.telephoneNumber" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Mobile No.</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.mobileNumber" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Email Address</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.emailAddress" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Status</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbStatus [itemsSource]="cmbStatusData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="broker.isLocked" [(ngModel)]="broker.status">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Remarks</label>
+                                    <div class="col-sm-8">
+                                        <textarea [disabled]="broker.isLocked" [(ngModel)]="broker.remarks" rows="5" class="form-control">
+                                                </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Picture</label>
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <img [src]="this.broker.picture" class="rounded" style="width: 100%;">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="btn btn-primary" [hidden]="broker.isLocked">
+                                                    <input type="file" (change)="btnUploadPictureClick($event)" name="btnUploadPicture" accept="image/*" style="display:none;"> Upload Pic
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Birth Date</label>
+                                    <div class="col-sm-8">
+                                        <wj-input-date #calBirthDate [(text)]="broker.birthDate" [isDisabled]="broker.isLocked" format="M/d/yyyy">
+                                        </wj-input-date>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Civil Status</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbCivilStatus [itemsSource]="cmbCivilStatusData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="broker.isLocked" [(ngModel)]="broker.civilStatus">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Gender</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbGender [itemsSource]="cmbGenderData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="broker.isLocked" [(ngModel)]="broker.gender">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Religion</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.religion" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">TIN</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.tin" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Realty Firm -->
+                    <div [ngClass]="{'active': tabDetail1[1], 'tab-pane': true }" role="tabpanel">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Firm</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirm" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Telepohne No.</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirmTelephoneNumber" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Mobile No.</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirmMobileNumber" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Fax No.</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirmFaxNumber" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Address</label>
+                                    <div class="col-sm-8">
+                                        <textarea [disabled]="broker.isLocked" [(ngModel)]="broker.realtyFirmAddress" rows="5" class="form-control">
+                                                </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Email Address</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirmEmailAddress" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Website</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirmWebsite" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">TIN</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.realtyFirmTIN" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Organization</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="broker.organization" [disabled]="broker.isLocked" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Attachments -->
+                    <div [ngClass]="{'active': tabDetail1[2], 'tab-pane': true }" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Attachment 1</label>
+                                    <div class="col-sm-5">
+                                        <input [(ngModel)]="broker.attachment1" disabled type="text" class="form-control">
+                                    </div>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <input type="file" (change)="btnOpenBrokerAttachment1Click($event)" name="btnOpenBrokerAttachment1" accept="image/*" [disabled]="broker.isLocked"
+                                            style="display:none;">
+                                        <i class="fa fa-floppy-o fa-fw"></i>
+                                    </label>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <a [href]="broker.attachment1" target="blank" style="color:white;">
+                                            <i class="fa fa-search fa-fw"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Attachment 2</label>
+                                    <div class="col-sm-5">
+                                        <input [(ngModel)]="broker.attachment2" disabled type="text" class="form-control">
+                                    </div>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <input type="file" (change)="btnOpenBrokerAttachment2Click($event)" name="btnOpenBrokerAttachment2" accept="image/*" [disabled]="broker.isLocked"
+                                            style="display:none;">
+                                        <i class="fa fa-floppy-o fa-fw"></i>
+                                    </label>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <a [href]="broker.attachment2" target="blank" style="color:white;">
+                                            <i class="fa fa-search fa-fw"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Attachment 3</label>
+                                    <div class="col-sm-5">
+                                        <input [(ngModel)]="broker.attachment3" disabled type="text" class="form-control">
+                                    </div>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <input type="file" (change)="btnOpenBrokerAttachment3Click($event)" name="btnOpenBrokerAttachment3" accept="image/*" [disabled]="broker.isLocked"
+                                            style="display:none;">
+                                        <i class="fa fa-floppy-o fa-fw"></i>
+                                    </label>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <a [href]="broker.attachment3" target="blank" style="color:white;">
+                                            <i class="fa fa-search fa-fw"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Attachment 4</label>
+                                    <div class="col-sm-5">
+                                        <input [(ngModel)]="broker.attachment4" disabled type="text" class="form-control">
+                                    </div>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <input type="file" (change)="btnOpenBrokerAttachment4Click($event)" name="btnOpenBrokerAttachment4" accept="image/*" [disabled]="broker.isLocked"
+                                            style="display:none;">
+                                        <i class="fa fa-floppy-o fa-fw"></i>
+                                    </label>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <a [href]="broker.attachment4" target="blank" style="color:white;">
+                                            <i class="fa fa-search fa-fw"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Attachment 5</label>
+                                    <div class="col-sm-5">
+                                        <input [(ngModel)]="broker.attachment5" disabled type="text" class="form-control">
+                                    </div>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <input type="file" (change)="btnOpenBrokerAttachment5Click($event)" name="btnOpenBrokerAttachment5" accept="image/*" [disabled]="broker.isLocked"
+                                            style="display:none;">
+                                        <i class="fa fa-floppy-o fa-fw"></i>
+                                    </label>
+                                    <label class="btn btn-info col-sm-1 mr-1">
+                                        <a [href]="broker.attachment5" target="blank" style="color:white;">
+                                            <i class="fa fa-search fa-fw"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tab Content -->
+
+
+            </div>
+            <!-- Card Body -->
+
+        </div>
+        <!-- <div class="card"> -->
+
+    </div>
+    <!-- <div class="container-fluid"> -->
+
+    <app-footer [data]="broker"></app-footer>
+
+</div>
+<!-- <div class="content-wrapper"> -->

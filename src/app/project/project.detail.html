@@ -1,0 +1,246 @@
+<menu-root></menu-root>
+
+<br>
+<br>
+
+<div class="content-wrapper">
+
+    <div class="container-fluid">
+
+        <!-- crumbs -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/menu">Menu</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/project">Project List</a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+
+
+        <div class="card">
+
+            <!-- detail operations, e.g., locked, unclocked, save, etc. -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button [disabled]="project.isLocked" class="btn btn-primary" (click)="btnLockProjectClick()" id="btnLockProject">
+                                <i class="fa fa-lock fa-fw"></i> Lock
+                            </button>
+                            <button [disabled]="!project.isLocked" class="btn btn-primary" (click)="btnUnlockProjectClick()" id="btnUnlockProject">
+                                <i class="fa fa-unlock fa-fw"></i> Unlock
+                            </button>
+                            <button [disabled]="project.isLocked" class="btn btn-primary" (click)="btnSaveProjectClick()" id="btnSaveProject">
+                                <i class="fa fa-save fa-fw"></i> Save
+                            </button>
+                            <button class="btn btn-danger" routerLink="/project">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- detail fields -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Project Code</label>
+                            <div class="col-sm-8">
+                                <input [disabled]="project.isLocked" [(ngModel)]="project.projectCode" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Project</label>
+                            <div class="col-sm-8">
+                                <input [disabled]="project.isLocked" [(ngModel)]="project.project" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Address</label>
+                            <div class="col-sm-8">
+                                <textarea [disabled]="project.isLocked" [(ngModel)]="project.address" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Status</label>
+                            <div class="col-sm-8">
+                                <wj-combo-box #cmbProjectStatus [isDisabled]="project.isLocked" [itemsSource]="cmbProjectStatusData" [isEditable]="false"
+                                    [isRequired]="true" [displayMemberPath]="'description'" [selectedValuePath]="'value'" [(ngModel)]="project.status">
+                                </wj-combo-box>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Logo</label>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <img [src]="this.project.projectLogo" class="rounded" style="width: 100%;">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="btn btn-primary pull-right" [hidden]="project.isLocked">
+                                            <input type="file" (change)="btnUploadProjectLogoClick($event)" name="btnUploadProjectLogo" accept="image/*" style="display:none;"> Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="card-body"> -->
+
+        </div>
+        <!-- <div class="card"> -->
+        <br />
+        <div class="card">
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h6>House Model</h6>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button type="button" class="btn btn-primary" (click)="btnAddHouseModelsClick()">
+                                <i class="fa fa-plus"></i> Add
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-body">
+                <wj-flex-grid #fgdHouseModels [itemsSource]="fgdHouseModelsCollection" [selectionMode]="3">
+                    <wj-flex-grid-filter></wj-flex-grid-filter>
+                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-primary btn-xs btn-block" [disabled]="project.isLocked" (click)="btnEditHouseModelsClick()">
+                                <i class="fa fa-edit fa-fw"></i> Edit
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-danger btn-xs btn-block" [disabled]="project.isLocked" (click)="btnDeleteHouseModelsClick()">
+                                <i class="fa fa-trash fa-fw"></i> Delete
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Code'" [binding]="'houseModelCode'" [isReadOnly]="true" [width]="70"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Model'" [binding]="'houseModel'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'TFA (sqm)'" [binding]="'tfa'" [isReadOnly]="true" [width]="200"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true" [width]="200"></wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
+            <div class="card-footer">
+                <div class="col-md-12 btn-group">
+                    <button type="button" class="btn btn-secondary" (click)="fgdHouseModelsCollection.moveToFirstPage()">
+                        <i class="fa fa-fast-backward"></i> First
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdHouseModelsCollection.moveToPreviousPage()">
+                        <i class="fa fa-step-backward"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                        {{ fgdHouseModelsCollection.pageIndex + 1 }} / {{ fgdHouseModelsCollection.pageCount }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdHouseModelsCollection.moveToNextPage()">
+                        Next
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdHouseModelsCollection.moveToLastPage()">
+                        Last
+                        <i class="fa fa-fast-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="container-fluid"> -->
+
+    <app-footer [data]="project"></app-footer>
+
+</div>
+<!-- <div class="content-wrapper"> -->
+
+
+
+
+<!-- delete house model prompt modal-->
+<div id="mdlHouseModelDelete" class="modal fade" role="dialog" [ngStyle]="{'display': mdlHouseModelDeleteShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete House Model</h4>
+            </div>
+            <div class="modal-body">
+                Delete {{fgdHouseModelsCollection.currentItem != null ? fgdHouseModelsCollection.currentItem.houseModel : ""}}?
+            </div>
+            <div class="modal-footer" align="right">
+                <button id="btnOkHouseModelDeleteModal" class="btn btn-danger" (click)="btnOkHouseModelDeleteModalClick()">
+                    <i class="fa fa-trash fa-fw"></i> Ok
+                </button>
+                <button id="btnCloseHouseModelDeleteModal" class="btn btn-primary" (click)="btnCloseHouseModelDeleteModalClick()">
+                    <i class="fa fa-close fa-fw"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- edit house model modal-->
+<div id="mdlHouseModelEdit" class="modal fade" role="dialog" [ngStyle]="{'display': mdlHouseModelEditShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit House Model</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-right">Code</label>
+                    <div class="col-sm-8">
+                        <input [(ngModel)]="houseModel.houseModelCode" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-right">House Model</label>
+                    <div class="col-sm-8">
+                        <input [(ngModel)]="houseModel.houseModel" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-right">Total Floor Area (sqm)</label>
+                    <div class="col-sm-8">
+                        <wj-input-number [(value)]="houseModel.tfa">
+                        </wj-input-number>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-right">Price</label>
+                    <div class="col-sm-8">
+                        <wj-input-number [(value)]="houseModel.price">
+                        </wj-input-number>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" align="right">
+                <button type="button" id="btnSaveHouseModelEditModal" class="btn btn-success" (click)="btnSaveHouseModelEditModalClick()">
+                    <i class="fa fa-check fa-fw"></i> Save</button>
+                <button type="button" id="btnCloseHouseModelEditModal" class="btn btn-danger" (click)="btnCloseHouseModelEditModalClick()">
+                    <i class="fa fa-times fa-fw"></i> Close </button>
+            </div>
+        </div>
+    </div>
+</div>

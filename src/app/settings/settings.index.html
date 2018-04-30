@@ -1,0 +1,295 @@
+<menu-root></menu-root>
+<br>
+<br>
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <!-- bread crumbs -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/menu">Menu</a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+
+        <div class="card">
+
+            <!-- buttons -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button class="btn btn-primary" (click)="btnSaveSettingsClick()" id="btnSaveSettings">
+                                <i class="fa fa-save fa-fw"></i> Save
+                            </button>
+                            <button class="btn btn-danger" routerLink="/menu">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- fields  -->
+            <div class="card-body">
+
+                <!-- tabs -->
+                <ul class="nav nav-tabs" role="tablist" style="width:100%">
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)" data-toggle="tab" role="tab">Company and Software</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)" data-toggle="tab" role="tab">User Tagging</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[2], 'nav-link': true }" (click)="tabDetail1Click(2)" data-toggle="tab" role="tab">Foot Notes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [ngClass]="{'active': tabDetail1[3], 'nav-link': true }" (click)="tabDetail1Click(3)" data-toggle="tab" role="tab">Sold Unit Proposal</a>
+                    </li>
+                </ul>
+                <br />
+
+                <!-- tab content -->
+                <div class="tab-content" style="width:100%">
+                    <div [ngClass]="{'active': tabDetail1[0], 'tab-pane': true }" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Company</label>
+                                    <div class="col-sm-8">
+                                        <input [(ngModel)]="settings.company" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Software Version</label>
+                                    <div class="col-sm-8">
+                                        <input [disabled]="true" [(ngModel)]="settings.softwareVersion" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Software Developer</label>
+                                    <div class="col-sm-8">
+                                        <input [disabled]="true" [(ngModel)]="settings.softwareDeveloper" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div [ngClass]="{'active': tabDetail1[1], 'tab-pane': true }" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Sold Unit Checked By</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbSoldUnitCheckedBy [itemsSource]="cmbUsersData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
+                                            [selectedValuePath]="'id'" [(ngModel)]="settings.soldUnitCheckedBy">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Sold Unit Approved By</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbSoldUnitApprovedBy [itemsSource]="cmbUsersData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
+                                            [selectedValuePath]="'id'" [(ngModel)]="settings.soldUnitApprovedBy">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Commission Request Checked By</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbCommissionRequestCheckedBy [itemsSource]="cmbUsersData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
+                                            [selectedValuePath]="'id'" [(ngModel)]="settings.commissionRequestCheckedBy">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Commission Request Approved By</label>
+                                    <div class="col-sm-8">
+                                        <wj-combo-box #cmbCommissionRequestApprovedBy [itemsSource]="cmbUsersData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
+                                            [selectedValuePath]="'id'" [(ngModel)]="settings.commissionRequestApprovedBy">
+                                        </wj-combo-box>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div [ngClass]="{'active': tabDetail1[2], 'tab-pane': true }" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Proposal Foot Note</label>
+                                    <div class="col-sm-8">
+                                        <textarea [(ngModel)]="settings.proposalFootNote" rows="8" style="font-family:Courier New" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Broker Foot Note</label>
+                                    <div class="col-sm-8">
+                                        <textarea [(ngModel)]="settings.brokerFootNote" rows="8" style="font-family:Courier New" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div [ngClass]="{'active': tabDetail1[3], 'tab-pane': true }" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Total Investment</label>
+                                    <div class="col-sm-8">
+                                        <textarea [(ngModel)]="settings.totalInvestment" rows="8" style="font-family:Courier New" class="form-control">
+                                                                                </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Payment Options</label>
+                                    <div class="col-sm-8">
+                                        <textarea [(ngModel)]="settings.paymentOptions" rows="8" style="font-family:Courier New" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">Financing</label>
+                                    <div class="col-sm-8">
+                                        <textarea [(ngModel)]="settings.financing" rows="8" style="font-family:Courier New" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <!-- dropdown settings -->
+        <div class="card">
+            <div class="card-header">
+                <p class="float-right">
+                    <button type="button" class="btn btn-primary" (click)="btnAddDropDownClick()">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                </p>
+            </div>
+            <div class="card-body">
+                <wj-flex-grid #fgdDropDowns [itemsSource]="fgdDropDownsCollection" [selectionMode]="3">
+                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditDropDownClick()">
+                                <i class="fa fa-edit fa-fw"></i> Edit
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteDropDownClick()">
+                                <i class="fa fa-trash fa-fw"></i> Delete
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Category'" [binding]="'category'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Description'" [binding]="'description'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Value'" [binding]="'value'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
+            <div class="card-footer">
+                <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                    <button type="button" class="btn btn-secondary" (click)="fgdDropDownsCollection.moveToFirstPage()">
+                        <i class="fa fa-fast-backward"></i> First
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdDropDownsCollection.moveToPreviousPage()">
+                        <i class="fa fa-step-backward"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                        {{ fgdDropDownsCollection.pageIndex + 1 }} / {{ fgdDropDownsCollection.pageCount }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdDropDownsCollection.moveToNextPage()">
+                        Next
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdDropDownsCollection.moveToLastPage()">
+                        Last
+                        <i class="fa fa-fast-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer [data]="settings"></app-footer>
+
+</div>
+<!-- <div class="content-wrapper"> -->
+
+
+
+
+<!-- delete drop down modal -->
+<div id="mdlDropDownDelete" class="modal fade" role="dialog" [ngStyle]="{'display': mdlDropDownDeleteShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Drop Down</h4>
+            </div>
+            <div class="modal-body">
+                Delete {{fgdDropDownsCollection.currentItem != null ? fgdDropDownsCollection.currentItem.description : ""}}?
+            </div>
+            <div class="modal-footer" align="right">
+                <button id="btnOkDropDownDeleteModal" class="btn btn-danger" (click)="btnOkDropDownDeleteModalClick()">
+                    <i class="fa fa-trash fa-fw"></i> Ok
+                </button>
+                <button id="btnCloseDropDownDeleteModal" class="btn btn-primary" (click)="btnCloseDropDownDeleteModalClick()">
+                    <i class="fa fa-close fa-fw"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- edit drop down modal -->
+<div id="mdlDropDownEdit" class="modal fade" role="dialog" [ngStyle]="{'display': mdlDropDownEditShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Drop Down</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Category</label>
+                    <div class="col-sm-9">
+                        <input [(ngModel)]="dropDown.category" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Description</label>
+                    <div class="col-sm-9">
+                        <input [(ngModel)]="dropDown.description" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">Value</label>
+                    <div class="col-sm-9">
+                        <input [(ngModel)]="dropDown.value" type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" align="right">
+                <button type="button" id="btnSaveDropDownEditModal" class="btn btn-success" (click)="btnSaveDropDownEditModalClick()">
+                    <i class="fa fa-check fa-fw"></i> Save</button>
+                <button type="button" id="btnCloseDrownDownEditModal" class="btn btn-danger" (click)="btnCloseDrownDownEditModalClick()">
+                    <i class="fa fa-times fa-fw"></i> Close </button>
+            </div>
+        </div>
+    </div>
+</div>

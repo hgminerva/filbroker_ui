@@ -1,0 +1,13 @@
+/*
+    *
+    * Wijmo Library 5.20173.380
+    * http://wijmo.com/
+    *
+    * Copyright(c) GrapeCity, Inc.  All rights reserved.
+    *
+    * Licensed under the GrapeCity Commercial License.
+    * sales@wijmo.com
+    * wijmo.com/products/wijmo-5/license/
+    *
+    */
+System.register(["wijmo/wijmo","wijmo/wijmo.react.base","react-dom","react"],function(t,e){"use strict";var o,n,i,r,s,a=this&&this.__extends||function(){var t=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var o in e)e.hasOwnProperty(o)&&(t[o]=e[o])};return function(e,o){function n(){this.constructor=e}t(e,o),e.prototype=null===o?Object.create(o):(n.prototype=o.prototype,new n)}}();e&&e.id;return{setters:[function(t){o=t},function(t){n=t},function(t){i=t},function(t){r=t}],execute:function(){window.wijmo=window.wijmo||{},window.wijmo.react=window.wijmo.react||{},window.wijmo.react.base=n,s=function(t){function e(e,o,n){var i=t.call(this,e)||this;i._objPropHash={},i.props=e,i.controlType=o;for(var r=0,s=n&&n.objectProps||[];r<s.length;r++){var a=s[r];i._objPropHash[a]=!0}return i}return a(e,t),e.prototype.render=function(){return r.createElement("div")},e.prototype.componentDidMount=function(){var t=i.findDOMNode(this),e=new this.controlType(t),n=this.props,r={};for(var s in n)if(s in e)r[s]=n[s];else switch(s){case"className":o.addClass(t,n.className);break;case"style":o.setCss(t,n.style);break;default:null!=t[s]&&(t[s]=n[s])}return e.initialize(r),o.isFunction(n.initialized)&&n.initialized(e),e},e.prototype.componentWillUnmount=function(){this._getControl(this).dispose()},e.prototype.shouldComponentUpdate=function(t){var e=this._getControl(this);return this._copy(e,t),!0},e.prototype._getControl=function(t){var e=i.findDOMNode(t);return o.Control.getControl(e)},e.prototype._copy=function(t,e){if(t&&e){var n;for(var i in e){var r=e[i];if((i in t||"className"==i||"style"==i)&&!this._isEvent(t,i)&&!this._sameValue(t[i],r))if(null==r)t[i]=r;else if("className"==i)t.hostElement&&o.addClass(t.hostElement,e[i]);else if("style"==i)t.hostElement&&o.setCss(t.hostElement,e[i]);else if(o.isPrimitive(r)||this._objPropHash[i]&&t===(n||(n=this._getControl(this))))t[i]=r;else if(o.isArray(r)&&o.isArray(t[i])){var s=t[i],a=r;if(a.length==s.length)for(var c=0;c<a.length;c++)this._copy(s[c],a[c])}else o.isObject(r)&&this._copy(t[i],e[i])}}},e.prototype._sameValue=function(t,e){return t==e||o.DateTime.equals(t,e)},e.prototype._isEvent=function(t,e){var n=t&&t[e];return null!=n&&n instanceof o.Event},e}(r.Component),t("ComponentBase",s)}}});

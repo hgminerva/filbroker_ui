@@ -1,0 +1,25 @@
+<footer class="app-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <b>{{company}}</b> {{version}}
+                <br />
+                {{support}}
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <b>Created By: </b> {{ getCreatedBy() }}
+                        <br />
+                        <b>Created Date: </b> {{ getCreatedDateTime() }}
+                    </div>
+                    <div class="col-lg-8">
+                        <b>Updated By: </b> {{ getUpdatedBy() }}
+                        <br />
+                        <b>Updated Date: </b> {{ getUpdatedDateTime() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

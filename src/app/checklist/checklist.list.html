@@ -1,0 +1,131 @@
+<menu-root></menu-root>
+<br>
+<br>
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <!-- bread crumbs -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/menu">Menu</a>
+            </li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+
+        <div class="card">
+
+            <!-- buttons -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button class="btn btn-primary" (click)="btnAddChecklistClick()" id="btnAddChecklist">
+                                <i class="fa fa-plus fa-fw"></i> Add
+                            </button>
+                            <button id="btnCloseChecklist" class="btn btn-danger" routerLink="/menu">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- filters -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 25%;">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    Project:
+                                </span>
+                                <wj-combo-box #cmbProjects [itemsSource]="cmbProjectsData" [placeholder]="'Select Project'" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'project'" [selectedValuePath]="'id'" (selectedIndexChanged)="cmbProjectsChange()">
+                                </wj-combo-box>
+                            </div>
+                        </td>
+                        <td style="width: 75%;"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- flexgrid -->
+            <div class="card-body">
+                <wj-flex-grid #fgdChecklist [itemsSource]="fgdChecklistCollection" [selectionMode]="3" [frozenColumns]="2">
+                    <wj-flex-grid-filter></wj-flex-grid-filter>
+                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditChecklistClick()">
+                                <i class="fa fa-edit fa-fw"></i> Edit
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteChecklistClick()">
+                                <i class="fa fa-trash fa-fw"></i> Delete
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Code'" [binding]="'checklistCode'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Checklist'" [binding]="'checklist'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Date'" [binding]="'checklistDate'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
+
+            <!-- navigation buttons -->
+            <div class="card-footer">
+                <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                    <button type="button" class="btn btn-secondary" (click)="fgdChecklistCollection.moveToFirstPage()">
+                        <i class="fa fa-fast-backward"></i> First
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdChecklistCollection.moveToPreviousPage()">
+                        <i class="fa fa-step-backward"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                        {{ fgdChecklistCollection.pageIndex + 1 }} / {{ fgdChecklistCollection.pageCount }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdChecklistCollection.moveToNextPage()">
+                        Next
+                        <i class="fa fa-step-forward"></i>
+                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="fgdChecklistCollection.moveToLastPage()">
+                        Last
+                        <i class="fa fa-fast-forward"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- user and time stamp -->
+    <app-footer [data]="fgdChecklistCollection"></app-footer>
+</div>
+
+<!-- delete checklist prompt modal -->
+<div id="mdlChecklistDelete" class="modal fade" role="dialog" [ngStyle]="{'display': mdlChecklistDeleteShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Checklist</h4>
+            </div>
+            <div class="modal-body">
+                Delete {{fgdChecklistCollection.currentItem != null ? fgdChecklistCollection.currentItem.checklist : ""}}?
+            </div>
+            <div class="modal-footer" align="right">
+                <button id="btnOkChecklistDeleteModal" class="btn btn-danger" (click)="btnOkChecklistDeleteModalClick()">
+                    <i class="fa fa-trash fa-fw"></i> Ok
+                </button>
+                <button id="btnCloseChecklistDeleteModal" class="btn btn-primary" (click)="btnCloseChecklistDeleteModalClick()">
+                    <i class="fa fa-close fa-fw"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+/*
+    *
+    * Wijmo Library 5.20173.380
+    * http://wijmo.com/
+    *
+    * Copyright(c) GrapeCity, Inc.  All rights reserved.
+    *
+    * Licensed under the GrapeCity Commercial License.
+    * sales@wijmo.com
+    * wijmo.com/products/wijmo-5/license/
+    *
+    */
+var __extends=this&&this.__extends||function(){var e=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var r in t)t.hasOwnProperty(r)&&(e[r]=t[r])};return function(t,r){function i(){this.constructor=t}e(t,r),t.prototype=null===r?Object.create(r):(i.prototype=r.prototype,new i)}}();define(["require","exports","wijmo/wijmo.grid.filter","@angular/core","@angular/core","@angular/core","@angular/common","wijmo/wijmo.angular2.directiveBase"],function(e,t,r,i,o,n,a,l){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.wjFlexGridFilterMeta={selector:"wj-flex-grid-filter",template:"",inputs:["wjProperty","showFilterIcons","showSortButtons","defaultFilterType","filterColumns"],outputs:["initialized","filterChangingNg: filterChanging","filterChangedNg: filterChanged","filterAppliedNg: filterApplied"],providers:[]};var s=function(e){function r(t,r,i){var o=e.call(this,i)||this;o.isInitialized=!1;o._wjBehaviour=l.WjDirectiveBehavior.attach(o,t,r,i);return o.created(),o}return __extends(r,e),r.prototype.created=function(){},r.prototype.ngOnInit=function(){this._wjBehaviour.ngOnInit()},r.prototype.ngAfterViewInit=function(){this._wjBehaviour.ngAfterViewInit()},r.prototype.ngOnDestroy=function(){this._wjBehaviour.ngOnDestroy()},r.meta={outputs:t.wjFlexGridFilterMeta.outputs},r.decorators=[{type:i.Component,args:[{selector:t.wjFlexGridFilterMeta.selector,template:t.wjFlexGridFilterMeta.template,inputs:t.wjFlexGridFilterMeta.inputs,outputs:t.wjFlexGridFilterMeta.outputs,providers:[{provide:"WjComponent",useExisting:o.forwardRef(function(){return r})}].concat(t.wjFlexGridFilterMeta.providers)}]}],r.ctorParameters=function(){return[{type:o.ElementRef,decorators:[{type:n.Inject,args:[o.ElementRef]}]},{type:o.Injector,decorators:[{type:n.Inject,args:[o.Injector]}]},{type:void 0,decorators:[{type:n.Inject,args:["WjComponent"]},{type:n.SkipSelf},{type:o.Optional}]}]},r}(r.FlexGridFilter);t.WjFlexGridFilter=s;var u=[s],p=function(){function e(){}return e.decorators=[{type:i.NgModule,args:[{imports:[l.WjDirectiveBaseModule,a.CommonModule],declarations:u.slice(),exports:u.slice()}]}],e.ctorParameters=function(){return[]},e}();t.WjGridFilterModule=p});
