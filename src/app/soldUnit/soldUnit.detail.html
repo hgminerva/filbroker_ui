@@ -145,7 +145,7 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Selling Price</label>
                             <div class="col-sm-8">
-                                <wj-input-number [(value)]="soldUnit.price" [isDisabled]="soldUnit.isLocked">
+                                <wj-input-number [(value)]="soldUnit.price" [isDisabled]=true>
                                 </wj-input-number>
                             </div>
                         </div>
@@ -301,14 +301,14 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Equity (%)</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equityPercent" [isDisabled]="soldUnit.isLocked" (textChanged)="txtEquityPercentKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equityPercent" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquityPercentKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Equity</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equityValue" [isDisabled]="soldUnit.isLocked" (textChanged)="txtEquityValueKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equityValue" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquityValueKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
@@ -874,13 +874,15 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label text-right">Payment Date</label>
                     <div class="col-sm-8">
-                        <input [(ngModel)]="soldUnitEquitySchedule.paymentDate" disabled type="text" class="form-control">
+                        <wj-input-date [(value)]="soldUnitEquitySchedule.paymentDate" format="M/d/yyyy">
+                        </wj-input-date>
+                        <!-- <input [(ngModel)]="soldUnitEquitySchedule.paymentDate" disabled type="text" class="form-control"> -->
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label text-right">Amortization</label>
                     <div class="col-sm-8">
-                        <wj-input-number [(value)]="soldUnitEquitySchedule.amortization" [isDisabled]=true>
+                        <wj-input-number [(value)]="soldUnitEquitySchedule.amortization">
                         </wj-input-number>
                     </div>
                 </div>
@@ -893,7 +895,7 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label text-right">Check Date</label>
                     <div class="col-sm-8">
-                        <wj-input-date [(text)]="soldUnitEquitySchedule.checkDate" format="M/d/yyyy">
+                        <wj-input-date [(value)]="soldUnitEquitySchedule.checkDate" format="M/d/yyyy">
                         </wj-input-date>
                     </div>
                 </div>

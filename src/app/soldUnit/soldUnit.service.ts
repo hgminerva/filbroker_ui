@@ -487,7 +487,7 @@ export class SoldUnitService {
         );
     }
     public getUnitsPerProject(projectId: number): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/ListPerProjectId/" + projectId;
+        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/OpenListPerProjectId/" + projectId;
         let units = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {

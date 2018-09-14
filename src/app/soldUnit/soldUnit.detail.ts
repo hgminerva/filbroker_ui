@@ -169,10 +169,10 @@ export class SoldUnitDetail {
   public soldUnitEquitySchedule : TrnSoldUnitEquitySchedule = {
 	  id: 0,
 	  soldUnitId: 0,
-    paymentDate: "",
+    paymentDate: new Date(),
     amortization: 0,
 	  checkNumber: "",
-	  checkDate: "",
+	  checkDate: new Date(),
     checkBank: "",
     remarks: "",
   };
@@ -443,10 +443,14 @@ export class SoldUnitDetail {
 
     this.soldUnitRequirementsSub = this.soldUnitService.soldUnitRequirementsSource.subscribe(
       data => {
+        this.fgdSoldUnitRequirementsData = new ObservableArray();
+
         this.fgdSoldUnitRequirementsData = data;
         this.fgdSoldUnitRequirementsCollection = new CollectionView(this.fgdSoldUnitRequirementsData);
         this.fgdSoldUnitRequirementsCollection.pageSize = 15;
         this.fgdSoldUnitRequirementsCollection.trackChanges = true;  
+
+        if( this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
 
         console.log(this.fgdSoldUnitRequirementsData);
       }
@@ -457,10 +461,14 @@ export class SoldUnitDetail {
 
     this.soldUnitRequirementsSub = this.soldUnitService.soldUnitRequirementsSource.subscribe(
       data => {
+        this.fgdSoldUnitRequirementsData = new ObservableArray();
+
         this.fgdSoldUnitRequirementsData = data;
         this.fgdSoldUnitRequirementsCollection = new CollectionView(this.fgdSoldUnitRequirementsData);
         this.fgdSoldUnitRequirementsCollection.pageSize = 15;
         this.fgdSoldUnitRequirementsCollection.trackChanges = true;  
+
+        if( this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
 
         console.log(this.fgdSoldUnitRequirementsData);
       }
@@ -504,10 +512,14 @@ export class SoldUnitDetail {
 
     this.soldUnitRequirementActivitiesSub = this.soldUnitService.soldUnitRequirementActivitiesSource.subscribe(
       data => {
+        this.fgdSoldUnitRequirementActivitiesData = new ObservableArray();
+
         this.fgdSoldUnitRequirementActivitiesData = data;
         this.fgdSoldUnitRequirementActivitiesCollection = new CollectionView(this.fgdSoldUnitRequirementActivitiesData);
         this.fgdSoldUnitRequirementActivitiesCollection.pageSize = 15;
         this.fgdSoldUnitRequirementActivitiesCollection.trackChanges = true;  
+
+        if( this.soldUnitRequirementActivitiesSub != null) this.soldUnitRequirementActivitiesSub.unsubscribe();
       }
     );
   }
@@ -520,10 +532,14 @@ export class SoldUnitDetail {
 
     this.soldUnitEquityScheduleSub = this.soldUnitService.soldUnitEquityScheduleObservable.subscribe(
       data => {
+        this.fgdSoldUnitEquityScheduleData = new ObservableArray();
+
         this.fgdSoldUnitEquityScheduleData = data;
         this.fgdSoldUnitEquityScheduleCollection = new CollectionView(this.fgdSoldUnitEquityScheduleData);
         this.fgdSoldUnitEquityScheduleCollection.pageSize = 15;
         this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;  
+
+        if( this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
       }
     );
   }
@@ -532,10 +548,14 @@ export class SoldUnitDetail {
 
     this.soldUnitEquityScheduleSub = this.soldUnitService.soldUnitEquityScheduleObservable.subscribe(
       data => {
+        this.fgdSoldUnitEquityScheduleData = new ObservableArray();
+
         this.fgdSoldUnitEquityScheduleData = data;
         this.fgdSoldUnitEquityScheduleCollection = new CollectionView(this.fgdSoldUnitEquityScheduleData);
         this.fgdSoldUnitEquityScheduleCollection.pageSize = 15;
         this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;  
+
+        if( this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
       }
     );
   }
@@ -927,7 +947,7 @@ export class SoldUnitDetail {
 
 	  this.soldUnitEquitySchedule.id = selectedSoldUnitEquitySchedule.id;
 	  this.soldUnitEquitySchedule.soldUnitId = selectedSoldUnitEquitySchedule.soldUnitId;
-    this.soldUnitEquitySchedule.paymentDate = selectedSoldUnitEquitySchedule.paymentDate;
+    this.soldUnitEquitySchedule.paymentDate = new Date(selectedSoldUnitEquitySchedule.paymentDate);
     this.soldUnitEquitySchedule.amortization = selectedSoldUnitEquitySchedule.amortization;
 	  this.soldUnitEquitySchedule.checkNumber = selectedSoldUnitEquitySchedule.checkNumber;
 	  this.soldUnitEquitySchedule.checkDate = selectedSoldUnitEquitySchedule.checkDate;
@@ -944,6 +964,8 @@ export class SoldUnitDetail {
     btnSaveSoldUnitEquityScheduleModal.innerHTML = "<i class='fa fa-save fa-fw'></i> Saving...";
     btnCloseSoldUnitEquityScheduleModal.setAttribute("disabled","disabled");
     
+    //console.log(this.soldUnitEquitySchedule);
+
     this.soldUnitService.saveSoldUnitEquitySchedule(this.soldUnitEquitySchedule);
     this.soldUnitEquityScheduleSavedSub =  this.soldUnitService.soldUnitEquityPaymentSavedObservable.subscribe(
       data => {
