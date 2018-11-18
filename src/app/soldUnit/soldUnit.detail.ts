@@ -106,6 +106,9 @@ export class SoldUnitDetail {
     price: 0,
     equityValue: 0,
     equityPercent: 0,
+    equitySpotPayment1: 0,
+    equitySpotPayment2: 0,
+    equitySpotPayment3: 0,
     discount: 0,
     reservation: 0,
     netEquity: 0,
@@ -323,6 +326,9 @@ export class SoldUnitDetail {
           this.soldUnit.price = data.price;
           this.soldUnit.equityValue = data.equityValue;
           this.soldUnit.equityPercent = data.equityPercent;
+          this.soldUnit.equitySpotPayment1 = data.equitySpotPayment1;
+          this.soldUnit.equitySpotPayment2 = data.equitySpotPayment2;
+          this.soldUnit.equitySpotPayment3 = data.equitySpotPayment3;
           this.soldUnit.discount = data.discount;
           this.soldUnit.reservation = data.reservation;
           this.soldUnit.netEquity = data.netEquity;
@@ -787,6 +793,7 @@ export class SoldUnitDetail {
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
           .subscribe( data => {
             this.soldUnitRequirement.attachment1 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
           });
     }
   }
@@ -797,6 +804,7 @@ export class SoldUnitDetail {
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
           .subscribe( data => {
             this.soldUnitRequirement.attachment2 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
           });
     }
   }
@@ -807,6 +815,7 @@ export class SoldUnitDetail {
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
           .subscribe( data => {
             this.soldUnitRequirement.attachment3 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
           });
     }
   }
@@ -817,6 +826,7 @@ export class SoldUnitDetail {
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
           .subscribe( data => {
             this.soldUnitRequirement.attachment4 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
           });
     }
   }
@@ -827,6 +837,7 @@ export class SoldUnitDetail {
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
           .subscribe( data => {
             this.soldUnitRequirement.attachment5 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
           });
     }
   }
@@ -999,7 +1010,13 @@ export class SoldUnitDetail {
 
   // keyups
   private computeNetEquity() : void {
-    this.soldUnit.netEquity = this.soldUnit.equityValue - this.soldUnit.discount - this.soldUnit.reservation;
+    //this.soldUnit.netEquity = this.soldUnit.equityValue - this.soldUnit.discount - this.soldUnit.reservation;
+    this.soldUnit.netEquity = this.soldUnit.equityValue - 
+                              this.soldUnit.equitySpotPayment1 - 
+                              this.soldUnit.equitySpotPayment2 - 
+                              this.soldUnit.equitySpotPayment3 - 
+                              this.soldUnit.discount - 
+                              this.soldUnit.reservation;
 
     if(this.soldUnit.netEquityInterest > 0) {
       var r = this.soldUnit.netEquityInterest / 100;
@@ -1054,6 +1071,9 @@ export class SoldUnitDetail {
       this.computeNetEquity();
     }
   }
+  public txtEquitySpotPaymentKeyup() : void {
+    this.computeNetEquity();
+  }
   public txtDiscountKeyup() : void {
     this.computeNetEquity();
   }
@@ -1099,8 +1119,30 @@ export class SoldUnitDetail {
     paymentOptions = paymentOptions + "              Value                                    P " + this.addSpaces(15-this.soldUnit.equityValue.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equityValue.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
     paymentOptions = paymentOptions + "      LESS:   Discount                                 P " + this.addSpaces(15-this.soldUnit.discount.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.discount.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
     paymentOptions = paymentOptions + "              Reservation                              P " + this.addSpaces(15-this.soldUnit.reservation.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.reservation.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 1                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 2                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 3                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";            
     paymentOptions = paymentOptions + "      NET EQUITY                                       P " + this.addSpaces(15-this.soldUnit.netEquity.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.netEquity.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest \n";
+    
+    if(this.soldUnit.equitySpotPayment1 + this.soldUnit.equitySpotPayment2 + this.soldUnit.equitySpotPayment3 > 0) {
+      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest ";
+      paymentOptions = paymentOptions + "with ";
+      if(this.soldUnit.equitySpotPayment1 > 0) {
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the 1st payment ";  
+      }
+      if(this.soldUnit.equitySpotPayment2 > 0) {
+        if(this.soldUnit.equitySpotPayment1 > 0) paymentOptions = paymentOptions + "and ";
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the " + (this.soldUnit.netEquityNoOfPayments / 2) + "th payment ";  
+      }
+      if(this.soldUnit.equitySpotPayment3 > 0) {
+        if(this.soldUnit.equitySpotPayment1+this.soldUnit.equitySpotPayment2 > 0) paymentOptions = paymentOptions + "and ";
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the " + this.soldUnit.netEquityNoOfPayments + "th payment ";  
+      }
+      paymentOptions = paymentOptions + "\n";
+    } else {
+      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest \n";  
+    }
+    
     paymentOptions = paymentOptions + "* Payee: PRILAND DEVELOPMENT CORPORATION \n";
 
     this.soldUnit.paymentOptions = paymentOptions;
