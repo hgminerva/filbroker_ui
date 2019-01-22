@@ -1,10 +1,10 @@
 export class TrnSoldUnitEquitySchedule {
 	id: number;
 	soldUnitId: number;
-    paymentDate: string;
+    paymentDate: Date;
     amortization: number;
 	checkNumber: string;
-	checkDate: string;
+	checkDate: Date;
     checkBank: string;
     remarks: string;
 }

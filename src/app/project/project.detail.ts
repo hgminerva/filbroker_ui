@@ -177,13 +177,18 @@ export class ProjectDetail {
   }
   public getHouseModels() {
     this.projectService.getHouseModelsPerProject(this.project.id);
-
     this.houseModelsSub = this.projectService.houseModelsObservable.subscribe(
       data => {
+        // Clean up data
+        this.fgdHouseModelsData = new ObservableArray();
         this.fgdHouseModelsData = data;
+        // Refresh collection view
         this.fgdHouseModelsCollection = new CollectionView(this.fgdHouseModelsData);
         this.fgdHouseModelsCollection.pageSize = 15;
         this.fgdHouseModelsCollection.trackChanges = true;  
+        this.fgdHouseModelsCollection.refresh();
+        // Destroy subscription
+        if( this.houseModelsSub != null) this.houseModelsSub.unsubscribe();
       }
     );
   } 

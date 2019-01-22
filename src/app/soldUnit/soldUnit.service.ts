@@ -184,6 +184,9 @@ export class SoldUnitService {
                             price: results[i].Price,
                             equityValue: results[i].EquityValue,
                             equityPercent: results[i].EquityPercent,
+                            equitySpotPayment1: results[i].equitySpotPayment1,
+                            equitySpotPayment2: results[i].equitySpotPayment2,
+                            equitySpotPayment3: results[i].equitySpotPayment3,
                             discount: results[i].Discount,
                             reservation: results[i].Reservation,
                             netEquity: results[i].NetEquity,
@@ -249,6 +252,9 @@ export class SoldUnitService {
                         price: result.Price,
                         equityValue: result.EquityValue,
                         equityPercent: result.EquityPercent,
+                        equitySpotPayment1: result.EquitySpotPayment1,
+                        equitySpotPayment2: result.EquitySpotPayment2,
+                        equitySpotPayment3: result.EquitySpotPayment3,
                         discount: result.Discount,
                         reservation: result.Reservation,
                         netEquity: result.NetEquity,
@@ -503,7 +509,7 @@ export class SoldUnitService {
     }
 
     public getUnitsPerProject(projectId: number): void {
-        let url = "http://localhost:10136/api/MstUnit/ListPerProjectId/" + projectId;
+        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/OpenListPerProjectId/" + projectId;
         let units = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {

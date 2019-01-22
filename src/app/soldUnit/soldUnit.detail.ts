@@ -107,6 +107,9 @@ export class SoldUnitDetail {
     price: 0,
     equityValue: 0,
     equityPercent: 0,
+    equitySpotPayment1: 0,
+    equitySpotPayment2: 0,
+    equitySpotPayment3: 0,
     discount: 0,
     reservation: 0,
     netEquity: 0,
@@ -167,13 +170,13 @@ export class SoldUnitDetail {
   };
 
   // detail line2 model
-  public soldUnitEquitySchedule: TrnSoldUnitEquitySchedule = {
-    id: 0,
-    soldUnitId: 0,
-    paymentDate: "",
+  public soldUnitEquitySchedule : TrnSoldUnitEquitySchedule = {
+	  id: 0,
+	  soldUnitId: 0,
+    paymentDate: new Date(),
     amortization: 0,
-    checkNumber: "",
-    checkDate: "",
+	  checkNumber: "",
+	  checkDate: new Date(),
     checkBank: "",
     remarks: "",
   };
@@ -358,6 +361,9 @@ export class SoldUnitDetail {
           this.soldUnit.price = data.price;
           this.soldUnit.equityValue = data.equityValue;
           this.soldUnit.equityPercent = data.equityPercent;
+          this.soldUnit.equitySpotPayment1 = data.equitySpotPayment1;
+          this.soldUnit.equitySpotPayment2 = data.equitySpotPayment2;
+          this.soldUnit.equitySpotPayment3 = data.equitySpotPayment3;
           this.soldUnit.discount = data.discount;
           this.soldUnit.reservation = data.reservation;
           this.soldUnit.netEquity = data.netEquity;
@@ -478,10 +484,14 @@ export class SoldUnitDetail {
 
     this.soldUnitRequirementsSub = this.soldUnitService.soldUnitRequirementsSource.subscribe(
       data => {
+        this.fgdSoldUnitRequirementsData = new ObservableArray();
+
         this.fgdSoldUnitRequirementsData = data;
         this.fgdSoldUnitRequirementsCollection = new CollectionView(this.fgdSoldUnitRequirementsData);
         this.fgdSoldUnitRequirementsCollection.pageSize = 15;
         this.fgdSoldUnitRequirementsCollection.trackChanges = true;
+
+        if( this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
 
         console.log(this.fgdSoldUnitRequirementsData);
       }
@@ -492,10 +502,14 @@ export class SoldUnitDetail {
 
     this.soldUnitRequirementsSub = this.soldUnitService.soldUnitRequirementsSource.subscribe(
       data => {
+        this.fgdSoldUnitRequirementsData = new ObservableArray();
+
         this.fgdSoldUnitRequirementsData = data;
         this.fgdSoldUnitRequirementsCollection = new CollectionView(this.fgdSoldUnitRequirementsData);
         this.fgdSoldUnitRequirementsCollection.pageSize = 15;
         this.fgdSoldUnitRequirementsCollection.trackChanges = true;
+
+        if( this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
 
         console.log(this.fgdSoldUnitRequirementsData);
       }
@@ -539,10 +553,14 @@ export class SoldUnitDetail {
 
     this.soldUnitRequirementActivitiesSub = this.soldUnitService.soldUnitRequirementActivitiesSource.subscribe(
       data => {
+        this.fgdSoldUnitRequirementActivitiesData = new ObservableArray();
+
         this.fgdSoldUnitRequirementActivitiesData = data;
         this.fgdSoldUnitRequirementActivitiesCollection = new CollectionView(this.fgdSoldUnitRequirementActivitiesData);
         this.fgdSoldUnitRequirementActivitiesCollection.pageSize = 15;
-        this.fgdSoldUnitRequirementActivitiesCollection.trackChanges = true;
+        this.fgdSoldUnitRequirementActivitiesCollection.trackChanges = true;  
+
+        if( this.soldUnitRequirementActivitiesSub != null) this.soldUnitRequirementActivitiesSub.unsubscribe();
       }
     );
   }
@@ -555,10 +573,14 @@ export class SoldUnitDetail {
 
     this.soldUnitEquityScheduleSub = this.soldUnitService.soldUnitEquityScheduleObservable.subscribe(
       data => {
+        this.fgdSoldUnitEquityScheduleData = new ObservableArray();
+
         this.fgdSoldUnitEquityScheduleData = data;
         this.fgdSoldUnitEquityScheduleCollection = new CollectionView(this.fgdSoldUnitEquityScheduleData);
         this.fgdSoldUnitEquityScheduleCollection.pageSize = 15;
-        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;
+        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;  
+
+        if( this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
       }
     );
   }
@@ -567,10 +589,14 @@ export class SoldUnitDetail {
 
     this.soldUnitEquityScheduleSub = this.soldUnitService.soldUnitEquityScheduleObservable.subscribe(
       data => {
+        this.fgdSoldUnitEquityScheduleData = new ObservableArray();
+
         this.fgdSoldUnitEquityScheduleData = data;
         this.fgdSoldUnitEquityScheduleCollection = new CollectionView(this.fgdSoldUnitEquityScheduleData);
         this.fgdSoldUnitEquityScheduleCollection.pageSize = 15;
-        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;
+        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;  
+
+        if( this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
       }
     );
   }
@@ -800,9 +826,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT1-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-        .subscribe(data => {
-          this.soldUnitRequirement.attachment1 = data.fileUrl;
-        });
+          .subscribe( data => {
+            this.soldUnitRequirement.attachment1 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+          });
     }
   }
   public btnOpenSoldUnitRequirementAttachment2Click(e: Event): void {
@@ -810,9 +837,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT2-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-        .subscribe(data => {
-          this.soldUnitRequirement.attachment2 = data.fileUrl;
-        });
+          .subscribe( data => {
+            this.soldUnitRequirement.attachment2 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+          });
     }
   }
   public btnOpenSoldUnitRequirementAttachment3Click(e: Event): void {
@@ -820,9 +848,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT3-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-        .subscribe(data => {
-          this.soldUnitRequirement.attachment3 = data.fileUrl;
-        });
+          .subscribe( data => {
+            this.soldUnitRequirement.attachment3 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+          });
     }
   }
   public btnOpenSoldUnitRequirementAttachment4Click(e: Event): void {
@@ -830,9 +859,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT4-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-        .subscribe(data => {
-          this.soldUnitRequirement.attachment4 = data.fileUrl;
-        });
+          .subscribe( data => {
+            this.soldUnitRequirement.attachment4 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+          });
     }
   }
   public btnOpenSoldUnitRequirementAttachment5Click(e: Event): void {
@@ -840,9 +870,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT5-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-        .subscribe(data => {
-          this.soldUnitRequirement.attachment5 = data.fileUrl;
-        });
+          .subscribe( data => {
+            this.soldUnitRequirement.attachment5 = data.fileUrl;
+            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+          });
     }
   }
 
@@ -960,9 +991,9 @@ export class SoldUnitDetail {
   public btnEditSoldUnitEquityScheduleClick(): void {
     let selectedSoldUnitEquitySchedule = this.fgdSoldUnitEquityScheduleCollection.currentItem;
 
-    this.soldUnitEquitySchedule.id = selectedSoldUnitEquitySchedule.id;
-    this.soldUnitEquitySchedule.soldUnitId = selectedSoldUnitEquitySchedule.soldUnitId;
-    this.soldUnitEquitySchedule.paymentDate = selectedSoldUnitEquitySchedule.paymentDate;
+	  this.soldUnitEquitySchedule.id = selectedSoldUnitEquitySchedule.id;
+	  this.soldUnitEquitySchedule.soldUnitId = selectedSoldUnitEquitySchedule.soldUnitId;
+    this.soldUnitEquitySchedule.paymentDate = new Date(selectedSoldUnitEquitySchedule.paymentDate);
     this.soldUnitEquitySchedule.amortization = selectedSoldUnitEquitySchedule.amortization;
     this.soldUnitEquitySchedule.checkNumber = selectedSoldUnitEquitySchedule.checkNumber;
     this.soldUnitEquitySchedule.checkDate = selectedSoldUnitEquitySchedule.checkDate;
@@ -977,7 +1008,9 @@ export class SoldUnitDetail {
 
     btnSaveSoldUnitEquityScheduleModal.setAttribute("disabled", "disabled");
     btnSaveSoldUnitEquityScheduleModal.innerHTML = "<i class='fa fa-save fa-fw'></i> Saving...";
-    btnCloseSoldUnitEquityScheduleModal.setAttribute("disabled", "disabled");
+    btnCloseSoldUnitEquityScheduleModal.setAttribute("disabled","disabled");
+    
+    //console.log(this.soldUnitEquitySchedule);
 
     this.soldUnitService.saveSoldUnitEquitySchedule(this.soldUnitEquitySchedule);
     this.soldUnitEquityScheduleSavedSub = this.soldUnitService.soldUnitEquityPaymentSavedObservable.subscribe(
@@ -1011,8 +1044,14 @@ export class SoldUnitDetail {
   }
 
   // keyups
-  private computeNetEquity(): void {
-    this.soldUnit.netEquity = this.soldUnit.equityValue - this.soldUnit.discount - this.soldUnit.reservation;
+  private computeNetEquity() : void {
+    //this.soldUnit.netEquity = this.soldUnit.equityValue - this.soldUnit.discount - this.soldUnit.reservation;
+    this.soldUnit.netEquity = this.soldUnit.equityValue - 
+                              this.soldUnit.equitySpotPayment1 - 
+                              this.soldUnit.equitySpotPayment2 - 
+                              this.soldUnit.equitySpotPayment3 - 
+                              this.soldUnit.discount - 
+                              this.soldUnit.reservation;
 
     if (this.soldUnit.netEquityInterest > 0) {
       var r = this.soldUnit.netEquityInterest / 100;
@@ -1067,7 +1106,10 @@ export class SoldUnitDetail {
       this.computeNetEquity();
     }
   }
-  public txtDiscountKeyup(): void {
+  public txtEquitySpotPaymentKeyup() : void {
+    this.computeNetEquity();
+  }
+  public txtDiscountKeyup() : void {
     this.computeNetEquity();
   }
   public txtReservationKeyup(): void {
@@ -1108,12 +1150,34 @@ export class SoldUnitDetail {
     var paymentOptions = "";
 
     paymentOptions = paymentOptions + "FINANCING SCHEME \n";
-    paymentOptions = paymentOptions + "      Equity: Percentage                                 " + this.addSpaces(15 - this.soldUnit.equityPercent.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equityPercent.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "% \n";
-    paymentOptions = paymentOptions + "              Value                                    P " + this.addSpaces(15 - this.soldUnit.equityValue.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equityValue.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
-    paymentOptions = paymentOptions + "      LESS:   Discount                                 P " + this.addSpaces(15 - this.soldUnit.discount.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.discount.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
-    paymentOptions = paymentOptions + "              Reservation                              P " + this.addSpaces(15 - this.soldUnit.reservation.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.reservation.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
-    paymentOptions = paymentOptions + "      NET EQUITY                                       P " + this.addSpaces(15 - this.soldUnit.netEquity.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.netEquity.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
-    paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at " + this.soldUnit.netEquityInterest + " interest \n";
+    paymentOptions = paymentOptions + "      Equity: Percentage                                 " + this.addSpaces(15-this.soldUnit.equityPercent.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equityPercent.toLocaleString('en-us', {minimumFractionDigits: 2}) + "% \n";
+    paymentOptions = paymentOptions + "              Value                                    P " + this.addSpaces(15-this.soldUnit.equityValue.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equityValue.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "      LESS:   Discount                                 P " + this.addSpaces(15-this.soldUnit.discount.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.discount.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Reservation                              P " + this.addSpaces(15-this.soldUnit.reservation.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.reservation.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 1                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 2                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 3                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";            
+    paymentOptions = paymentOptions + "      NET EQUITY                                       P " + this.addSpaces(15-this.soldUnit.netEquity.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.netEquity.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
+    
+    if(this.soldUnit.equitySpotPayment1 + this.soldUnit.equitySpotPayment2 + this.soldUnit.equitySpotPayment3 > 0) {
+      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest ";
+      paymentOptions = paymentOptions + "with ";
+      if(this.soldUnit.equitySpotPayment1 > 0) {
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the 1st payment ";  
+      }
+      if(this.soldUnit.equitySpotPayment2 > 0) {
+        if(this.soldUnit.equitySpotPayment1 > 0) paymentOptions = paymentOptions + "and ";
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the " + (this.soldUnit.netEquityNoOfPayments / 2) + "th payment ";  
+      }
+      if(this.soldUnit.equitySpotPayment3 > 0) {
+        if(this.soldUnit.equitySpotPayment1+this.soldUnit.equitySpotPayment2 > 0) paymentOptions = paymentOptions + "and ";
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the " + this.soldUnit.netEquityNoOfPayments + "th payment ";  
+      }
+      paymentOptions = paymentOptions + "\n";
+    } else {
+      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest \n";  
+    }
+    
     paymentOptions = paymentOptions + "* Payee: PRILAND DEVELOPMENT CORPORATION \n";
 
     this.soldUnit.paymentOptions = paymentOptions;

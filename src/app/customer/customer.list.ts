@@ -209,4 +209,40 @@ export class CustomerList {
     public btnCloseCustomerDeleteModalClick() : void {
         this.mdlCustomerDeleteShow = false;
     }
+    public btnCSVReportClick() : void {
+        var fileName = "customer.csv";
+
+        var collection = this.fgdCustomersCollection;
+        var data = "Customer List" + "\r\n\n";
+        var columns = "";
+        
+        // csv columns
+        for (var s in collection.items[0]) columns += s + ",";
+        columns = columns.slice(0, -1);
+        data += columns + "\r\n";
+
+        // csv records
+        collection.moveToFirstPage();
+        for (var p = 0; p < collection.pageCount; p++) {
+          for (var i = 0; i < collection.items.length; i++) {
+            var row = "";
+            for (var s in collection.items[i]) {
+              row += "\"" + collection.items[i][s] + "\",";
+            }
+            row.slice(0, row.length - 1);
+            data += row + "\r\n";
+          }
+          collection.moveToNextPage();
+        }
+
+        // Create the csv blob
+        var csvData = new Blob([data], {type: 'text/csv;charset=utf-8;'});
+
+        // Create a link then click the link to down load the csv blob
+        var csvURL = window.URL.createObjectURL(csvData);
+        var csvLink = document.createElement('a');
+        csvLink.href = csvURL;
+        csvLink.setAttribute('download', fileName);
+        csvLink.click();
+    }
 }

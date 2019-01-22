@@ -75,7 +75,7 @@ export class ChecklistDetail {
     requirementNo: 0,
     requirement: "",
     category: "",
-    type: "OPTIONAL",
+    type: "SECONDARY",
     withAttachments: false,
   };
 
@@ -210,10 +210,15 @@ export class ChecklistDetail {
 
     this.checklistRequirementsSub = this.checklistService.checklistRequirementsObservable.subscribe(
       data => {
+        // Clean up data
+        this.fgdChecklistRequirementsData = new ObservableArray();
         this.fgdChecklistRequirementsData = data;
+        // Refresh collection view
         this.fgdChecklistRequirementsCollection = new CollectionView(this.fgdChecklistRequirementsData);
         this.fgdChecklistRequirementsCollection.pageSize = 15;
         this.fgdChecklistRequirementsCollection.trackChanges = true;  
+        // Destroy subscription
+        if( this.checklistRequirementsSub != null) this.checklistRequirementsSub.unsubscribe();
       }
     );
   } 
@@ -333,12 +338,12 @@ export class ChecklistDetail {
     this.checklistRequirement.requirementNo = requirementNo + 1;
     this.checklistRequirement.requirement = "";
     this.checklistRequirement.category = "";    
-    this.checklistRequirement.type = "OPTIONAL";
+    this.checklistRequirement.type = "SECONDARY";
     this.checklistRequirement.withAttachments = false;
 
     this.mdlChecklistRequirementEditShow = true; 
 
-    this.getRequirementType("OPTIONAL");
+    this.getRequirementType("SECONDARY");
   } 
   public btnEditChecklistRequirementsClick() : void {
     let selectedChecklistRequirement = this.fgdChecklistRequirementsCollection.currentItem;
