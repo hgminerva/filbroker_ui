@@ -56,6 +56,7 @@ export class UnitList {
     tla: 0,
     tfa: 0,
     price: 0,
+    tsp: 0,
     status: "OPEN",
     isLocked: false,
     createdBy: 1,
@@ -269,7 +270,7 @@ export class UnitList {
       var r = new FileReader();
       r.readAsText(target.files[0]);
       r.onload = (e) => {
-          let csv: string = r.result;
+          var csv = r.result.toString();
           var csvLines = csv.split(/\r\n|\n/);
           var csvData = new ObservableArray();
 

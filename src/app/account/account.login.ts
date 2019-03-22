@@ -43,6 +43,17 @@ export class AccountLogin {
   }
 
   public btnLoginClick(): void {
+    let btnLogin: Element = document.getElementById("btnLogin");
+
+    btnLogin.setAttribute("disabled", "true");
+    btnLogin.innerHTML = "<i class='fa fa-sign-in'></i> Logging in...";
+
+    let inpUsername: Element = document.getElementById("username");
+    let inpPassword: Element = document.getElementById("password");
+
+    inpUsername.setAttribute("disabled", "true");
+    inpPassword.setAttribute("disabled", "true");
+
     this.accountService.login(this.user.username, this.user.password);
     this.loginSub = this.accountService.loginObservable.subscribe(
       data => {
@@ -53,7 +64,15 @@ export class AccountLogin {
           }, 1000);
         } else if (data == 0) {
           this.toastr.error("Login failed.");
+
+          btnLogin.removeAttribute("disabled");
+          btnLogin.innerHTML = "<i class='fa fa-sign-in'></i> Login";
+
+          inpUsername.removeAttribute("disabled");
+          inpPassword.removeAttribute("disabled");
         }
+
+        if (this.loginSub != null) this.loginSub.unsubscribe();
       }
     );
   }

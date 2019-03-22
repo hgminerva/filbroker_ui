@@ -229,7 +229,8 @@ export class CommissionService {
                     for (var i = 0; i <= results.length - 1; i++) {
                         brokers.push({
                             id: results[i].Id,
-                            fullName: results[i].FullName
+                            fullName: results[i].FullName,
+                            realtyFirm: results[i].RealtyFirm
                         });
                     }
                     this.brokersSource.next(brokers);

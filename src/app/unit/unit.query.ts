@@ -95,6 +95,7 @@ export class UnitQuery {
                             tla: data[i].tla,
                             tfa: data[i].tfa,
                             price: data[i].price,
+                            tsp: data[i].tsp,
                             status: data[i].status,
                             isLocked: data[i].isLocked,
                             createdBy: data[i].createdBy,

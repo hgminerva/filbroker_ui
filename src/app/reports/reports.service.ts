@@ -29,7 +29,7 @@ export class ReportsService {
         'Content-Type': 'application/json'
     });
     private options = new RequestOptions({ headers: this.headers });
-    
+
     // =================
     // public properties
     // =================
@@ -51,8 +51,16 @@ export class ReportsService {
     public soldUnitChecklistRequirementObservable = this.soldUnitChecklistRequirementSource.asObservable();
 
     // sending email
-    public sendEmailSource =  new Subject<number>();
+    public sendEmailSource = new Subject<number>();
     public sendEmailObservable = this.sendEmailSource.asObservable();
+
+    // customer list
+    public customerListSource = new Subject<ObservableArray>();
+    public customerListObservable = this.customerListSource.asObservable();
+
+    // broker list
+    public brokerListSource = new Subject<ObservableArray>();
+    public brokerListObservable = this.brokerListSource.asObservable();
 
     // =======
     // angular
@@ -68,7 +76,7 @@ export class ReportsService {
     public getSoldUnitSummary(dateStart: string, dateEnd: string): void {
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/RepSummary/ListSoldUnitPerDates/" + dateStart + "/" + dateEnd;
         let soldUnits = new ObservableArray();
-        
+
         this.http.get(url, this.options).subscribe(
             response => {
                 var results = new ObservableArray(response.json());
@@ -122,9 +130,9 @@ export class ReportsService {
                         });
                     }
                     this.soldUnitsSource.next(soldUnits);
-                }else{
+                } else {
                     this.soldUnitsSource.next(soldUnits);
-                    this.toastr.error("No sold units.");   
+                    this.toastr.error("No sold units.");
                 }
             }
         );
@@ -133,7 +141,7 @@ export class ReportsService {
     public getCommissionRequestSummary(dateStart: string, dateEnd: string): void {
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/RepSummary/ListCommissionRequestPerDates/" + dateStart + "/" + dateEnd;
         let commissionRequests = new ObservableArray();
-        
+
         this.http.get(url, this.options).subscribe(
             response => {
                 var results = new ObservableArray(response.json());
@@ -167,13 +175,13 @@ export class ReportsService {
                     this.commissionRequestsSource.next(commissionRequests);
                 } else {
                     this.commissionRequestsSource.next(commissionRequests);
-                    this.toastr.error("No commissions requests.");   
+                    this.toastr.error("No commissions requests.");
                 }
             }
         );
     }
 
-    public getSoldUnitRequirementActivitySummary(dateStart: string, dateEnd: string) : void {
+    public getSoldUnitRequirementActivitySummary(dateStart: string, dateEnd: string): void {
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/RepSummary/ListSoldUnitRequirementActivityPerDates/" + dateStart + "/" + dateEnd;
         let soldUnitRequirementActivities = new ObservableArray();
 
@@ -183,30 +191,30 @@ export class ReportsService {
                 if (results.length > 0) {
                     for (var i = 0; i <= results.length - 1; i++) {
                         soldUnitRequirementActivities.push({
-                            id : results[i].Id,
-                            soldUnitRequirementId : results[i].SoldUnitRequirementId,
-                            activityDate : results[i].ActivityDate,
-                            activity : results[i].Activity,
-                            remarks : results[i].Remarks,
-                            userId : results[i].UserId,
-                            user : results[i].User,
-                            checklistRequirement : results[i].ChecklistRequirement,
-                            soldUnitNumber : results[i].SoldUnitNumber,
-                            project : results[i].Project,
-                            unitCode : results[i].UnitCode,
-                            customer : results[i].Customer
+                            id: results[i].Id,
+                            soldUnitRequirementId: results[i].SoldUnitRequirementId,
+                            activityDate: results[i].ActivityDate,
+                            activity: results[i].Activity,
+                            remarks: results[i].Remarks,
+                            userId: results[i].UserId,
+                            user: results[i].User,
+                            checklistRequirement: results[i].ChecklistRequirement,
+                            soldUnitNumber: results[i].SoldUnitNumber,
+                            project: results[i].Project,
+                            unitCode: results[i].UnitCode,
+                            customer: results[i].Customer
                         });
                     }
                     this.soldUnitRequirementActivitiesSource.next(soldUnitRequirementActivities);
                 } else {
                     this.soldUnitRequirementActivitiesSource.next(soldUnitRequirementActivities);
-                    this.toastr.error("No sold unit requirement activities.");   
+                    this.toastr.error("No sold unit requirement activities.");
                 }
             }
         );
     }
 
-    public getSoldUnitChecklistSummary(dateStart: string, dateEnd: string) : void {
+    public getSoldUnitChecklistSummary(dateStart: string, dateEnd: string): void {
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/RepSummary/ListSoldUnitChecklistPerDates/" + dateStart + "/" + dateEnd;
         let soldUnitChecklist = new ObservableArray();
 
@@ -216,42 +224,42 @@ export class ReportsService {
                 if (results.length > 0) {
                     for (var i = 0; i <= results.length - 1; i++) {
                         soldUnitChecklist.push({
-                            id : results[i].Id,
-                            soldUnitId : results[i].SoldUnitId,
-                            checklistRequirementId : results[i].ChecklistRequirementId,
-                            checklistRequirement : results[i].ChecklistRequirement,
-                            checklistRequirementNo : results[i].ChecklistRequirementNo,
-                            checklistCategory : results[i].ChecklistCategory,
-                            checklistType : results[i].ChecklistType,
-                            checklistWithAttachments : results[i].ChecklistWithAttachments,
-                            attachment1 : results[i].Attachment1,
-                            attachment2 : results[i].Attachment2,
-                            attachment3 : results[i].Attachment3,
-                            attachment4 : results[i].Attachment4,
-                            attachment5 : results[i].Attachment5,
-                            remarks : results[i].Remarks,
-                            status : results[i].Status,
-                            statusDate : results[i].StatusDate,
-                            soldUnitNumber : results[i].SoldUnitNumber,
-                            soldUnitDate : results[i].SoldUnitDate,
-                            project : results[i].Project,
-                            unit : results[i].Unit,
-                            customer : results[i].Customer
+                            id: results[i].Id,
+                            soldUnitId: results[i].SoldUnitId,
+                            checklistRequirementId: results[i].ChecklistRequirementId,
+                            checklistRequirement: results[i].ChecklistRequirement,
+                            checklistRequirementNo: results[i].ChecklistRequirementNo,
+                            checklistCategory: results[i].ChecklistCategory,
+                            checklistType: results[i].ChecklistType,
+                            checklistWithAttachments: results[i].ChecklistWithAttachments,
+                            attachment1: results[i].Attachment1,
+                            attachment2: results[i].Attachment2,
+                            attachment3: results[i].Attachment3,
+                            attachment4: results[i].Attachment4,
+                            attachment5: results[i].Attachment5,
+                            remarks: results[i].Remarks,
+                            status: results[i].Status,
+                            statusDate: results[i].StatusDate,
+                            soldUnitNumber: results[i].SoldUnitNumber,
+                            soldUnitDate: results[i].SoldUnitDate,
+                            project: results[i].Project,
+                            unit: results[i].Unit,
+                            customer: results[i].Customer
                         });
                     }
                     this.soldUnitChecklistRequirementSource.next(soldUnitChecklist);
                 } else {
                     this.soldUnitChecklistRequirementSource.next(soldUnitChecklist);
-                    this.toastr.error("No sold unit checklist requirements.");   
+                    this.toastr.error("No sold unit checklist requirements.");
                 }
             }
         );
     }
 
-    public sendEmail(attachment : Blob, filename : string) : void {
+    public sendEmail(attachment: Blob, filename: string): void {
         let mailgunUrl: string = "sandbox56506e2182a34cddae6690198eb6627f.mailgun.org";
         let apiKey: string = "YXBpOmtleS1iYmIxNmY2ZTZmZGU0MGQ2YWJkZTNmOWJiYjAyMTlhZA==";
-        let url : string  = "https://api.mailgun.net/v3/" + mailgunUrl + "/messages";
+        let url: string = "https://api.mailgun.net/v3/" + mailgunUrl + "/messages";
 
         var formData = new FormData();
         formData.append('to', 'hgminerva@gmail.com');
@@ -261,8 +269,8 @@ export class ReportsService {
         formData.append('attachment', attachment, filename);
 
         let emailHeaders = new Headers({
-                "Authorization": "Basic " + apiKey
-            }
+            "Authorization": "Basic " + apiKey
+        }
         );
         let emailOptions = new RequestOptions({ headers: emailHeaders });
 
@@ -271,7 +279,62 @@ export class ReportsService {
                 this.sendEmailSource.next(1);
             }, error => {
                 this.sendEmailSource.next(0);
-        });
+            });
+    }
+
+    // Cutomer List
+    public getCustomerList(dateStart: string, dateEnd: string): void {
+        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/RepSummary/ListCustomerFilterByUpdateDateTime/" + dateStart + "/" + dateEnd;
+        let customerListObservableArray = new ObservableArray();
+
+        this.http.get(url, this.options).subscribe(
+            response => {
+                var results = new ObservableArray(response.json());
+                if (results.length > 0) {
+                    for (var i = 0; i <= results.length - 1; i++) {
+                        customerListObservableArray.push({
+                            id: results[i].Id,
+                            customerCode: results[i].CustomerCode,
+                            fullName: results[i].LastName + ", " + results[i].FirstName,
+                            firstName: results[i].FirstName,
+                            lastName: results[i].LastName,
+                            gender: results[i].Gender,
+                            address: results[i].Address,
+                            emailAddress: results[i].EmailAddress,
+                            telephoneNumber: results[i].TelephoneNumber
+
+                        });
+                    }
+                    this.customerListSource.next(customerListObservableArray);
+                }
+            }
+        );
+    }
+
+    // Cutomer List
+    public getBrokerList(dateStart: string, dateEnd: string): void {
+        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/RepSummary/ListBrokerFilterByUpdateDateTime/" + dateStart + "/" + dateEnd;
+        let brokerListObservableArray = new ObservableArray();
+
+        this.http.get(url, this.options).subscribe(
+            response => {
+                var results = new ObservableArray(response.json());
+                if (results.length > 0) {
+                    for (var i = 0; i <= results.length - 1; i++) {
+                        brokerListObservableArray.push({
+                            id: results[i].Id,
+                            brokerCode: results[i].BrokerCode,
+                            fullName: results[i].LastName + ", " + results[i].FirstName,
+                            gender: results[i].Gender,
+                            address: results[i].Address,
+                            emailAddress: results[i].EmailAddress,
+                            telephoneNumber: results[i].TelephoneNumber
+                        });
+                    }
+                    this.brokerListSource.next(brokerListObservableArray);
+                }
+            }
+        );
     }
 
 }

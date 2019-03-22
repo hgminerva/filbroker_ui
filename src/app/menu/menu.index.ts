@@ -40,10 +40,12 @@ export class MenuIndex {
       localStorage.removeItem('expires_in');
       localStorage.removeItem('token_type');
       localStorage.removeItem('username');
+      localStorage.removeItem('userRights');
 
       this.toastr.success("Logout successful.");   
       setTimeout(() => {
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
+        location.reload();
       }, 1000);
     }
   }

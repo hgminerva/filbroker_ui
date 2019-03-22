@@ -34,14 +34,16 @@
                             <button id="btnPrintSoldUnit" class="btn btn-primary" (click)="btnPrintSoldUnitClick()">
                                 <i class="fa fa-print fa-fw"></i> Print
                             </button>
-                            <button id="btnLockSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary" (click)="btnLockSoldUnitClick()">
+                            <button id="btnLockSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary"
+                                (click)="btnLockSoldUnitClick()">
                                 <i class="fa fa-lock fa-fw"></i> Lock
                             </button>
                             <button id="btnUnlockSoldUnit" [disabled]="!soldUnit.isLocked" class="btn btn-primary"
                                 (click)="btnUnlockSoldUnitClick()">
                                 <i class="fa fa-unlock fa-fw"></i> Unlock
                             </button>
-                            <button id="btnSaveSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary" (click)="btnSaveSoldUnitClick()">
+                            <button id="btnSaveSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary"
+                                (click)="btnSaveSoldUnitClick()">
                                 <i class="fa fa-save fa-fw"></i> Save
                             </button>
                             <button id="btnCancelSoldUnit" [disabled]="!soldUnit.isLocked" class="btn btn-warning"
@@ -74,8 +76,8 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Date</label>
                             <div class="col-sm-8">
-                                <wj-input-date #calSoldUnitDate [(text)]="soldUnit.soldUnitDate" [isDisabled]="soldUnit.isLocked"
-                                    format="M/d/yyyy">
+                                <wj-input-date #calSoldUnitDate [(text)]="soldUnit.soldUnitDate"
+                                    [isDisabled]="soldUnit.isLocked" format="M/d/yyyy">
                                 </wj-input-date>
                             </div>
                         </div>
@@ -85,8 +87,8 @@
                                 <div class="input-group">
                                     <input [(ngModel)]="soldUnit.project" disabled type="text" class="form-control">
                                     <div class="input-group-append">
-                                        <button id="btnOpenUnitQueryModal" class="btn btn-info" [disabled]="soldUnit.isLocked"
-                                            (click)="btnOpenUnitQueryModalClick()">
+                                        <button id="btnOpenUnitQueryModal" class="btn btn-info"
+                                            [disabled]="soldUnit.isLocked" (click)="btnOpenUnitQueryModalClick()">
                                             <i class="fa fa-refresh fa-fw"></i>
                                         </button>
                                     </div>
@@ -102,32 +104,43 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Customer</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbCustomers [itemsSource]="cmbCustomersData" [isDisabled]="soldUnit.isLocked"
-                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
-                                    [selectedValuePath]="'id'" [(ngModel)]="soldUnit.customerId" style="width: 100%;">
+                                <wj-combo-box #cmbCustomers [itemsSource]="cmbCustomersData"
+                                    [isDisabled]="soldUnit.isLocked" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'fullName'" [selectedValuePath]="'id'"
+                                    [(ngModel)]="soldUnit.customerId" style="width: 100%;">
                                 </wj-combo-box>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Broker</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbBrokers [itemsSource]="cmbBrokersData" [isDisabled]="soldUnit.isLocked"
-                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
-                                    [selectedValuePath]="'id'" [(ngModel)]="soldUnit.brokerId" style="width: 100%;">
+                                <wj-combo-box #cmbBrokers [itemsSource]="cmbBrokersData"
+                                    [isDisabled]="soldUnit.isLocked" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'fullName'" [selectedValuePath]="'id'"
+                                    [(ngModel)]="soldUnit.brokerId" style="width: 100%;">
                                 </wj-combo-box>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Agent</label>
                             <div class="col-sm-8">
-                                <input [(ngModel)]="soldUnit.agent" [disabled]="soldUnit.isLocked" type="text" class="form-control">
+                                <input [(ngModel)]="soldUnit.agent" [disabled]="soldUnit.isLocked" type="text"
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Broker Coordinator</label>
                             <div class="col-sm-8">
-                                <input [(ngModel)]="soldUnit.brokerCoordinator" [disabled]="soldUnit.isLocked" type="text"
+                                <input [(ngModel)]="soldUnit.brokerCoordinator" [disabled]="soldUnit.isLocked"
+                                    type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Remarks</label>
+                            <div class="col-sm-8">
+                                <textarea [disabled]="soldUnit.isLocked" [(ngModel)]="soldUnit.remarks" rows="3"
                                     class="form-control">
+                                </textarea>
                             </div>
                         </div>
                     </div>
@@ -137,12 +150,14 @@
                             <label class="col-sm-4 col-form-label text-right">Checklist</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <wj-combo-box #cmbChecklists [itemsSource]="cmbChecklistsData" [isDisabled]="soldUnit.isLocked"
-                                        [isEditable]="false" [isRequired]="true" [displayMemberPath]="'checklist'"
-                                        [selectedValuePath]="'id'" [(ngModel)]="soldUnit.checklistId">
+                                    <wj-combo-box #cmbChecklists [itemsSource]="cmbChecklistsData"
+                                        [isDisabled]="soldUnit.isLocked" [isEditable]="false" [isRequired]="true"
+                                        [displayMemberPath]="'checklist'" [selectedValuePath]="'id'"
+                                        [(ngModel)]="soldUnit.checklistId">
                                     </wj-combo-box>
                                     <div class="input-group-append">
-                                        <button id="btnOpenSoldUnitRequirementsModal" class="btn btn-info" [disabled]="soldUnit.isLocked"
+                                        <button id="btnOpenSoldUnitRequirementsModal" class="btn btn-info"
+                                            [disabled]="soldUnit.isLocked"
                                             (click)="btnOpenSoldUnitRequirementsModalClick()">
                                             <i class="fa fa-refresh fa-fw"></i>
                                         </button>
@@ -158,10 +173,33 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">Remarks</label>
+                            <label class="col-sm-4 col-form-label text-right">TCP</label>
                             <div class="col-sm-8">
-                                <textarea [disabled]="soldUnit.isLocked" [(ngModel)]="soldUnit.remarks" rows="3" class="form-control">
-                                </textarea>
+                                <wj-input-number [(value)]="soldUnit.tcp" [isDisabled]=true>
+                                </wj-input-number>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">TCP Discount</label>
+                            <div class="col-sm-8">
+                                <wj-input-number [isDisabled]=true>
+                                </wj-input-number>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">TSP</label>
+                            <div class="col-sm-8">
+                                <wj-input-number [(value)]="soldUnit.tsp" [isDisabled]=true>
+                                </wj-input-number>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Financing Types</label>
+                            <div class="col-sm-8">
+                                <wj-combo-box #cmbFinancingType [itemsSource]="cmbFinancingTypeData" [isEditable]="false"
+                                    [isRequired]="true" [displayMemberPath]="'value'" [selectedValuePath]="'value'"
+                                    [(ngModel)]="soldUnit.financingType">
+                                </wj-combo-box>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -176,27 +214,29 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Checked By</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbCheckedBy [itemsSource]="cmbUsersData" [isDisabled]="soldUnit.isLocked"
-                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
-                                    [selectedValuePath]="'id'" [(ngModel)]="soldUnit.checkedBy">
+                                <wj-combo-box #cmbCheckedBy [itemsSource]="cmbUsersData"
+                                    [isDisabled]="soldUnit.isLocked" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'fullName'" [selectedValuePath]="'id'"
+                                    [(ngModel)]="soldUnit.checkedBy">
                                 </wj-combo-box>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Approved By</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbApprovedBy [itemsSource]="cmbUsersData" [isDisabled]="soldUnit.isLocked"
-                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'fullName'"
-                                    [selectedValuePath]="'id'" [(ngModel)]="soldUnit.approvedBy">
+                                <wj-combo-box #cmbApprovedBy [itemsSource]="cmbUsersData"
+                                    [isDisabled]="soldUnit.isLocked" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'fullName'" [selectedValuePath]="'id'"
+                                    [(ngModel)]="soldUnit.approvedBy">
                                 </wj-combo-box>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Status</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbStatus [itemsSource]="cmbStatusData" [isDisabled]=true [isEditable]="false"
-                                    [isRequired]="true" [displayMemberPath]="'value'" [selectedValuePath]="'value'"
-                                    [(ngModel)]="soldUnit.status">
+                                <wj-combo-box #cmbStatus [itemsSource]="cmbStatusData" [isDisabled]=true
+                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
+                                    [selectedValuePath]="'value'" [(ngModel)]="soldUnit.status">
                                 </wj-combo-box>
                             </div>
                         </div>
@@ -211,24 +251,24 @@
         <br />
         <ul class="nav nav-tabs" role="tablist" style="width:100%">
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)" data-toggle="tab"
-                    role="tab">Checklist Requirements</a>
+                <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)"
+                    data-toggle="tab" role="tab">Checklist Requirements</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)" data-toggle="tab"
-                    role="tab">Total Investments</a>
+                <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)"
+                    data-toggle="tab" role="tab">Total Investments</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[2], 'nav-link': true }" (click)="tabDetail1Click(2)" data-toggle="tab"
-                    role="tab">Payment Options</a>
+                <a [ngClass]="{'active': tabDetail1[2], 'nav-link': true }" (click)="tabDetail1Click(2)"
+                    data-toggle="tab" role="tab">Payment Options</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[3], 'nav-link': true }" (click)="tabDetail1Click(3)" data-toggle="tab"
-                    role="tab">Financing</a>
+                <a [ngClass]="{'active': tabDetail1[3], 'nav-link': true }" (click)="tabDetail1Click(3)"
+                    data-toggle="tab" role="tab">Financing</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[4], 'nav-link': true }" (click)="tabDetail1Click(4)" data-toggle="tab"
-                    role="tab">Co-Owner</a>
+                <a [ngClass]="{'active': tabDetail1[4], 'nav-link': true }" (click)="tabDetail1Click(4)"
+                    data-toggle="tab" role="tab">Co-Owner</a>
             </li>
         </ul>
         <br />
@@ -241,47 +281,55 @@
                         <wj-flex-grid #fgdSoldUnitRequirements [itemsSource]="fgdSoldUnitRequirementsCollection"
                             [selectionMode]="3" [frozenColumns]="1">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                                [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                     <button [disabled]="soldUnit.isLocked" class="btn btn-primary btn-xs btn-block"
-                                        (click)="btnEditSoldUnitRequirementClick()" data-toggle="modal" data-backdrop="static"
-                                        data-keyboard="false">
+                                        (click)="btnEditSoldUnitRequirementClick()" data-toggle="modal"
+                                        data-backdrop="static" data-keyboard="false">
                                         <i class="fa fa-edit fa-fw"></i> Edit
                                     </button>
                                 </ng-template>
                             </wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'No'" [binding]="'checklistRequirementNo'" [isReadOnly]="true"
-                                [width]="100"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'No'" [binding]="'checklistRequirementNo'"
+                                [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Requirement'" [binding]="'checklistRequirement'"
                                 [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Category'" [binding]="'checklistCategory'" [isReadOnly]="true"
-                                [width]="200"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Category'" [binding]="'checklistCategory'"
+                                [isReadOnly]="true" [width]="200"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Type'" [binding]="'checklistType'" [isReadOnly]="true"
                                 [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'A'" [binding]="'checklistWithAttachments'" [isReadOnly]="true"
-                                [width]="50"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true" [width]="200"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Date'" [binding]="'statusDate'" [isReadOnly]="true" [width]="150"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'A'" [binding]="'checklistWithAttachments'"
+                                [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true"
+                                [width]="200"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Date'" [binding]="'statusDate'" [isReadOnly]="true"
+                                [width]="150"></wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementsCollection.moveToFirstPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitRequirementsCollection.moveToFirstPage()">
                                 <i class="fa fa-fast-backward"></i> First
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementsCollection.moveToPreviousPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitRequirementsCollection.moveToPreviousPage()">
                                 <i class="fa fa-step-backward"></i> Previous
                             </button>
                             <button type="button" class="btn btn-secondary" disabled style="width:100px">
                                 {{ fgdSoldUnitRequirementsCollection.pageIndex + 1 }} / {{
                                 fgdSoldUnitRequirementsCollection.pageCount }}
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementsCollection.moveToNextPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitRequirementsCollection.moveToNextPage()">
                                 Next
                                 <i class="fa fa-step-forward"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementsCollection.moveToLastPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitRequirementsCollection.moveToLastPage()">
                                 Last
                                 <i class="fa fa-fast-forward"></i>
                             </button>
@@ -301,8 +349,8 @@
                                 </td>
                                 <td style="width: 1%;"></td>
                                 <td style="width: 60%;" align="right">
-                                    <button id="btnWriteTotalInvestment" class="btn btn-secondary" [disabled]="soldUnit.isLocked"
-                                        (click)="btnWriteTotalInvestmentClick()">
+                                    <button id="btnWriteTotalInvestment" class="btn btn-secondary"
+                                        [disabled]="soldUnit.isLocked" (click)="btnWriteTotalInvestmentClick()">
                                         <i class="fa fa-pencil-square-o fa-fw"></i> Write
                                     </button>
                                 </td>
@@ -312,8 +360,8 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <textarea [disabled]="soldUnit.isLocked" [(ngModel)]="soldUnit.totalInvestment" rows="15"
-                                    style="font-family:Courier New" class="form-control">
+                                <textarea [disabled]="soldUnit.isLocked" [(ngModel)]="soldUnit.totalInvestment"
+                                    rows="15" style="font-family:Courier New" class="form-control">
                                             </textarea>
                             </div>
                         </div>
@@ -330,35 +378,43 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Equity (%)</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equityPercent" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquityPercentKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equityPercent"
+                                            [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquityPercentKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Equity</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equityValue" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquityValueKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equityValue"
+                                            [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquityValueKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-4 col-form-label text-right">Equity Spot Payment 1 (First)</label>
+                                    <label class="col-sm-4 col-form-label text-right">Equity Spot Payment 1
+                                        (First)</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equitySpotPayment1" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquitySpotPaymentKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equitySpotPayment1"
+                                            [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquitySpotPaymentKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-4 col-form-label text-right">Equity Spot Payment 2 (Mid)</label>
+                                    <label class="col-sm-4 col-form-label text-right">Equity Spot Payment 2
+                                        (Mid)</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equitySpotPayment2" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquitySpotPaymentKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equitySpotPayment2"
+                                            [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquitySpotPaymentKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-4 col-form-label text-right">Equity Spot Payment 3 (Last)</label>
+                                    <label class="col-sm-4 col-form-label text-right">Equity Spot Payment 3
+                                        (Last)</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.equitySpotPayment3" [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquitySpotPaymentKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.equitySpotPayment3"
+                                            [isDisabled]="soldUnit.isLocked" (lostFocus)="txtEquitySpotPaymentKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
@@ -373,8 +429,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Reservation</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.reservation" [isDisabled]="soldUnit.isLocked"
-                                            (textChanged)="txtReservationKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.reservation"
+                                            [isDisabled]="soldUnit.isLocked" (textChanged)="txtReservationKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
@@ -390,7 +446,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Interest</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.netEquityInterest" [isDisabled]="soldUnit.isLocked"
+                                        <wj-input-number [(value)]="soldUnit.netEquityInterest"
+                                            [isDisabled]="soldUnit.isLocked"
                                             (textChanged)="txtNetEquityInterestKeyup()">
                                         </wj-input-number>
                                     </div>
@@ -398,7 +455,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">No. of Payments</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.netEquityNoOfPayments" [isDisabled]="soldUnit.isLocked"
+                                        <wj-input-number [(value)]="soldUnit.netEquityNoOfPayments"
+                                            [isDisabled]="soldUnit.isLocked"
                                             (textChanged)="txtNetEquityNoOfPaymentsKeyup()">
                                         </wj-input-number>
                                     </div>
@@ -424,8 +482,8 @@
                                 </td>
                                 <td style="width: 1%;"></td>
                                 <td style="width: 60%;" align="right">
-                                    <button id="btnWritePaymentOptions" class="btn btn-secondary" [disabled]="soldUnit.isLocked"
-                                        (click)="btnWritePaymentOptionsClick()">
+                                    <button id="btnWritePaymentOptions" class="btn btn-secondary"
+                                        [disabled]="soldUnit.isLocked" (click)="btnWritePaymentOptionsClick()">
                                         <i class="fa fa-pencil-square-o fa-fw"></i> Write
                                     </button>
                                 </td>
@@ -452,11 +510,12 @@
                                 </td>
                                 <td style="width: 1%;"></td>
                                 <td style="width: 60%;" align="right">
-                                    <button id="btnPrintEquityPaymentSchedule" class="btn btn-primary" (click)="btnPrintEquityPaymentScheduleClick()">
+                                    <button id="btnPrintEquityPaymentSchedule" class="btn btn-primary"
+                                        (click)="btnPrintEquityPaymentScheduleClick()">
                                         <i class="fa fa-print fa-fw"></i> Print
                                     </button>
-                                    <button id="btnCreateEquityPaymentSchedule" class="btn btn-secondary" [disabled]="soldUnit.isLocked"
-                                        (click)="btnCreateEquityPaymentScheduleClick()">
+                                    <button id="btnCreateEquityPaymentSchedule" class="btn btn-secondary"
+                                        [disabled]="soldUnit.isLocked" (click)="btnCreateEquityPaymentScheduleClick()">
                                         <i class="fa fa-magic fa-fw"></i> Create
                                     </button>
                                 </td>
@@ -468,44 +527,51 @@
                         <wj-flex-grid #fgdSoldUnitEquitySchedule [itemsSource]="fgdSoldUnitEquityScheduleCollection"
                             [selectionMode]="3" [frozenColumns]="1">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                                [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                    <button class="btn btn-primary btn-xs btn-block" (click)="btnEditSoldUnitEquityScheduleClick()"
-                                        data-toggle="modal" data-backdrop="static" data-keyboard="false">
+                                    <button class="btn btn-primary btn-xs btn-block"
+                                        (click)="btnEditSoldUnitEquityScheduleClick()" data-toggle="modal"
+                                        data-backdrop="static" data-keyboard="false">
                                         <i class="fa fa-edit fa-fw"></i> Edit
                                     </button>
                                 </ng-template>
                             </wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Date'" [binding]="'paymentDate'" [isReadOnly]="true"
                                 [width]="120"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Amortization'" [binding]="'amortization'" [isReadOnly]="true"
-                                [width]="150"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Amortization'" [binding]="'amortization'"
+                                [isReadOnly]="true" [width]="150"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Check No'" [binding]="'checkNumber'" [isReadOnly]="true"
                                 [width]="150"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Check Date'" [binding]="'checkDate'" [isReadOnly]="true"
                                 [width]="120"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Check Bank'" [binding]="'checkBank'" [isReadOnly]="true"
                                 [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitEquityScheduleCollection.moveToFirstPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitEquityScheduleCollection.moveToFirstPage()">
                                 <i class="fa fa-fast-backward"></i> First
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitEquityScheduleCollection.moveToPreviousPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitEquityScheduleCollection.moveToPreviousPage()">
                                 <i class="fa fa-step-backward"></i> Previous
                             </button>
                             <button type="button" class="btn btn-secondary" disabled style="width:100px">
                                 {{ fgdSoldUnitEquityScheduleCollection.pageIndex + 1 }} / {{
                                 fgdSoldUnitEquityScheduleCollection.pageCount }}
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitEquityScheduleCollection.moveToNextPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitEquityScheduleCollection.moveToNextPage()">
                                 Next
                                 <i class="fa fa-step-forward"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitEquityScheduleCollection.moveToLastPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitEquityScheduleCollection.moveToLastPage()">
                                 Last
                                 <i class="fa fa-fast-forward"></i>
                             </button>
@@ -530,15 +596,16 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Interest</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.balanceInterest" [isDisabled]="soldUnit.isLocked"
-                                            (textChanged)="txtBalanceInterestKeyup()">
+                                        <wj-input-number [(value)]="soldUnit.balanceInterest"
+                                            [isDisabled]="soldUnit.isLocked" (textChanged)="txtBalanceInterestKeyup()">
                                         </wj-input-number>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">No. of Payments</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.balanceNoOfPayments" [isDisabled]="soldUnit.isLocked"
+                                        <wj-input-number [(value)]="soldUnit.balanceNoOfPayments"
+                                            [isDisabled]="soldUnit.isLocked"
                                             (textChanged)="txtBalanceNoOfPaymentsKeyup()">
                                         </wj-input-number>
                                     </div>
@@ -546,7 +613,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Amortization</label>
                                     <div class="col-sm-8">
-                                        <wj-input-number [(value)]="soldUnit.balanceAmortization" [isDisabled]="soldUnit.isLocked">
+                                        <wj-input-number [(value)]="soldUnit.balanceAmortization"
+                                            [isDisabled]="soldUnit.isLocked">
                                         </wj-input-number>
                                     </div>
                                 </div>
@@ -564,8 +632,8 @@
                                 </td>
                                 <td style="width: 1%;"></td>
                                 <td style="width: 60%;" align="right">
-                                    <button id="btnWriteFinancing" class="btn btn-secondary" [disabled]="soldUnit.isLocked"
-                                        (click)="btnWriteFinancingClick()">
+                                    <button id="btnWriteFinancing" class="btn btn-secondary"
+                                        [disabled]="soldUnit.isLocked" (click)="btnWriteFinancingClick()">
                                         <i class="fa fa-pencil-square-o fa-fw"></i> Write
                                     </button>
                                 </td>
@@ -591,7 +659,8 @@
                         <table border="0" style="width: 100%;">
                             <tr>
                                 <td style="width: 100%;" align="right">
-                                    <button id="btnAddSoldUnitCoOwner" class="btn btn-primary" (click)="btnAddSoldUnitCoOwnerClick()">
+                                    <button id="btnAddSoldUnitCoOwner" class="btn btn-primary"
+                                        (click)="btnAddSoldUnitCoOwnerClick()">
                                         <i class="fa fa-plus fa-fw"></i> Add
                                     </button>
                                 </td>
@@ -599,37 +668,43 @@
                         </table>
                     </div>
                     <div class="card-body">
-                        <wj-flex-grid #fgdSoldUnitCoOwner [itemsSource]="fgdSoldUnitCoOwnerCollection" [selectionMode]="3"
-                            [frozenColumns]="2">
+                        <wj-flex-grid #fgdSoldUnitCoOwner [itemsSource]="fgdSoldUnitCoOwnerCollection"
+                            [selectionMode]="3" [frozenColumns]="2">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                                [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                    <button class="btn btn-primary btn-xs btn-block" (click)="btnEditSoldUnitCoOwnerClick()"
-                                        data-toggle="modal" data-backdrop="static" data-keyboard="false">
+                                    <button class="btn btn-primary btn-xs btn-block"
+                                        (click)="btnEditSoldUnitCoOwnerClick()" data-toggle="modal"
+                                        data-backdrop="static" data-keyboard="false">
                                         <i class="fa fa-edit fa-fw"></i> Edit
                                     </button>
                                 </ng-template>
                             </wj-flex-grid-column>
                             <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                    <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteSoldUnitCoOwnerClick()"
-                                        data-toggle="modal" data-backdrop="static" data-keyboard="false">
+                                    <button class="btn btn-danger btn-xs btn-block"
+                                        (click)="btnDeleteSoldUnitCoOwnerClick()" data-toggle="modal"
+                                        data-backdrop="static" data-keyboard="false">
                                         <i class="fa fa-trash fa-fw"></i> Delete
                                     </button>
                                 </ng-template>
                             </wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Co-Owner'" [binding]="'customer'" [isReadOnly]="true"
                                 [width]="'1*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Address'" [binding]="'address'" [isReadOnly]="true" [width]="'3*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Address'" [binding]="'address'" [isReadOnly]="true"
+                                [width]="'3*'"></wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-sm-12 btn-group" id="">
-                                <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitCoOwnerCollection.moveToFirstPage()">
+                                <button type="button" class="btn btn-secondary"
+                                    (click)="fgdSoldUnitCoOwnerCollection.moveToFirstPage()">
                                     <i class="fa fa-fast-backward"></i> First
                                 </button>
-                                <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitCoOwnerCollection.moveToPreviousPage()">
+                                <button type="button" class="btn btn-secondary"
+                                    (click)="fgdSoldUnitCoOwnerCollection.moveToPreviousPage()">
                                     <i class="fa fa-step-backward"></i> Previous
                                 </button>
                                 <button type="button" class="btn btn-secondary" disabled style="width:100px">
@@ -637,11 +712,13 @@
                                     fgdSoldUnitCoOwnerCollection.pageCount
                                     }}
                                 </button>
-                                <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitCoOwnerCollection.moveToNextPage()">
+                                <button type="button" class="btn btn-secondary"
+                                    (click)="fgdSoldUnitCoOwnerCollection.moveToNextPage()">
                                     Next
                                     <i class="fa fa-step-forward"></i>
                                 </button>
-                                <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitCoOwnerCollection.moveToLastPage()">
+                                <button type="button" class="btn btn-secondary"
+                                    (click)="fgdSoldUnitCoOwnerCollection.moveToLastPage()">
                                     Last
                                     <i class="fa fa-fast-forward"></i>
                                 </button>
@@ -659,7 +736,8 @@
 <!-- <div class="content-wrapper"> -->
 
 <!-- coowner prompt modal -->
-<div id="mdlSoldUnitCoOwnerModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitCoOwnerModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitCoOwnerModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitCoOwnerModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -682,10 +760,12 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSoldUnitCoOwnerModalSave" class="btn btn-success" (click)="btnSaveSoldUnitCoOwnerModalClick()">
+                <button type="button" id="btnSoldUnitCoOwnerModalSave" class="btn btn-success"
+                    (click)="btnSaveSoldUnitCoOwnerModalClick()">
                     <i class="fa fa-save fa-fw"></i> Save
                 </button>
-                <button type="button" id="btnSoldUnitCoOwnerModalClose" class="btn btn-danger" (click)="btnCloseSoldUnitCoOwnerModalClick()">
+                <button type="button" id="btnSoldUnitCoOwnerModalClose" class="btn btn-danger"
+                    (click)="btnCloseSoldUnitCoOwnerModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close
                 </button>
             </div>
@@ -694,7 +774,8 @@
 </div>
 
 <!-- coowner prompt delete modal -->
-<div id="mdlSoldUnitCoOwnerDeleteModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitCoOwnerDeleteModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitCoOwnerDeleteModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitCoOwnerDeleteModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -704,10 +785,12 @@
                 Are you sure you want to delete this co-owner?
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSoldUnitCoOwnerConfirmDelete" class="btn btn-danger" (click)="btnSoldUnitCoOwnerConfirmDeleteClick()">
+                <button type="button" id="btnSoldUnitCoOwnerConfirmDelete" class="btn btn-danger"
+                    (click)="btnSoldUnitCoOwnerConfirmDeleteClick()">
                     <i class="fa fa-trash fa-fw"></i> Delete
                 </button>
-                <button type="button" id="btnSoldUnitCoOwnerConfirmDeleteCloseModal" class="btn btn-default" (click)="btnSoldUnitCoOwnerConfirmDeleteCloseModalClick()">
+                <button type="button" id="btnSoldUnitCoOwnerConfirmDeleteCloseModal" class="btn btn-default"
+                    (click)="btnSoldUnitCoOwnerConfirmDeleteCloseModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close
                 </button>
             </div>
@@ -716,7 +799,8 @@
 </div>
 
 <!-- new checklist requirements prompt modal -->
-<div id="mdlSoldUnitRequirementsModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitRequirementsModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitRequirementsModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitRequirementsModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -726,9 +810,11 @@
                 Add checklist requirements? This will delete the existing checklist requirements.
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSoldUnitRequirementsModalOk" class="btn btn-success" (click)="btnOkSoldUnitRequirementsModalClick()">
+                <button type="button" id="btnSoldUnitRequirementsModalOk" class="btn btn-success"
+                    (click)="btnOkSoldUnitRequirementsModalClick()">
                     <i class="fa fa-check fa-fw"></i> Ok</button>
-                <button type="button" id="btnSoldUnitRequirementsModalClose" class="btn btn-danger" (click)="btnCloseSoldUnitRequirementsModalClick()">
+                <button type="button" id="btnSoldUnitRequirementsModalClose" class="btn btn-danger"
+                    (click)="btnCloseSoldUnitRequirementsModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close</button>
             </div>
         </div>
@@ -736,7 +822,8 @@
 </div>
 
 <!-- edit checklist requirement modal -->
-<div id="mdlEditSoldUnitRequirementModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlEditSoldUnitRequirementModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlEditSoldUnitRequirementModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlEditSoldUnitRequirementModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -745,16 +832,16 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs" role="tablist" style="width:100%">
                     <li class="nav-item">
-                        <a [ngClass]="{'active': tabDetail1Modal1[0], 'nav-link': true }" (click)="tabDetail1Modal1Click(0)"
-                            data-toggle="tab" role="tab">Requirement</a>
+                        <a [ngClass]="{'active': tabDetail1Modal1[0], 'nav-link': true }"
+                            (click)="tabDetail1Modal1Click(0)" data-toggle="tab" role="tab">Requirement</a>
                     </li>
                     <li class="nav-item">
-                        <a [ngClass]="{'active': tabDetail1Modal1[1], 'nav-link': true }" (click)="tabDetail1Modal1Click(1)"
-                            data-toggle="tab" role="tab">Attachments</a>
+                        <a [ngClass]="{'active': tabDetail1Modal1[1], 'nav-link': true }"
+                            (click)="tabDetail1Modal1Click(1)" data-toggle="tab" role="tab">Attachments</a>
                     </li>
                     <li class="nav-item">
-                        <a [ngClass]="{'active': tabDetail1Modal1[2], 'nav-link': true }" (click)="tabDetail1Modal1Click(2)"
-                            data-toggle="tab" role="tab">Activities</a>
+                        <a [ngClass]="{'active': tabDetail1Modal1[2], 'nav-link': true }"
+                            (click)="tabDetail1Modal1Click(2)" data-toggle="tab" role="tab">Activities</a>
                     </li>
                 </ul>
                 <br>
@@ -777,7 +864,8 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Category</label>
                             <div class="col-sm-8">
-                                <input [(ngModel)]="soldUnitRequirement.checklistCategory" disabled type="text" class="form-control">
+                                <input [(ngModel)]="soldUnitRequirement.checklistCategory" disabled type="text"
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -790,22 +878,24 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Status</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbUnitSoldRequirementStatus [itemsSource]="cmbUnitSoldRequirementStatusData"
-                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
-                                    [selectedValuePath]="'value'" [(ngModel)]="soldUnitRequirement.status" style="width: 100%;">
+                                <wj-combo-box #cmbUnitSoldRequirementStatus
+                                    [itemsSource]="cmbUnitSoldRequirementStatusData" [isEditable]="false"
+                                    [isRequired]="true" [displayMemberPath]="'value'" [selectedValuePath]="'value'"
+                                    [(ngModel)]="soldUnitRequirement.status" style="width: 100%;">
                                 </wj-combo-box>
                             </div>
                         </div>
                     </div>
                     <div [ngClass]="{'active': tabDetail1Modal1[1], 'tab-pane': true }" role="tabpanel">
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">Attachment 1</label>
+                            <label class="col-sm-3 col-form-label text-right">Attachment 1</label>
                             <div class="col-sm-5">
-                                <input [(ngModel)]="soldUnitRequirement.attachment1" disabled type="text" class="form-control">
+                                <input [(ngModel)]="soldUnitRequirement.attachment1" disabled type="text"
+                                    class="form-control">
                             </div>
                             <label class="btn btn-info col-sm-1 mr-1">
-                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment1Click($event)" name="btnOpenSoldUnitRequirementAttachment1"
-                                    accept="image/*" style="display:none;">
+                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment1Click($event)"
+                                    name="btnOpenSoldUnitRequirementAttachment1" accept="image/*" style="display:none;">
                                 <i class="fa fa-floppy-o fa-fw"></i>
                             </label>
                             <label class="btn btn-info col-sm-1 mr-1">
@@ -813,15 +903,20 @@
                                     <i class="fa fa-search fa-fw"></i>
                                 </a>
                             </label>
+                            <label class="btn btn-danger col-sm-1 mr-1"
+                                (click)="btnDeleteSoldUnitRequirementAttachment1Click()">
+                                <i class="fa fa-eraser" aria-hidden="true" style="color:white;"></i>
+                            </label>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">Attachment 2</label>
+                            <label class="col-sm-3 col-form-label text-right">Attachment 2</label>
                             <div class="col-sm-5">
-                                <input [(ngModel)]="soldUnitRequirement.attachment2" disabled type="text" class="form-control">
+                                <input [(ngModel)]="soldUnitRequirement.attachment2" disabled type="text"
+                                    class="form-control">
                             </div>
                             <label class="btn btn-info col-sm-1 mr-1">
-                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment2Click($event)" name="btnOpenSoldUnitRequirementAttachment2"
-                                    accept="image/*" style="display:none;">
+                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment2Click($event)"
+                                    name="btnOpenSoldUnitRequirementAttachment2" accept="image/*" style="display:none;">
                                 <i class="fa fa-floppy-o fa-fw"></i>
                             </label>
                             <label class="btn btn-info col-sm-1 mr-1">
@@ -829,15 +924,20 @@
                                     <i class="fa fa-search fa-fw"></i>
                                 </a>
                             </label>
+                            <label class="btn btn-danger col-sm-1 mr-1"
+                                (click)="btnDeleteSoldUnitRequirementAttachment2Click()">
+                                <i class="fa fa-eraser" aria-hidden="true" style="color:white;"></i>
+                            </label>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">Attachment 3</label>
+                            <label class="col-sm-3 col-form-label text-right">Attachment 3</label>
                             <div class="col-sm-5">
-                                <input [(ngModel)]="soldUnitRequirement.attachment3" disabled type="text" class="form-control">
+                                <input [(ngModel)]="soldUnitRequirement.attachment3" disabled type="text"
+                                    class="form-control">
                             </div>
                             <label class="btn btn-info col-sm-1 mr-1">
-                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment3Click($event)" name="btnOpenSoldUnitRequirementAttachment3"
-                                    accept="image/*" style="display:none;">
+                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment3Click($event)"
+                                    name="btnOpenSoldUnitRequirementAttachment3" accept="image/*" style="display:none;">
                                 <i class="fa fa-floppy-o fa-fw"></i>
                             </label>
                             <label class="btn btn-info col-sm-1 mr-1">
@@ -845,15 +945,20 @@
                                     <i class="fa fa-search fa-fw"></i>
                                 </a>
                             </label>
+                            <label class="btn btn-danger col-sm-1 mr-1"
+                                (click)="btnDeleteSoldUnitRequirementAttachment3Click()">
+                                <i class="fa fa-eraser" aria-hidden="true" style="color:white;"></i>
+                            </label>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">Attachment 4</label>
+                            <label class="col-sm-3 col-form-label text-right">Attachment 4</label>
                             <div class="col-sm-5">
-                                <input [(ngModel)]="soldUnitRequirement.attachment4" disabled type="text" class="form-control">
+                                <input [(ngModel)]="soldUnitRequirement.attachment4" disabled type="text"
+                                    class="form-control">
                             </div>
                             <label class="btn btn-info col-sm-1 mr-1">
-                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment4Click($event)" name="btnOpenSoldUnitRequirementAttachment4"
-                                    accept="image/*" style="display:none;">
+                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment4Click($event)"
+                                    name="btnOpenSoldUnitRequirementAttachment4" accept="image/*" style="display:none;">
                                 <i class="fa fa-floppy-o fa-fw"></i>
                             </label>
                             <label class="btn btn-info col-sm-1 mr-1">
@@ -861,21 +966,30 @@
                                     <i class="fa fa-search fa-fw"></i>
                                 </a>
                             </label>
+                            <label class="btn btn-danger col-sm-1 mr-1"
+                                (click)="btnDeleteSoldUnitRequirementAttachment4Click()">
+                                <i class="fa fa-eraser" aria-hidden="true" style="color:white;"></i>
+                            </label>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">Attachment 5</label>
+                            <label class="col-sm-3 col-form-label text-right">Attachment 5</label>
                             <div class="col-sm-5">
-                                <input [(ngModel)]="soldUnitRequirement.attachment5" disabled type="text" class="form-control">
+                                <input [(ngModel)]="soldUnitRequirement.attachment5" disabled type="text"
+                                    class="form-control">
                             </div>
                             <label class="btn btn-info col-sm-1 mr-1">
-                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment5Click($event)" name="btnOpenSoldUnitRequirementAttachment5"
-                                    accept="image/*" style="display:none;">
+                                <input type="file" (change)="btnOpenSoldUnitRequirementAttachment5Click($event)"
+                                    name="btnOpenSoldUnitRequirementAttachment5" accept="image/*" style="display:none;">
                                 <i class="fa fa-floppy-o fa-fw"></i>
                             </label>
                             <label class="btn btn-info col-sm-1 mr-1">
                                 <a [href]="soldUnitRequirement.attachment5" target="blank" style="color:white;">
                                     <i class="fa fa-search fa-fw"></i>
                                 </a>
+                            </label>
+                            <label class="btn btn-danger col-sm-1 mr-1"
+                                (click)="btnDeleteSoldUnitRequirementAttachment5Click()">
+                                <i class="fa fa-eraser" aria-hidden="true" style="color:white;"></i>
                             </label>
                         </div>
                     </div>
@@ -895,13 +1009,15 @@
                                 </table>
                             </div>
                             <div class="card-body">
-                                <wj-flex-grid #fgdSoldUnitRequirementActivities [itemsSource]="fgdSoldUnitRequirementActivitiesCollection"
-                                    [selectionMode]="3" [frozenColumns]="2">
+                                <wj-flex-grid #fgdSoldUnitRequirementActivities
+                                    [itemsSource]="fgdSoldUnitRequirementActivitiesCollection" [selectionMode]="3"
+                                    [frozenColumns]="2">
                                     <wj-flex-grid-filter></wj-flex-grid-filter>
                                     <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
                                         [width]="90">
                                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditSoldUnitRequirementActivitiesClick()"
+                                            <button class="btn btn-primary btn-xs btn-block"
+                                                (click)="btnEditSoldUnitRequirementActivitiesClick()"
                                                 data-toggle="modal" data-backdrop="static" data-keyboard="false">
                                                 <i class="fa fa-edit fa-fw"></i> Edit
                                             </button>
@@ -909,16 +1025,17 @@
                                     </wj-flex-grid-column>
                                     <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
                                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteSoldUnitRequirementActivitiesClick()"
+                                            <button class="btn btn-danger btn-xs btn-block"
+                                                (click)="btnDeleteSoldUnitRequirementActivitiesClick()"
                                                 data-toggle="modal" data-backdrop="static" data-keyboard="false">
                                                 <i class="fa fa-trash fa-fw"></i> Delete
                                             </button>
                                         </ng-template>
                                     </wj-flex-grid-column>
-                                    <wj-flex-grid-column [header]="'Date'" [binding]="'activityDate'" [isReadOnly]="true"
-                                        [width]="100"></wj-flex-grid-column>
-                                    <wj-flex-grid-column [header]="'Activity'" [binding]="'activity'" [isReadOnly]="true"
-                                        [width]="'*'"></wj-flex-grid-column>
+                                    <wj-flex-grid-column [header]="'Date'" [binding]="'activityDate'"
+                                        [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
+                                    <wj-flex-grid-column [header]="'Activity'" [binding]="'activity'"
+                                        [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
                                     <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true"
                                         [width]="'*'"></wj-flex-grid-column>
                                     <wj-flex-grid-column [header]="'User'" [binding]="'user'" [isReadOnly]="true"
@@ -928,10 +1045,12 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-sm-12 btn-group" id="">
-                                        <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementActivitiesCollection.moveToFirstPage()">
+                                        <button type="button" class="btn btn-secondary"
+                                            (click)="fgdSoldUnitRequirementActivitiesCollection.moveToFirstPage()">
                                             <i class="fa fa-fast-backward"></i> First
                                         </button>
-                                        <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementActivitiesCollection.moveToPreviousPage()">
+                                        <button type="button" class="btn btn-secondary"
+                                            (click)="fgdSoldUnitRequirementActivitiesCollection.moveToPreviousPage()">
                                             <i class="fa fa-step-backward"></i> Previous
                                         </button>
                                         <button type="button" class="btn btn-secondary" disabled style="width:100px">
@@ -939,11 +1058,13 @@
                                             fgdSoldUnitRequirementActivitiesCollection.pageCount
                                             }}
                                         </button>
-                                        <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementActivitiesCollection.moveToNextPage()">
+                                        <button type="button" class="btn btn-secondary"
+                                            (click)="fgdSoldUnitRequirementActivitiesCollection.moveToNextPage()">
                                             Next
                                             <i class="fa fa-step-forward"></i>
                                         </button>
-                                        <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitRequirementActivitiesCollection.moveToLastPage()">
+                                        <button type="button" class="btn btn-secondary"
+                                            (click)="fgdSoldUnitRequirementActivitiesCollection.moveToLastPage()">
                                             Last
                                             <i class="fa fa-fast-forward"></i>
                                         </button>
@@ -956,9 +1077,11 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSaveEditSoldUnitRequirementModal" class="btn btn-success" (click)="btnSaveEditSoldUnitRequirementModalClick()">
+                <button type="button" id="btnSaveEditSoldUnitRequirementModal" class="btn btn-success"
+                    (click)="btnSaveEditSoldUnitRequirementModalClick()">
                     <i class="fa fa-check fa-fw"></i> Save</button>
-                <button type="button" id="btnCloseEditSoldUnitRequirementModal" class="btn btn-danger" (click)="btnCloseEditSoldUnitRequirementModalClick()">
+                <button type="button" id="btnCloseEditSoldUnitRequirementModal" class="btn btn-danger"
+                    (click)="btnCloseEditSoldUnitRequirementModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close </button>
             </div>
         </div>
@@ -969,7 +1092,8 @@
 
 
 <!-- Checklist Requirement Activity  -->
-<div id="mdlSoldUnitRequirementActivityModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitRequirementActivityModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitRequirementActivityModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitRequirementActivityModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -979,7 +1103,8 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label text-right">Date</label>
                     <div class="col-sm-8">
-                        <wj-input-date #calActivityDate [(ngModel)]="soldUnitRequirementActivity.activityDate" format="M/d/yyyy">
+                        <wj-input-date #calActivityDate [(ngModel)]="soldUnitRequirementActivity.activityDate"
+                            format="M/d/yyyy">
                         </wj-input-date>
                     </div>
                 </div>
@@ -999,9 +1124,11 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSaveSoldUnitRequirementActivityModal" class="btn btn-success" (click)="btnSaveSoldUnitRequirementActivityModalClick()">
+                <button type="button" id="btnSaveSoldUnitRequirementActivityModal" class="btn btn-success"
+                    (click)="btnSaveSoldUnitRequirementActivityModalClick()">
                     <i class="fa fa-check fa-fw"></i> Save</button>
-                <button type="button" id="btnCloseSoldUnitRequirementActivityModal" class="btn btn-danger" (click)="btnCloseSoldUnitRequirementActivityModalClick()">
+                <button type="button" id="btnCloseSoldUnitRequirementActivityModal" class="btn btn-danger"
+                    (click)="btnCloseSoldUnitRequirementActivityModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close</button>
             </div>
         </div>
@@ -1009,7 +1136,8 @@
 </div>
 
 <!-- cancel sold unit modal -->
-<div id="mdlSoldUnitCancelModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitCancelModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitCancelModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitCancelModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -1025,9 +1153,11 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSoldUnitCancelModalOk" class="btn btn-warning" (click)="btnSoldUnitCancelModalOkClick()">
+                <button type="button" id="btnSoldUnitCancelModalOk" class="btn btn-warning"
+                    (click)="btnSoldUnitCancelModalOkClick()">
                     <i class="fa fa-ban fa-fw"></i> Ok</button>
-                <button type="button" id="btnSoldUnitCancelModalClose" class="btn btn-danger" (click)="btnSoldUnitCancelModalCloseClick()">
+                <button type="button" id="btnSoldUnitCancelModalClose" class="btn btn-danger"
+                    (click)="btnSoldUnitCancelModalCloseClick()">
                     <i class="fa fa-times fa-fw"></i> Close</button>
             </div>
         </div>
@@ -1035,7 +1165,8 @@
 </div>
 
 <!-- transfer sold unit modal -->
-<div id="mdlSoldUnitTransferModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitTransferModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitTransferModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitTransferModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -1051,9 +1182,11 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSoldUnitTransferModalOk" class="btn btn-success" (click)="btnSoldUnitTransferModalOkClick()">
+                <button type="button" id="btnSoldUnitTransferModalOk" class="btn btn-success"
+                    (click)="btnSoldUnitTransferModalOkClick()">
                     <i class="fa fa-check fa-fw"></i> Ok</button>
-                <button type="button" id="btnSoldUnitTransferModalClose" class="btn btn-danger" (click)="btnSoldUnitTransferModalCloseClick()">
+                <button type="button" id="btnSoldUnitTransferModalClose" class="btn btn-danger"
+                    (click)="btnSoldUnitTransferModalCloseClick()">
                     <i class="fa fa-times fa-fw"></i> Close</button>
             </div>
         </div>
@@ -1061,7 +1194,8 @@
 </div>
 
 <!-- equity payment schedule  -->
-<div id="mdlSoldUnitEquityScheduleModal" class="modal fade" role="dialog" [ngStyle]="{'display': mdlSoldUnitEquityScheduleModalShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlSoldUnitEquityScheduleModal" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitEquityScheduleModalShow ? 'block' : 'none', 'opacity': 1}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -1111,9 +1245,11 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSaveSoldUnitEquityScheduleModal" class="btn btn-success" (click)="btnSaveSoldUnitEquityScheduleModalClick()">
+                <button type="button" id="btnSaveSoldUnitEquityScheduleModal" class="btn btn-success"
+                    (click)="btnSaveSoldUnitEquityScheduleModalClick()">
                     <i class="fa fa-save fa-fw"></i> Save</button>
-                <button type="button" id="btnCloseSoldUnitEquityScheduleModal" class="btn btn-danger" (click)="btnCloseSoldUnitEquityScheduleModalClick()">
+                <button type="button" id="btnCloseSoldUnitEquityScheduleModal" class="btn btn-danger"
+                    (click)="btnCloseSoldUnitEquityScheduleModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close</button>
             </div>
         </div>

@@ -47,7 +47,8 @@
                                 <span class="input-group-addon">
                                     Date Start:
                                 </span>
-                                <wj-input-date #calDateStart [(ngModel)]="calDateStartData" (textChanged)="getReports()" format="M/d/yyyy">
+                                <wj-input-date #calDateStart [(ngModel)]="calDateStartData" (textChanged)="getReports()"
+                                    format="M/d/yyyy">
                                 </wj-input-date>
                             </div>
                         </td>
@@ -57,7 +58,8 @@
                                 <span class="input-group-addon">
                                     Date End:
                                 </span>
-                                <wj-input-date #calDateEnd [(ngModel)]="calDateEndData" (textChanged)="getReports()" format="M/d/yyyy">
+                                <wj-input-date #calDateEnd [(ngModel)]="calDateEndData" (textChanged)="getReports()"
+                                    format="M/d/yyyy">
                                 </wj-input-date>
                             </div>
                         </td>
@@ -71,16 +73,28 @@
         <!-- tabs -->
         <ul class="nav nav-tabs" role="tablist" style="width:100%">
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)" data-toggle="tab" role="tab">Sold Units</a>
+                <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)"
+                    data-toggle="tab" role="tab">Sold Units</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)" data-toggle="tab" role="tab">Checklist Requirements</a>
+                <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)"
+                    data-toggle="tab" role="tab">Checklist Requirements</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[2], 'nav-link': true }" (click)="tabDetail1Click(2)" data-toggle="tab" role="tab">Activities</a>
+                <a [ngClass]="{'active': tabDetail1[2], 'nav-link': true }" (click)="tabDetail1Click(2)"
+                    data-toggle="tab" role="tab">Activities</a>
             </li>
             <li class="nav-item">
-                <a [ngClass]="{'active': tabDetail1[3], 'nav-link': true }" (click)="tabDetail1Click(3)" data-toggle="tab" role="tab">Commission</a>
+                <a [ngClass]="{'active': tabDetail1[3], 'nav-link': true }" (click)="tabDetail1Click(3)"
+                    data-toggle="tab" role="tab">Commission</a>
+            </li>
+            <li class="nav-item">
+                <a [ngClass]="{'active': tabDetail1[4], 'nav-link': true }" (click)="tabDetail1Click(4)"
+                    data-toggle="tab" role="tab">Customer</a>
+            </li>
+            <li class="nav-item">
+                <a [ngClass]="{'active': tabDetail1[5], 'nav-link': true }" (click)="tabDetail1Click(5)"
+                    data-toggle="tab" role="tab">Broker</a>
             </li>
         </ul>
         <br />
@@ -94,32 +108,44 @@
                     <div class="card-body">
                         <wj-flex-grid #fgdSoldUnits [itemsSource]="fgdSoldUnitsCollection" [selectionMode]="3">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="'Number'" [binding]="'soldUnitNumber'" [isReadOnly]="true" [width]="120"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Date'" [binding]="'soldUnitDate'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unit'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Broker'" [binding]="'broker'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true" [width]="150"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Number'" [binding]="'soldUnitNumber'" [isReadOnly]="true"
+                                [width]="120"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Date'" [binding]="'soldUnitDate'" [isReadOnly]="true"
+                                [width]="100"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unit'" [isReadOnly]="true" [width]="100">
+                            </wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Broker'" [binding]="'broker'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true"
+                                [width]="150"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50">
+                            </wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitsCollection.moveToFirstPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitsCollection.moveToFirstPage()">
                                 <i class="fa fa-fast-backward"></i> First
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitsCollection.moveToPreviousPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitsCollection.moveToPreviousPage()">
                                 <i class="fa fa-step-backward"></i> Previous
                             </button>
                             <button type="button" class="btn btn-secondary" disabled style="width:100px">
                                 {{ fgdSoldUnitsCollection.pageIndex + 1 }} / {{ fgdSoldUnitsCollection.pageCount }}
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitsCollection.moveToNextPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitsCollection.moveToNextPage()">
                                 Next
                                 <i class="fa fa-step-forward"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdSoldUnitsCollection.moveToLastPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdSoldUnitsCollection.moveToLastPage()">
                                 Last
                                 <i class="fa fa-fast-forward"></i>
                             </button>
@@ -132,33 +158,46 @@
             <div [ngClass]="{'active': tabDetail1[1], 'tab-pane': true }" role="tabpanel">
                 <div class="card">
                     <div class="card-body">
-                        <wj-flex-grid #fgdChecklistRequirements [itemsSource]="fgdChecklistRequirementsCollection" [selectionMode]="3">
+                        <wj-flex-grid #fgdChecklistRequirements [itemsSource]="fgdChecklistRequirementsCollection"
+                            [selectionMode]="3">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="'Date'" [binding]="'soldUnitDate'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unit'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'No'" [binding]="'checklistRequirementNo'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Checklist'" [binding]="'checklistRequirement'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Date'" [binding]="'soldUnitDate'" [isReadOnly]="true"
+                                [width]="100"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unit'" [isReadOnly]="true" [width]="100">
+                            </wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'No'" [binding]="'checklistRequirementNo'"
+                                [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Checklist'" [binding]="'checklistRequirement'"
+                                [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true"
+                                [width]="50"></wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                            <button type="button" class="btn btn-secondary" (click)="fgdChecklistRequirementsCollection.moveToFirstPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdChecklistRequirementsCollection.moveToFirstPage()">
                                 <i class="fa fa-fast-backward"></i> First
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdChecklistRequirementsCollection.moveToPreviousPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdChecklistRequirementsCollection.moveToPreviousPage()">
                                 <i class="fa fa-step-backward"></i> Previous
                             </button>
                             <button type="button" class="btn btn-secondary" disabled style="width:100px">
-                                {{ fgdChecklistRequirementsCollection.pageIndex + 1 }} / {{ fgdChecklistRequirementsCollection.pageCount }}
+                                {{ fgdChecklistRequirementsCollection.pageIndex + 1 }} /
+                                {{ fgdChecklistRequirementsCollection.pageCount }}
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdChecklistRequirementsCollection.moveToNextPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdChecklistRequirementsCollection.moveToNextPage()">
                                 Next
                                 <i class="fa fa-step-forward"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdChecklistRequirementsCollection.moveToLastPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdChecklistRequirementsCollection.moveToLastPage()">
                                 Last
                                 <i class="fa fa-fast-forward"></i>
                             </button>
@@ -171,33 +210,46 @@
             <div [ngClass]="{'active': tabDetail1[2], 'tab-pane': true }" role="tabpanel">
                 <div class="card">
                     <div class="card-body">
-                        <wj-flex-grid #fgdRequirementActivities [itemsSource]="fgdRequirementActivitiesCollection" [selectionMode]="3">
+                        <wj-flex-grid #fgdRequirementActivities [itemsSource]="fgdRequirementActivitiesCollection"
+                            [selectionMode]="3">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="'Date'" [binding]="'activityDate'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Activity'" [binding]="'activity'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'User'" [binding]="'user'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unitCode'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Date'" [binding]="'activityDate'" [isReadOnly]="true"
+                                [width]="100"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Activity'" [binding]="'activity'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'User'" [binding]="'user'" [isReadOnly]="true" [width]="'*'">
+                            </wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Unit'" [binding]="'unitCode'" [isReadOnly]="true"
+                                [width]="100"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                            <button type="button" class="btn btn-secondary" (click)="fgdRequirementActivitiesCollection.moveToFirstPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdRequirementActivitiesCollection.moveToFirstPage()">
                                 <i class="fa fa-fast-backward"></i> First
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdRequirementActivitiesCollection.moveToPreviousPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdRequirementActivitiesCollection.moveToPreviousPage()">
                                 <i class="fa fa-step-backward"></i> Previous
                             </button>
                             <button type="button" class="btn btn-secondary" disabled style="width:100px">
-                                {{ fgdRequirementActivitiesCollection.pageIndex + 1 }} / {{ fgdRequirementActivitiesCollection.pageCount }}
+                                {{ fgdRequirementActivitiesCollection.pageIndex + 1 }} /
+                                {{ fgdRequirementActivitiesCollection.pageCount }}
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdRequirementActivitiesCollection.moveToNextPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdRequirementActivitiesCollection.moveToNextPage()">
                                 Next
                                 <i class="fa fa-step-forward"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdRequirementActivitiesCollection.moveToLastPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdRequirementActivitiesCollection.moveToLastPage()">
                                 Last
                                 <i class="fa fa-fast-forward"></i>
                             </button>
@@ -210,33 +262,143 @@
             <div [ngClass]="{'active': tabDetail1[3], 'tab-pane': true }" role="tabpanel">
                 <div class="card">
                     <div class="card-body">
-                        <wj-flex-grid #fgdCommissionRequests [itemsSource]="fgdCommissionRequestsCollection" [selectionMode]="3">
+                        <wj-flex-grid #fgdCommissionRequests [itemsSource]="fgdCommissionRequestsCollection"
+                            [selectionMode]="3">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="'Number'" [binding]="'commissionRequestNumber'" [isReadOnly]="true" [width]="120"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Date'" [binding]="'commissionRequestDate'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Broker'" [binding]="'broker'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Sold Unit'" [binding]="'soldUnit'" [isReadOnly]="true" [width]="120"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'Amount'" [binding]="'amount'" [isReadOnly]="true" [width]="150"></wj-flex-grid-column>
-                            <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Number'" [binding]="'commissionRequestNumber'"
+                                [isReadOnly]="true" [width]="120"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Date'" [binding]="'commissionRequestDate'"
+                                [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Broker'" [binding]="'broker'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Sold Unit'" [binding]="'soldUnit'" [isReadOnly]="true"
+                                [width]="120"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Remarks'" [binding]="'remarks'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Amount'" [binding]="'amount'" [isReadOnly]="true"
+                                [width]="150"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50">
+                            </wj-flex-grid-column>
                         </wj-flex-grid>
                     </div>
                     <div class="card-footer">
                         <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                            <button type="button" class="btn btn-secondary" (click)="fgdCommissionRequestsCollection.moveToFirstPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCommissionRequestsCollection.moveToFirstPage()">
                                 <i class="fa fa-fast-backward"></i> First
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdCommissionRequestsCollection.moveToPreviousPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCommissionRequestsCollection.moveToPreviousPage()">
                                 <i class="fa fa-step-backward"></i> Previous
                             </button>
                             <button type="button" class="btn btn-secondary" disabled style="width:100px">
-                                {{ fgdCommissionRequestsCollection.pageIndex + 1 }} / {{ fgdCommissionRequestsCollection.pageCount }}
+                                {{ fgdCommissionRequestsCollection.pageIndex + 1 }} /
+                                {{ fgdCommissionRequestsCollection.pageCount }}
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdCommissionRequestsCollection.moveToNextPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCommissionRequestsCollection.moveToNextPage()">
                                 Next
                                 <i class="fa fa-step-forward"></i>
                             </button>
-                            <button type="button" class="btn btn-secondary" (click)="fgdCommissionRequestsCollection.moveToLastPage()">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCommissionRequestsCollection.moveToLastPage()">
+                                Last
+                                <i class="fa fa-fast-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer List -->
+            <div [ngClass]="{'active': tabDetail1[4], 'tab-pane': true }" role="tabpanel">
+                <div class="card">
+                    <div class="card-body">
+                        <wj-flex-grid #fgdCustomerList [itemsSource]="fgdCustomerListCollection" [selectionMode]="3">
+                            <wj-flex-grid-filter></wj-flex-grid-filter>
+                            <wj-flex-grid-column [header]="'Code'" [binding]="'customerCode'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'FullName'" [binding]="'fullName'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Gender'" [binding]="'gender'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Address'" [binding]="'address'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Email'" [binding]="'emailAddress'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Tel. No.'" [binding]="'telephoneNumber'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                        </wj-flex-grid>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCustomerListCollection.moveToFirstPage()">
+                                <i class="fa fa-fast-backward"></i> First
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCustomerListCollection.moveToPreviousPage()">
+                                <i class="fa fa-step-backward"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                                {{ fgdCustomerListCollection.pageIndex + 1 }} /
+                                {{ fgdCustomerListCollection.pageCount }}
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCustomerListCollection.moveToNextPage()">
+                                Next
+                                <i class="fa fa-step-forward"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdCustomerListCollection.moveToLastPage()">
+                                Last
+                                <i class="fa fa-fast-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Broker List -->
+            <div [ngClass]="{'active': tabDetail1[5], 'tab-pane': true }" role="tabpanel">
+                <div class="card">
+                    <div class="card-body">
+                        <wj-flex-grid #fgdBrokerList [itemsSource]="fgdBrokerListCollection" [selectionMode]="3">
+                            <wj-flex-grid-filter></wj-flex-grid-filter>
+                            <wj-flex-grid-column [header]="'Code'" [binding]="'brokerCode'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'FullName'" [binding]="'fullName'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Gender'" [binding]="'gender'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Address'" [binding]="'address'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Email'" [binding]="'emailAddress'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Tel. No.'" [binding]="'telephoneNumber'" [isReadOnly]="true"
+                                [width]="'*'"></wj-flex-grid-column>
+                        </wj-flex-grid>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdBrokerListCollection.moveToFirstPage()">
+                                <i class="fa fa-fast-backward"></i> First
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdBrokerListCollection.moveToPreviousPage()">
+                                <i class="fa fa-step-backward"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                                {{ fgdBrokerListCollection.pageIndex + 1 }} / {{ fgdBrokerListCollection.pageCount }}
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdBrokerListCollection.moveToNextPage()">
+                                Next
+                                <i class="fa fa-step-forward"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="fgdBrokerListCollection.moveToLastPage()">
                                 Last
                                 <i class="fa fa-fast-forward"></i>
                             </button>

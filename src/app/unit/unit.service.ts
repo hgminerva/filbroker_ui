@@ -92,6 +92,7 @@ export class UnitService {
 
     // list
     public getProjects(): void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/List";
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/List";
         let projects = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -120,7 +121,9 @@ export class UnitService {
         );
     }
     public getUnitsPerProjectId(projectId: number): void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/ListPerProjectId/" + projectId;
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/ListPerProjectId/" + projectId;
+
         let units = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -139,6 +142,7 @@ export class UnitService {
                             tla: results[i].TLA,
                             tfa: results[i].TFA,
                             price: results[i].Price,
+                            tsp: results[i].TSP,
                             status: results[i].Status,
                             isLocked: results[i].IsLocked,
                             createdBy: results[i].CreatedBy,
@@ -158,6 +162,7 @@ export class UnitService {
     }
     public getHouseModelsPerProject(id : number) : void {
         let houseModels  = new ObservableArray();
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstHouseModel/ListPerProjectId/" + id;
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstHouseModel/ListPerProjectId/" + id;
 
         this.http.get(url, this.options).subscribe(
@@ -189,7 +194,9 @@ export class UnitService {
         );
     }
     public getUnitPricesPerUnitId(unitId: number) : void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnitPrice/ListPerUnitId/" + unitId;
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnitPrice/ListPerUnitId/" + unitId;
+
         let unitPrices = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -212,7 +219,12 @@ export class UnitService {
 
     // list operations
     public addUnit(unit: MstUnit, btnAddUnit: Element): void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Add";
+        
+        console.log(localStorage.getItem('access_token'));
+
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Add";
+
         this.http.post(url, JSON.stringify(unit), this.options).subscribe(
             response => {
                 var id = response.json();
@@ -235,7 +247,9 @@ export class UnitService {
         )
     }
     public deleteUnit(id : number) : void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Delete/" + id;
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Delete/" + id;
+
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.unitDeletedSource.next(1);
@@ -249,12 +263,15 @@ export class UnitService {
     // detail
     public getUnit(id : number) : void {
         let unit: MstUnit;
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Detail/" + id;
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
             response => {
                 var result = response.json();
                 if (result != null) {
+                    console.log(result.TSP);
+
                     unit = {
                         id: result.Id,
                         unitCode: result.UnitCode,
@@ -267,6 +284,7 @@ export class UnitService {
                         tla: result.TLA,
                         tfa: result.TFA,
                         price: result.Price,
+                        tsp: result.TSP,
                         status: result.Status,
                         isLocked: result.IsLocked,
                         createdBy: result.CreatedBy,
@@ -288,7 +306,9 @@ export class UnitService {
 
     // detail operations
     public saveUnit(unit: MstUnit): void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Save";
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Save";
+
         this.http.put(url, JSON.stringify(unit), this.options).subscribe(
             response => {
                 this.unitSavedSource.next(1);
@@ -299,7 +319,9 @@ export class UnitService {
         )
     }
     public lockUnit(unit: MstUnit): void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Lock";
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Lock";
+
         this.http.put(url, JSON.stringify(unit), this.options).subscribe(
             response => {
                 this.unitLockedSource.next(1);
@@ -310,7 +332,9 @@ export class UnitService {
         )
     }
     public unlockUnit(unit: MstUnit): void {
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Unlock";
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/Unlock";
+
         this.http.put(url, JSON.stringify(unit), this.options).subscribe(
             response => {
                 this.unitUnlockedSource.next(1);
@@ -328,7 +352,9 @@ export class UnitService {
             price: price    
         };
 
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/UpdatePrice";
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/UpdatePrice";
+
         this.http.put(url, JSON.stringify(unitPrice), this.options).subscribe(
             response => {
                 this.unitUpdatePriceSource.next(1);
@@ -342,7 +368,9 @@ export class UnitService {
     // drop downs
     public getDropDowns() : void {
         let dropDowns  = new ObservableArray();
+        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
         let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+
 
         this.http.get(url, this.options).subscribe(
             response => {

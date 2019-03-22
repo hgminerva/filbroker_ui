@@ -62,6 +62,7 @@ export class UnitDetail {
     tla: 0,
     tfa: 0,
     price: 0,
+    tsp: 0,
     status: "OPEN",
     isLocked: false,
     createdBy: 1,
@@ -155,6 +156,7 @@ export class UnitDetail {
           this.unit.tla = data.tla;
           this.unit.tfa = data.tfa;
           this.unit.price = data.price;
+          this.unit.tsp = data.tsp;
           this.unit.status = data.status;
           this.unit.isLocked = data.isLocked;
           this.unit.createdBy = data.createdBy;

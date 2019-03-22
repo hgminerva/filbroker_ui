@@ -105,6 +105,9 @@ export class SoldUnitDetail {
     checklistId: 0,
     checklist: "",
     price: 0,
+    tcp: 0,
+    tsp: 0,
+    tcpdiscount: 0,
     equityValue: 0,
     equityPercent: 0,
     equitySpotPayment1: 0,
@@ -124,6 +127,7 @@ export class SoldUnitDetail {
     paymentOptions: "",
     financing: "",
     remarks: "",
+    financingType: "",
     preparedBy: 0,
     preparedByUser: "",
     checkedBy: 0,
@@ -170,13 +174,13 @@ export class SoldUnitDetail {
   };
 
   // detail line2 model
-  public soldUnitEquitySchedule : TrnSoldUnitEquitySchedule = {
-	  id: 0,
-	  soldUnitId: 0,
+  public soldUnitEquitySchedule: TrnSoldUnitEquitySchedule = {
+    id: 0,
+    soldUnitId: 0,
     paymentDate: new Date(),
     amortization: 0,
-	  checkNumber: "",
-	  checkDate: new Date(),
+    checkNumber: "",
+    checkDate: new Date(),
     checkBank: "",
     remarks: "",
   };
@@ -189,6 +193,7 @@ export class SoldUnitDetail {
   public cmbBrokersData: ObservableArray;
   public cmbStatusData: ObservableArray;
   public cmbUsersData: ObservableArray; // (cmbPreparedBy, cmbCheckedBy, cmbApprovedBy)
+  public cmbFinancingTypeData: ObservableArray;
 
   // detail line1 combo boxes data
   public cmbUnitSoldRequirementStatusData: ObservableArray;
@@ -359,6 +364,9 @@ export class SoldUnitDetail {
           this.soldUnit.checklistId = data.checklistId;
           this.soldUnit.checklist = data.checklist;
           this.soldUnit.price = data.price;
+          this.soldUnit.tcp = data.tcp;
+          this.soldUnit.tsp = data.tsp;
+          this.soldUnit.tcpdiscount = data.tcpdiscount;
           this.soldUnit.equityValue = data.equityValue;
           this.soldUnit.equityPercent = data.equityPercent;
           this.soldUnit.equitySpotPayment1 = data.equitySpotPayment1;
@@ -378,6 +386,10 @@ export class SoldUnitDetail {
           this.soldUnit.paymentOptions = data.paymentOptions;
           this.soldUnit.financing = data.financing;
           this.soldUnit.remarks = data.remarks;
+          this.soldUnit.financingType = data.financingType;
+
+          console.log(data.financingType);
+
           this.soldUnit.preparedBy = data.preparedBy;
           this.soldUnit.preparedByUser = data.preparedByUser;
           this.soldUnit.checkedBy = data.checkedBy;
@@ -396,7 +408,7 @@ export class SoldUnitDetail {
           this.getCmbCustomers(data);
           this.getCmbBrokers(data);
           this.getCmbUsers(data);
-          this.getCmbStatus(data);
+          this.getCmbDropdowns(data);
 
           this.getSoldUnitRequirements();
           this.getSoldUnitEquitySchedule();
@@ -440,9 +452,11 @@ export class SoldUnitDetail {
       }
     );
   }
-  public getCmbStatus(defaultValue: any): void {
+
+  public getCmbDropdowns(defaultValue: any): void {
     this.soldUnitService.getDropDowns();
     let statuses = new ObservableArray();
+    let financingTypes = new ObservableArray();
 
     this.cmbStatusesSub = this.soldUnitService.dropDownsObservable.subscribe(
       data => {
@@ -454,11 +468,23 @@ export class SoldUnitDetail {
                 value: data[i].value
               });
             }
+
+            if (data[i].category == "FINANCING TYPE") {
+              financingTypes.push({
+                description: data[i].description,
+                value: data[i].value
+              });
+            }
           }
         }
-        this.cmbStatusData = statuses;
 
-        setTimeout(() => { this.soldUnit.status = defaultValue.status; }, 100);
+        this.cmbStatusData = statuses;
+        this.cmbFinancingTypeData = financingTypes;
+
+        setTimeout(() => { 
+          this.soldUnit.status = defaultValue.status;
+          this.soldUnit.financingType = defaultValue.financingType
+         }, 100);
       }
     );
   }
@@ -491,7 +517,7 @@ export class SoldUnitDetail {
         this.fgdSoldUnitRequirementsCollection.pageSize = 15;
         this.fgdSoldUnitRequirementsCollection.trackChanges = true;
 
-        if( this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
+        if (this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
 
         console.log(this.fgdSoldUnitRequirementsData);
       }
@@ -509,7 +535,7 @@ export class SoldUnitDetail {
         this.fgdSoldUnitRequirementsCollection.pageSize = 15;
         this.fgdSoldUnitRequirementsCollection.trackChanges = true;
 
-        if( this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
+        if (this.soldUnitRequirementsSub != null) this.soldUnitRequirementsSub.unsubscribe();
 
         console.log(this.fgdSoldUnitRequirementsData);
       }
@@ -558,9 +584,9 @@ export class SoldUnitDetail {
         this.fgdSoldUnitRequirementActivitiesData = data;
         this.fgdSoldUnitRequirementActivitiesCollection = new CollectionView(this.fgdSoldUnitRequirementActivitiesData);
         this.fgdSoldUnitRequirementActivitiesCollection.pageSize = 15;
-        this.fgdSoldUnitRequirementActivitiesCollection.trackChanges = true;  
+        this.fgdSoldUnitRequirementActivitiesCollection.trackChanges = true;
 
-        if( this.soldUnitRequirementActivitiesSub != null) this.soldUnitRequirementActivitiesSub.unsubscribe();
+        if (this.soldUnitRequirementActivitiesSub != null) this.soldUnitRequirementActivitiesSub.unsubscribe();
       }
     );
   }
@@ -578,9 +604,9 @@ export class SoldUnitDetail {
         this.fgdSoldUnitEquityScheduleData = data;
         this.fgdSoldUnitEquityScheduleCollection = new CollectionView(this.fgdSoldUnitEquityScheduleData);
         this.fgdSoldUnitEquityScheduleCollection.pageSize = 15;
-        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;  
+        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;
 
-        if( this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
+        if (this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
       }
     );
   }
@@ -594,9 +620,9 @@ export class SoldUnitDetail {
         this.fgdSoldUnitEquityScheduleData = data;
         this.fgdSoldUnitEquityScheduleCollection = new CollectionView(this.fgdSoldUnitEquityScheduleData);
         this.fgdSoldUnitEquityScheduleCollection.pageSize = 15;
-        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;  
+        this.fgdSoldUnitEquityScheduleCollection.trackChanges = true;
 
-        if( this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
+        if (this.soldUnitEquityScheduleSub != null) this.soldUnitEquityScheduleSub.unsubscribe();
       }
     );
   }
@@ -623,6 +649,8 @@ export class SoldUnitDetail {
         this.soldUnit.unitId = unit.id;
         this.soldUnit.unit = unit.unitCode;
         this.soldUnit.price = unit.price;
+        this.soldUnit.tcp = unit.price;
+        this.soldUnit.tsp = unit.tsp;
 
         this.getChecklistsPerProjectId(this.soldUnit);
       }
@@ -815,6 +843,7 @@ export class SoldUnitDetail {
 
     this.mdlEditSoldUnitRequirementModalShow = false;
   }
+
   public btnCloseEditSoldUnitRequirementModalClick() {
     this.mdlEditSoldUnitRequirementModalShow = false;
   }
@@ -822,25 +851,26 @@ export class SoldUnitDetail {
   // attachments
   public btnOpenSoldUnitRequirementAttachment1Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    console.log(target);
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT1-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-          .subscribe( data => {
-            this.soldUnitRequirement.attachment1 = data.fileUrl;
-            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
-          });
+        .subscribe(data => {
+          console.log(data.fileUrl);
+          this.soldUnitRequirement.attachment1 = data.fileUrl;
+          if (this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+        });
     }
   }
+
   public btnOpenSoldUnitRequirementAttachment2Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT2-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-          .subscribe( data => {
-            this.soldUnitRequirement.attachment2 = data.fileUrl;
-            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
-          });
+        .subscribe(data => {
+          this.soldUnitRequirement.attachment2 = data.fileUrl;
+          if (this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+        });
     }
   }
   public btnOpenSoldUnitRequirementAttachment3Click(e: Event): void {
@@ -848,10 +878,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT3-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-          .subscribe( data => {
-            this.soldUnitRequirement.attachment3 = data.fileUrl;
-            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
-          });
+        .subscribe(data => {
+          this.soldUnitRequirement.attachment3 = data.fileUrl;
+          if (this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+        });
     }
   }
   public btnOpenSoldUnitRequirementAttachment4Click(e: Event): void {
@@ -859,10 +889,10 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT4-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-          .subscribe( data => {
-            this.soldUnitRequirement.attachment4 = data.fileUrl;
-            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
-          });
+        .subscribe(data => {
+          this.soldUnitRequirement.attachment4 = data.fileUrl;
+          if (this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+        });
     }
   }
   public btnOpenSoldUnitRequirementAttachment5Click(e: Event): void {
@@ -870,11 +900,28 @@ export class SoldUnitDetail {
     if (target.files.length > 0) {
       this.soldUnitService.uploadSoldUnitAttachment(target.files[0], "SOLDUNIT5-" + this.soldUnit.soldUnitNumber + "-" + this.soldUnitRequirement.checklistRequirementNo + "-" + Date.now());
       this.soldUnitRequirementAttachmentSub = this.soldUnitService.soldUnitRequirementAttachmentObservable
-          .subscribe( data => {
-            this.soldUnitRequirement.attachment5 = data.fileUrl;
-            if( this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
-          });
+        .subscribe(data => {
+          this.soldUnitRequirement.attachment5 = data.fileUrl;
+          if (this.soldUnitRequirementAttachmentSub != null) this.soldUnitRequirementAttachmentSub.unsubscribe();
+        });
     }
+  }
+
+  public btnDeleteSoldUnitRequirementAttachment1Click(): void {
+    this.soldUnitRequirement.attachment1 = "";
+  }
+
+  public btnDeleteSoldUnitRequirementAttachment2Click(): void {
+    this.soldUnitRequirement.attachment2 = "";
+  }
+  public btnDeleteSoldUnitRequirementAttachment3Click(): void {
+    this.soldUnitRequirement.attachment3 = "";
+  }
+  public btnDeleteSoldUnitRequirementAttachment4Click(): void {
+    this.soldUnitRequirement.attachment4 = "";
+  }
+  public btnDeleteSoldUnitRequirementAttachment5Click(): void {
+    this.soldUnitRequirement.attachment5 = "";
   }
 
   // detail line1 line (checklist requirement activities) list operations
@@ -991,8 +1038,8 @@ export class SoldUnitDetail {
   public btnEditSoldUnitEquityScheduleClick(): void {
     let selectedSoldUnitEquitySchedule = this.fgdSoldUnitEquityScheduleCollection.currentItem;
 
-	  this.soldUnitEquitySchedule.id = selectedSoldUnitEquitySchedule.id;
-	  this.soldUnitEquitySchedule.soldUnitId = selectedSoldUnitEquitySchedule.soldUnitId;
+    this.soldUnitEquitySchedule.id = selectedSoldUnitEquitySchedule.id;
+    this.soldUnitEquitySchedule.soldUnitId = selectedSoldUnitEquitySchedule.soldUnitId;
     this.soldUnitEquitySchedule.paymentDate = new Date(selectedSoldUnitEquitySchedule.paymentDate);
     this.soldUnitEquitySchedule.amortization = selectedSoldUnitEquitySchedule.amortization;
     this.soldUnitEquitySchedule.checkNumber = selectedSoldUnitEquitySchedule.checkNumber;
@@ -1008,8 +1055,8 @@ export class SoldUnitDetail {
 
     btnSaveSoldUnitEquityScheduleModal.setAttribute("disabled", "disabled");
     btnSaveSoldUnitEquityScheduleModal.innerHTML = "<i class='fa fa-save fa-fw'></i> Saving...";
-    btnCloseSoldUnitEquityScheduleModal.setAttribute("disabled","disabled");
-    
+    btnCloseSoldUnitEquityScheduleModal.setAttribute("disabled", "disabled");
+
     //console.log(this.soldUnitEquitySchedule);
 
     this.soldUnitService.saveSoldUnitEquitySchedule(this.soldUnitEquitySchedule);
@@ -1044,14 +1091,14 @@ export class SoldUnitDetail {
   }
 
   // keyups
-  private computeNetEquity() : void {
+  private computeNetEquity(): void {
     //this.soldUnit.netEquity = this.soldUnit.equityValue - this.soldUnit.discount - this.soldUnit.reservation;
-    this.soldUnit.netEquity = this.soldUnit.equityValue - 
-                              this.soldUnit.equitySpotPayment1 - 
-                              this.soldUnit.equitySpotPayment2 - 
-                              this.soldUnit.equitySpotPayment3 - 
-                              this.soldUnit.discount - 
-                              this.soldUnit.reservation;
+    this.soldUnit.netEquity = this.soldUnit.equityValue -
+      this.soldUnit.equitySpotPayment1 -
+      this.soldUnit.equitySpotPayment2 -
+      this.soldUnit.equitySpotPayment3 -
+      this.soldUnit.discount -
+      this.soldUnit.reservation;
 
     if (this.soldUnit.netEquityInterest > 0) {
       var r = this.soldUnit.netEquityInterest / 100;
@@ -1106,10 +1153,10 @@ export class SoldUnitDetail {
       this.computeNetEquity();
     }
   }
-  public txtEquitySpotPaymentKeyup() : void {
+  public txtEquitySpotPaymentKeyup(): void {
     this.computeNetEquity();
   }
-  public txtDiscountKeyup() : void {
+  public txtDiscountKeyup(): void {
     this.computeNetEquity();
   }
   public txtReservationKeyup(): void {
@@ -1150,34 +1197,34 @@ export class SoldUnitDetail {
     var paymentOptions = "";
 
     paymentOptions = paymentOptions + "FINANCING SCHEME \n";
-    paymentOptions = paymentOptions + "      Equity: Percentage                                 " + this.addSpaces(15-this.soldUnit.equityPercent.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equityPercent.toLocaleString('en-us', {minimumFractionDigits: 2}) + "% \n";
-    paymentOptions = paymentOptions + "              Value                                    P " + this.addSpaces(15-this.soldUnit.equityValue.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equityValue.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    paymentOptions = paymentOptions + "      LESS:   Discount                                 P " + this.addSpaces(15-this.soldUnit.discount.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.discount.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    paymentOptions = paymentOptions + "              Reservation                              P " + this.addSpaces(15-this.soldUnit.reservation.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.reservation.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    paymentOptions = paymentOptions + "              Spot Payment 1                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    paymentOptions = paymentOptions + "              Spot Payment 2                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    paymentOptions = paymentOptions + "              Spot Payment 3                           P " + this.addSpaces(15-this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";            
-    paymentOptions = paymentOptions + "      NET EQUITY                                       P " + this.addSpaces(15-this.soldUnit.netEquity.toLocaleString('en-us', {minimumFractionDigits: 2}).length) + this.soldUnit.netEquity.toLocaleString('en-us', {minimumFractionDigits: 2}) + "\n";
-    
-    if(this.soldUnit.equitySpotPayment1 + this.soldUnit.equitySpotPayment2 + this.soldUnit.equitySpotPayment3 > 0) {
-      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest ";
+    paymentOptions = paymentOptions + "      Equity: Percentage                                 " + this.addSpaces(15 - this.soldUnit.equityPercent.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equityPercent.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "% \n";
+    paymentOptions = paymentOptions + "              Value                                    P " + this.addSpaces(15 - this.soldUnit.equityValue.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equityValue.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "      LESS:   Discount                                 P " + this.addSpaces(15 - this.soldUnit.discount.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.discount.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "              Reservation                              P " + this.addSpaces(15 - this.soldUnit.reservation.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.reservation.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 1                           P " + this.addSpaces(15 - this.soldUnit.equitySpotPayment1.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 2                           P " + this.addSpaces(15 - this.soldUnit.equitySpotPayment2.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "              Spot Payment 3                           P " + this.addSpaces(15 - this.soldUnit.equitySpotPayment3.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "      NET EQUITY                                       P " + this.addSpaces(15 - this.soldUnit.netEquity.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.netEquity.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+
+    if (this.soldUnit.equitySpotPayment1 + this.soldUnit.equitySpotPayment2 + this.soldUnit.equitySpotPayment3 > 0) {
+      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at " + this.soldUnit.netEquityInterest + " interest ";
       paymentOptions = paymentOptions + "with ";
-      if(this.soldUnit.equitySpotPayment1 > 0) {
-        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the 1st payment ";  
+      if (this.soldUnit.equitySpotPayment1 > 0) {
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment1.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " on the 1st payment ";
       }
-      if(this.soldUnit.equitySpotPayment2 > 0) {
-        if(this.soldUnit.equitySpotPayment1 > 0) paymentOptions = paymentOptions + "and ";
-        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the " + (this.soldUnit.netEquityNoOfPayments / 2) + "th payment ";  
+      if (this.soldUnit.equitySpotPayment2 > 0) {
+        if (this.soldUnit.equitySpotPayment1 > 0) paymentOptions = paymentOptions + "and ";
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " on the " + (this.soldUnit.netEquityNoOfPayments / 2) + "th payment ";
       }
-      if(this.soldUnit.equitySpotPayment3 > 0) {
-        if(this.soldUnit.equitySpotPayment1+this.soldUnit.equitySpotPayment2 > 0) paymentOptions = paymentOptions + "and ";
-        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', {minimumFractionDigits: 2}) + " on the " + this.soldUnit.netEquityNoOfPayments + "th payment ";  
+      if (this.soldUnit.equitySpotPayment3 > 0) {
+        if (this.soldUnit.equitySpotPayment1 + this.soldUnit.equitySpotPayment2 > 0) paymentOptions = paymentOptions + "and ";
+        paymentOptions = paymentOptions + "P " + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " on the " + this.soldUnit.netEquityNoOfPayments + "th payment ";
       }
       paymentOptions = paymentOptions + "\n";
     } else {
-      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', {minimumFractionDigits: 2}) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at "  + this.soldUnit.netEquityInterest + " interest \n";  
+      paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at " + this.soldUnit.netEquityInterest + " interest \n";
     }
-    
+
     paymentOptions = paymentOptions + "* Payee: PRILAND DEVELOPMENT CORPORATION \n";
 
     this.soldUnit.paymentOptions = paymentOptions;
@@ -1323,7 +1370,7 @@ export class SoldUnitDetail {
         this.isCoOwnerContentHide = false;
 
         let selectedSoldUnitCoOwner = this.fgdSoldUnitCoOwnerCollection.currentItem;
-        setTimeout(()=> {
+        setTimeout(() => {
           this.cboUnitSoldCoOwnerCustomer.selectedValue = selectedSoldUnitCoOwner.customerId;
         }, 100);
 
@@ -1351,7 +1398,7 @@ export class SoldUnitDetail {
   public btnAddSoldUnitCoOwnerClick(): void {
     this.mdlSoldUnitCoOwnerModalShow = true;
     this.listSoldUnitCoOwnerCustomer();
-    
+
     this.soldUnitCoOwnerObj = {
       Id: 0,
       SoldUnitId: this.soldUnit.id,

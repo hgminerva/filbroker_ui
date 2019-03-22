@@ -10,6 +10,7 @@ export class MstUnit {
     tla: number;
     tfa: number;
     price: number;
+    tsp: number;
     status: string;
     isLocked: boolean;
     createdBy: number;

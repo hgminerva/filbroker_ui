@@ -15,6 +15,9 @@ export class TrnSoldUnit {
 	checklistId: number;
 	checklist: string;
 	price: number;
+	tcp: number;
+	tsp: number;
+	tcpdiscount: number;
 	equityValue: number;
 	equityPercent: number;
 	equitySpotPayment1: number;
@@ -34,6 +37,7 @@ export class TrnSoldUnit {
 	paymentOptions: string;
 	financing: string;
 	remarks: string;
+	financingType: string;
 	preparedBy: number;
 	preparedByUser: string;
 	checkedBy: number;

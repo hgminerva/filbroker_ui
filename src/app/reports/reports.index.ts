@@ -27,6 +27,8 @@ export class ReportsIndex {
   private requirementActivitiesSub : any;
   private checklistRequirementsSub : any;
   private sendEmailSub : any;
+  private customerListSub : any;
+  private brokerListSub : any;
 
   // =================
   // public properties
@@ -36,18 +38,24 @@ export class ReportsIndex {
   public filterReport: string;
 
   public fgdSoldUnitsData : ObservableArray;
-  public fgdSoldUnitsCollection : CollectionView;
+  public fgdSoldUnitsCollection = new CollectionView(this.fgdSoldUnitsData);
   
   public fgdRequirementActivitiesData : ObservableArray;
-  public fgdRequirementActivitiesCollection : CollectionView;
+  public fgdRequirementActivitiesCollection = new CollectionView(this.fgdRequirementActivitiesData);
 
   public fgdChecklistRequirementsData : ObservableArray;
-  public fgdChecklistRequirementsCollection : CollectionView;
+  public fgdChecklistRequirementsCollection = new CollectionView(this.fgdChecklistRequirementsData);
 
   public fgdCommissionRequestsData : ObservableArray;
-  public fgdCommissionRequestsCollection : CollectionView;
+  public fgdCommissionRequestsCollection = new CollectionView(this.fgdCommissionRequestsData);
 
-  public tabDetail1 = new Array(true, false, false, false);
+  public fgdCustomerListData : ObservableArray;
+  public fgdCustomerListCollection = new CollectionView(this.fgdCustomerListData);
+
+  public fgdBrokerListData : ObservableArray;
+  public fgdBrokerListCollection = new CollectionView(this.fgdBrokerListData);
+
+  public tabDetail1 = new Array(true, false, false, false, false, false);
 
   // filters
   public calDateStartData = new Date();
@@ -93,6 +101,9 @@ export class ReportsIndex {
     if( this.requirementActivitiesSub != null) this.requirementActivitiesSub.unsubscribe();
     if( this.checklistRequirementsSub != null) this.checklistRequirementsSub.unsubscribe();
     if( this.sendEmailSub != null) this.sendEmailSub.unsubscribe();
+
+    if( this.customerListSub != null) this.customerListSub.unsubscribe();
+    if( this.brokerListSub != null) this.brokerListSub.unsubscribe();
   }
 
   // ==============
@@ -107,6 +118,8 @@ export class ReportsIndex {
     this.getCommissionRequests(dateStart,dateEnd);
     this.getRequirementActivities(dateStart,dateEnd);
     this.getChecklistRequirements(dateStart,dateEnd);
+    this.getCustomerList(dateStart,dateEnd);
+    this.getBrokerList(dateStart,dateEnd);
   }
 
   public getUnitSolds(dateStart: string, dateEnd: string) : void {
@@ -158,6 +171,32 @@ export class ReportsIndex {
     );
   }
 
+  public getCustomerList(dateStart: string, dateEnd: string) : void {
+    this.reportsService.getCustomerList(dateStart,dateEnd);
+
+    this.customerListSub = this.reportsService.customerListObservable.subscribe(
+      data => {
+        this.fgdCustomerListData = data;
+        this.fgdCustomerListCollection = new CollectionView(this.fgdCustomerListData);
+        this.fgdCustomerListCollection.pageSize = 15;
+        this.fgdCustomerListCollection.trackChanges = true;  
+      }
+    );
+  }
+
+  public getBrokerList(dateStart: string, dateEnd: string) : void {
+    this.reportsService.getBrokerList(dateStart,dateEnd);
+
+    this.brokerListSub = this.reportsService.brokerListObservable.subscribe(
+      data => {
+        this.fgdBrokerListData = data;
+        this.fgdBrokerListCollection = new CollectionView(this.fgdBrokerListData);
+        this.fgdBrokerListCollection.pageSize = 15;
+        this.fgdBrokerListCollection.trackChanges = true;  
+      }
+    );
+  }
+
   // ======
   // events
   // ======
@@ -184,7 +223,17 @@ export class ReportsIndex {
       data = 'Commission Request Summary Report' + '\r\n\n';
       collection = this.fgdCommissionRequestsCollection;
       fileName = "report-commissionRequest.csv";
-    }
+    } else if(this.tabDetail1[4] == true) {
+      data = 'Customer List' + '\r\n\n';
+      collection = this.fgdCustomerListCollection;
+      fileName = "report-customerList.csv";
+    } else if(this.tabDetail1[5] == true) {
+      data = 'Broker List' + '\r\n\n';
+      collection = this.fgdBrokerListCollection;
+      fileName = "report-brokerList.csv";
+    } 
+    
+    
 
     if(data != "")  {
       var label = '';
@@ -273,5 +322,7 @@ export class ReportsIndex {
     if(index==1) this.getChecklistRequirements(dateStart,dateEnd);
     if(index==2) this.getRequirementActivities(dateStart,dateEnd);
     if(index==3) this.getCommissionRequests(dateStart,dateEnd);
+    if(index==4) this.getCustomerList(dateStart,dateEnd);
+    if(index==5) this.getBrokerList(dateStart,dateEnd);
   }
 }
