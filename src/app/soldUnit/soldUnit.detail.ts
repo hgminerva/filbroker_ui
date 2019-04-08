@@ -318,8 +318,8 @@ export class SoldUnitDetail {
     if (this.cmbStatusesSub != null) this.cmbStatusesSub.unsubscribe();
 
     if (this.soldUnitCoOwnerCustomerSub != null) this.soldUnitCoOwnerCustomerSub.unsubscribe();
-    if (this.soldUnitCoOwnerSub != null) this.soldUnitCoOwnerCustomerSub.unsubscribe();
-    if (this.soldUnitSavedSub != null) this.soldUnitCoOwnerCustomerSub.unsubscribe();
+    if (this.soldUnitCoOwnerSub != null) this.soldUnitCoOwnerSub.unsubscribe();
+    if (this.soldUnitSavedSub != null) this.soldUnitSavedSub.unsubscribe();
     if (this.addSoldUnitCoOwnerCustomerSub != null) this.addSoldUnitCoOwnerCustomerSub.unsubscribe();
     if (this.updateSoldUnitCoOwnerCustomerSub != null) this.updateSoldUnitCoOwnerCustomerSub.unsubscribe();
     if (this.deleteSoldUnitCoOwnerCustomerSub != null) this.deleteSoldUnitCoOwnerCustomerSub.unsubscribe();
