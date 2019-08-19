@@ -114,8 +114,10 @@ export class SoldUnitDetail {
     equitySpotPayment2: 0,
     equitySpotPayment3: 0,
     discount: 0,
+    discountedEquity: 0,
     reservation: 0,
     netEquity: 0,
+    netEquityBalance: 0,
     netEquityInterest: 0,
     netEquityNoOfPayments: 0,
     netEquityAmortization: 0,
@@ -373,8 +375,10 @@ export class SoldUnitDetail {
           this.soldUnit.equitySpotPayment2 = data.equitySpotPayment2;
           this.soldUnit.equitySpotPayment3 = data.equitySpotPayment3;
           this.soldUnit.discount = data.discount;
+          this.soldUnit.discountedEquity = data.discountedEquity;
           this.soldUnit.reservation = data.reservation;
           this.soldUnit.netEquity = data.netEquity;
+          this.soldUnit.netEquityBalance = data.netEquityBalance;
           this.soldUnit.netEquityInterest = data.netEquityInterest;
           this.soldUnit.netEquityNoOfPayments = data.netEquityNoOfPayments;
           this.soldUnit.netEquityAmortization = data.netEquityAmortization;
@@ -1091,9 +1095,9 @@ export class SoldUnitDetail {
   }
 
   // keyups
-  private computeNetEquity(): void {
+  private computeNetEquityBalance(): void {
     //this.soldUnit.netEquity = this.soldUnit.equityValue - this.soldUnit.discount - this.soldUnit.reservation;
-    this.soldUnit.netEquity = this.soldUnit.equityValue -
+    this.soldUnit.netEquityBalance = this.soldUnit.equityValue -
       this.soldUnit.equitySpotPayment1 -
       this.soldUnit.equitySpotPayment2 -
       this.soldUnit.equitySpotPayment3 -
@@ -1108,17 +1112,25 @@ export class SoldUnitDetail {
       var ad = Math.pow(1 + r, n) - 1;
 
       if (ad != 0) {
-        this.soldUnit.netEquityAmortization = this.soldUnit.netEquity * (an / ad);
+        this.soldUnit.netEquityAmortization = this.soldUnit.netEquityBalance * (an / ad);
       }
     } else {
       var n = this.soldUnit.netEquityNoOfPayments;
 
       if (n > 0) {
-        this.soldUnit.netEquityAmortization = this.soldUnit.netEquity / n;
+        this.soldUnit.netEquityAmortization = this.soldUnit.netEquityBalance / n;
       }
     }
 
+    this.computeDiscountedEquity();
     this.computeBalance();
+  }
+  private computeDiscountedEquity() : void {
+    this.soldUnit.discountedEquity = this.soldUnit.equityValue - this.soldUnit.discount;
+    this.computeNetEquity();
+  }
+  private computeNetEquity(): void {
+    this.soldUnit.netEquity = this.soldUnit.discountedEquity - this.soldUnit.reservation;
   }
   private computeBalance(): void {
     this.soldUnit.balance = this.soldUnit.price - this.soldUnit.equityValue;
@@ -1144,29 +1156,29 @@ export class SoldUnitDetail {
   public txtEquityPercentKeyup(): void {
     if (this.soldUnit.price > 0) {
       this.soldUnit.equityValue = this.soldUnit.price * (this.soldUnit.equityPercent / 100);
-      this.computeNetEquity();
+      this.computeNetEquityBalance();
     }
   }
   public txtEquityValueKeyup(): void {
     if (this.soldUnit.price > 0) {
       this.soldUnit.equityPercent = (this.soldUnit.equityValue / this.soldUnit.price) * 100;
-      this.computeNetEquity();
+      this.computeNetEquityBalance();
     }
   }
   public txtEquitySpotPaymentKeyup(): void {
-    this.computeNetEquity();
+    this.computeNetEquityBalance();
   }
   public txtDiscountKeyup(): void {
-    this.computeNetEquity();
+    this.computeNetEquityBalance();
   }
   public txtReservationKeyup(): void {
-    this.computeNetEquity();
+    this.computeNetEquityBalance();
   }
   public txtNetEquityInterestKeyup(): void {
-    this.computeNetEquity();
+    this.computeNetEquityBalance();
   }
   public txtNetEquityNoOfPaymentsKeyup(): void {
-    this.computeNetEquity();
+    this.computeNetEquityBalance();
   }
   public txtBalanceInterestKeyup(): void {
     this.computeBalance();
@@ -1205,6 +1217,7 @@ export class SoldUnitDetail {
     paymentOptions = paymentOptions + "              Spot Payment 2                           P " + this.addSpaces(15 - this.soldUnit.equitySpotPayment2.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equitySpotPayment2.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
     paymentOptions = paymentOptions + "              Spot Payment 3                           P " + this.addSpaces(15 - this.soldUnit.equitySpotPayment3.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.equitySpotPayment3.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
     paymentOptions = paymentOptions + "      NET EQUITY                                       P " + this.addSpaces(15 - this.soldUnit.netEquity.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.netEquity.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
+    paymentOptions = paymentOptions + "      EQUITY BALANCE                                   P " + this.addSpaces(15 - this.soldUnit.netEquityBalance.toLocaleString('en-us', { minimumFractionDigits: 2 }).length) + this.soldUnit.netEquityBalance.toLocaleString('en-us', { minimumFractionDigits: 2 }) + "\n";
 
     if (this.soldUnit.equitySpotPayment1 + this.soldUnit.equitySpotPayment2 + this.soldUnit.equitySpotPayment3 > 0) {
       paymentOptions = paymentOptions + "* P " + this.soldUnit.netEquityAmortization.toLocaleString('en-us', { minimumFractionDigits: 2 }) + " spread over " + this.soldUnit.netEquityNoOfPayments + " month(s) at " + this.soldUnit.netEquityInterest + " interest ";

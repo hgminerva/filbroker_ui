@@ -24,8 +24,10 @@ export class TrnSoldUnit {
 	equitySpotPayment2: number;
 	equitySpotPayment3: number;
 	discount: number;
+	discountedEquity: number;
 	reservation: number;
 	netEquity: number;
+	netEquityBalance: number;
 	netEquityInterest: number;
 	netEquityNoOfPayments: number;
 	netEquityAmortization: number;

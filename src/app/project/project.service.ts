@@ -93,7 +93,7 @@ export class ProjectService {
 
     // project listing
     public getProjects(): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/List";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/List";
         let projects = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -124,7 +124,7 @@ export class ProjectService {
 
     // project listing operations
     public addProject(project: MstProject, btnAddProject: Element): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Add";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/Add";
         this.http.post(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 var id = response.json();
@@ -147,7 +147,7 @@ export class ProjectService {
         )
     }
     public deleteProject(id : number) {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Delete/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/Delete/" + id;
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.projectDeletedSource.next(1);
@@ -161,7 +161,7 @@ export class ProjectService {
     // project detail
     public getProject(id : number) {
         let project: MstProject;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Detail/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -193,7 +193,7 @@ export class ProjectService {
 
     // project detail operations
     public saveProject(project: MstProject): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Save";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/Save";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 this.projectSavedSource.next(1);
@@ -204,7 +204,7 @@ export class ProjectService {
         )
     }
     public lockProject(project: MstProject): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Lock";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/Lock";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 this.projectLockedSource.next(1);
@@ -215,7 +215,7 @@ export class ProjectService {
         )
     }
     public unlockProject(project: MstProject): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Unlock";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstProject/Unlock";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 this.projectUnlockedSource.next(1);
@@ -226,7 +226,7 @@ export class ProjectService {
         )
     }
     public uploadProjectLogo(file: File, fileName: string) : void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/Blob/Upload";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/Blob/Upload";
         let blob : SysBlob;
 
         var formData: FormData = new FormData();
@@ -262,7 +262,7 @@ export class ProjectService {
     // combo boxes
     public getDropDowns()  {
         let dropDowns  = new ObservableArray();
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/SysDropDown/List";
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -287,7 +287,7 @@ export class ProjectService {
 
     // get house models per project
     public getHouseModelsPerProject(id : number) {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstHouseModel/ListPerProjectId/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstHouseModel/ListPerProjectId/" + id;
         let houseModels = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -321,7 +321,7 @@ export class ProjectService {
     // house models operation
     public saveHouseModel(houseModel: MstHouseModel): void {
         if(houseModel.id == 0) {
-            let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstHouseModel/Add";
+            let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstHouseModel/Add";
             this.http.post(url, JSON.stringify(houseModel), this.options).subscribe(
                 response => {
                     this.houseModelSavedSource.next(1);
@@ -331,7 +331,7 @@ export class ProjectService {
                 }
             )
         } else {
-            let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstHouseModel/Save";
+            let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstHouseModel/Save";
             this.http.put(url, JSON.stringify(houseModel), this.options).subscribe(
                 response => {
                     this.houseModelSavedSource.next(1);
@@ -343,7 +343,7 @@ export class ProjectService {
         }
     }
     public deleteHouseModel(id: number) {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstHouseModel/Delete/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstHouseModel/Delete/" + id;
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.houseModelDeletedSource.next(1);
