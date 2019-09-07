@@ -1,7 +1,9 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a routerLink="/" class="navbar-brand">Filbroker - Priland</a>
+        <a routerLink="/" class="navbar-brand custom-narbar-brand">
+            <img src="../../assets/landing/img/filbroker logo.png" />
+        </a>
         <a routerLink="/account/register" class="btn btn-primary">Sign Up!</a>
     </div>
 </nav>
@@ -27,7 +29,8 @@
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 150px">
                             <i class="fa fa-at"></i>&nbsp;&nbsp;Username</div>
-                        <input type="text" name="username" class="form-control" id="username" [(ngModel)]="user.username" required autofocus>
+                        <input type="text" name="username" class="form-control" id="username"
+                            [(ngModel)]="user.username" required autofocus>
                     </div>
                 </div>
             </div>
@@ -47,7 +50,8 @@
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 150px">
                             <i class="fa fa-key"></i>&nbsp;&nbsp;Password</div>
-                        <input type="password" name="password" class="form-control" id="password" [(ngModel)]="user.password" required>
+                        <input type="password" name="password" class="form-control" id="password"
+                            [(ngModel)]="user.password" required>
                     </div>
                 </div>
             </div>
@@ -107,7 +111,7 @@
                         <a href="#">Privacy Policy</a>
                     </li>
                 </ul>
-                <p class="text-muted small mb-4 mb-lg-0">&copy; Filbroker - Priland 2018. All Rights Reserved.</p>
+                <p class="text-muted small mb-4 mb-lg-0">&copy; Filbroker 2018. All Rights Reserved.</p>
             </div>
             <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                 <ul class="list-inline mb-0">

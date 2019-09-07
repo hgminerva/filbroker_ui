@@ -16,7 +16,7 @@ export class FooterIndex {
     private usersSub : any;
     private usersData : ObservableArray;
 
-    public company: string = "Priland";
+    public company: string = "";
     public version: string = "Filbroker v1.0.20190311.ORE";
     public support: string = "Innosoft Solutions +63 917 812 3982 (support@innosoft.ph)";
 
