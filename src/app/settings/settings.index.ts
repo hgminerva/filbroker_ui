@@ -26,6 +26,14 @@ export class SettingsIndex {
   // private properties
   // ==================
 
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   // detail
   private settingsSub : any;
 
@@ -106,6 +114,21 @@ export class SettingsIndex {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+        if (userRights[i].page == 'SETTINGS') {
+            this.canEdit = userRights[i].canEdit;
+            this.canSave = userRights[i].canSave;
+            this.canLock = userRights[i].canLock;
+            this.canUnlock = userRights[i].canUnlock;
+            this.canPrint = userRights[i].canPrint;
+            this.canDelete = userRights[i].canDelete;
+        }
+    }
+}
+
   // ng
   ngOnInit() {
     this.fgdDropDownsData = new ObservableArray();
@@ -116,6 +139,21 @@ export class SettingsIndex {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
     } 
+
+    this.getUserRights();
+
+    if (!this.canSave) {
+      (<HTMLInputElement>document.getElementById("btnSaveSettings")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveDropDownEditModal")).disabled = true;
+    }
+
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnEditDropDown")).disabled = true;
+    }
+
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnDeleteDropDown")).disabled = true;
+    }
   }
   ngOnDestroy() {
     if( this.settingsSub != null) this.settingsSub.unsubscribe();

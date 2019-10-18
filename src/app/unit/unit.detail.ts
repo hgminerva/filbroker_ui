@@ -43,6 +43,15 @@ export class UnitDetail {
   private cmbHouseModelSub : any;
   private cmbUnitStatusSub : any;
   
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
+
   // =================
   // public properties
   // =================
@@ -97,6 +106,21 @@ export class UnitDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+        if (userRights[i].page == 'UNIT DETAIL') {
+            this.canEdit = userRights[i].canEdit;
+            this.canSave = userRights[i].canSave;
+            this.canLock = userRights[i].canLock;
+            this.canUnlock = userRights[i].canUnlock;
+            this.canPrint = userRights[i].canPrint;
+            this.canDelete = userRights[i].canDelete;
+        }
+    }
+}
+
   // ng
   ngOnInit() {
     this.fgdUnitPricesData = new ObservableArray();
@@ -108,6 +132,18 @@ export class UnitDetail {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
     } 
+    this.getUserRights();
+    if (!this.canUnlock) {
+      (<HTMLInputElement>document.getElementById("btnLockUnit")).disabled = true;
+    }
+    
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnSaveUnit")).disabled = true;
+    }
+
+    if (!this.canSave) {
+      (<HTMLInputElement>document.getElementById("btnDeleteUserRights")).disabled = true;
+    }
   }
   ngOnDestroy() {
     if( this.unitSub != null) this.unitSub.unsubscribe();

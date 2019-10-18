@@ -1,10 +1,10 @@
 // angular
-import { Component,ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 // wijmo
-import { ObservableArray, CollectionView} from 'wijmo/wijmo';
+import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 
 // message box
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -15,6 +15,7 @@ import { SecurityService } from '../security/security.service';
 
 // model(s)
 import { MstCustomer } from '../model/model.mst.customer';
+import { MstUserRight } from '../model/model.mst.user.right';
 
 @Component({
   templateUrl: './customer.detail.html'
@@ -45,10 +46,20 @@ export class CustomerDetail {
   // public properties
   // =================
 
+
   public title: string = 'Customer Detail';
 
+  //userRight
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
+
   // model(s)
-  public customer : MstCustomer = {
+  public customer: MstCustomer = {
     id: 0,
     customerCode: "",
     lastName: "",
@@ -86,9 +97,9 @@ export class CustomerDetail {
     spouseFirstName: "",
     spouseMiddleName: "",
     spouseBirthDate: this.currentDateString,
-    spouseCitizen : "",
-    spouseEmployer : "",
-    spouseTIN : "",
+    spouseCitizen: "",
+    spouseEmployer: "",
+    spouseTIN: "",
     remarks: "",
     status: "ACTIVE",
     picture: "",
@@ -126,22 +137,52 @@ export class CustomerDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'CUSTOMER DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
   // ng
   public ngOnInit() {
-    if(this.securityService.openPage("CUSTOMER DETAIL") == true) {
+
+    if (this.securityService.openPage("CUSTOMER DETAIL") == true) {
       this.getCustomer();
     } else {
       this.toastr.error("No rights to open page.")
-      setTimeout(() => { this.location.back(); }, 1000);  
+      setTimeout(() => { this.location.back(); }, 1000);
+    }
+
+    this.getUserRights();
+    
+    if (!this.canPrint) {
+      (<HTMLInputElement>document.getElementById("btnPrintCustomer")).disabled = true;
+    }
+    if (!this.canLock) {
+      (<HTMLInputElement>document.getElementById("btnLockCustomer")).disabled = true;
+    }
+    if (!this.canUnlock)  {
+      (<HTMLInputElement>document.getElementById("btnUnlockCustomer")).disabled = true;
+    }
+    if (!this.canSave)  {
+      (<HTMLInputElement>document.getElementById("btnSaveCustomer")).disabled = true;
     }
   }
   public ngOnDestroy() {
-    if( this.customerSub != null) this.customerSub.unsubscribe();
-    if( this.customerSavedSub != null) this.customerSavedSub.unsubscribe();
-    if( this.customerLockedSub != null) this.customerLockedSub.unsubscribe();
-    if( this.customerUnlockedSub != null) this.customerUnlockedSub.unsubscribe();
-    if( this.dropDownsSub != null) this.dropDownsSub.unsubscribe();
-    if( this.customerPictureSub != null) this.customerPictureSub.unsubscribe();
+    if (this.customerSub != null) this.customerSub.unsubscribe();
+    if (this.customerSavedSub != null) this.customerSavedSub.unsubscribe();
+    if (this.customerLockedSub != null) this.customerLockedSub.unsubscribe();
+    if (this.customerUnlockedSub != null) this.customerUnlockedSub.unsubscribe();
+    if (this.dropDownsSub != null) this.dropDownsSub.unsubscribe();
+    if (this.customerPictureSub != null) this.customerPictureSub.unsubscribe();
   }
 
   // ===============
@@ -214,7 +255,7 @@ export class CustomerDetail {
           this.customer.createdBy = data.createdBy;
           this.customer.createdDateTime = data.createdDateTime;
           this.customer.updatedBy = data.updatedBy;
-          this.customer.updatedDateTime = data.updatedDateTime;    
+          this.customer.updatedDateTime = data.updatedDateTime;
 
           this.getDropDowns(data);
         }
@@ -222,7 +263,7 @@ export class CustomerDetail {
   }
 
   // detail combo boxes
-  public getDropDowns(defaultValues: any) : void {
+  public getDropDowns(defaultValues: any): void {
     this.customerService.getDropDowns();
     this.dropDownsSub = this.customerService.dropDownsObservable.subscribe(
       data => {
@@ -280,108 +321,108 @@ export class CustomerDetail {
       }
     );
   }
-  
+
   // ======
   // events
   // ======
 
   // detail operations
-  public btnSaveCustomerClick() : void {
-    let btnSaveCustomer:Element = document.getElementById("btnSaveCustomer");
+  public btnSaveCustomerClick(): void {
+    let btnSaveCustomer: Element = document.getElementById("btnSaveCustomer");
 
-    btnSaveCustomer.setAttribute("disabled","disabled");
+    btnSaveCustomer.setAttribute("disabled", "disabled");
     btnSaveCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
-    
+
     this.customerService.saveCustomer(this.customer);
-    this.customerSavedSub =  this.customerService.customerSavedObservable.subscribe(
+    this.customerSavedSub = this.customerService.customerSavedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Saving successful.");
-              btnSaveCustomer.removeAttribute("disabled");
-              btnSaveCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          } else if(data == 0) {
-              this.toastr.error("Saving failed.");   
-              btnSaveCustomer.removeAttribute("disabled");
-              btnSaveCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          }
+        if (data == 1) {
+          this.toastr.success("Saving successful.");
+          btnSaveCustomer.removeAttribute("disabled");
+          btnSaveCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        } else if (data == 0) {
+          this.toastr.error("Saving failed.");
+          btnSaveCustomer.removeAttribute("disabled");
+          btnSaveCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        }
       }
     );
   }
-  public btnLockCustomerClick() : void {
-    let btnLockCustomer:Element = document.getElementById("btnLockCustomer");
+  public btnLockCustomerClick(): void {
+    let btnLockCustomer: Element = document.getElementById("btnLockCustomer");
 
-    btnLockCustomer.setAttribute("disabled","disabled");
+    btnLockCustomer.setAttribute("disabled", "disabled");
     btnLockCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Locking...";
 
     this.customerService.lockCustomer(this.customer);
-    this.customerLockedSub =  this.customerService.customerLockedObservable.subscribe(
+    this.customerLockedSub = this.customerService.customerLockedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Locking successful.");
-              this.customer.isLocked = true;
-              btnLockCustomer.removeAttribute("disabled");
-              btnLockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
-          } else if(data == 0) {
-              this.toastr.error("Locking failed.");   
-              btnLockCustomer.removeAttribute("disabled");
-              btnLockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
-          }
+        if (data == 1) {
+          this.toastr.success("Locking successful.");
+          this.customer.isLocked = true;
+          btnLockCustomer.removeAttribute("disabled");
+          btnLockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
+        } else if (data == 0) {
+          this.toastr.error("Locking failed.");
+          btnLockCustomer.removeAttribute("disabled");
+          btnLockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
+        }
       }
     );
-  } 
-  public btnUnlockCustomerClick() : void {
-    let btnUnlockCustomer:Element = document.getElementById("btnUnlockCustomer");
+  }
+  public btnUnlockCustomerClick(): void {
+    let btnUnlockCustomer: Element = document.getElementById("btnUnlockCustomer");
 
-    btnUnlockCustomer.setAttribute("disabled","disabled");
+    btnUnlockCustomer.setAttribute("disabled", "disabled");
     btnUnlockCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Unlocking...";
 
     this.customerService.unlockCustomer(this.customer);
     this.customerUnlockedSub = this.customerService.customerUnlockedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Unlocking successful.");
-              this.customer.isLocked = false;
-              btnUnlockCustomer.removeAttribute("disabled");
-              btnUnlockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
-          } else if(data == 0) {
-              this.toastr.error("Unlocking failed.");   
-              btnUnlockCustomer.removeAttribute("disabled");
-              btnUnlockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
-          }
+        if (data == 1) {
+          this.toastr.success("Unlocking successful.");
+          this.customer.isLocked = false;
+          btnUnlockCustomer.removeAttribute("disabled");
+          btnUnlockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
+        } else if (data == 0) {
+          this.toastr.error("Unlocking failed.");
+          btnUnlockCustomer.removeAttribute("disabled");
+          btnUnlockCustomer.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
+        }
       }
     );
   }
-  public btnPrintCustomerClick() : void {
-    this.router.navigate(['/pdf', 'customer',this.customer.id]);   
+  public btnPrintCustomerClick(): void {
+    this.router.navigate(['/pdf', 'customer', this.customer.id]);
   }
-  public btnUploadPictureClick(e: Event) : void {
+  public btnUploadPictureClick(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.customerService.uploadCustomerPicture(target.files[0],"CUSTOMER-" + this.customer.customerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.customerService.uploadCustomerPicture(target.files[0], "CUSTOMER-" + this.customer.customerCode + "-" + Date.now());
       this.customerPictureSub = this.customerService.customerPictureObservable
-          .subscribe( data => {
-            this.customer.picture = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.customer.picture = data.fileUrl;
+        });
     }
   }
 
   // detail tab event (for multiple detail number of fields)
   public tabDetail1Click(index: number) {
     for (var i = 0; i <= this.tabDetail1.length - 1; i++) {
-      if(index==i) this.tabDetail1[i] = true;
+      if (index == i) this.tabDetail1[i] = true;
       else this.tabDetail1[i] = false;
     }
   }
 
   //  full name events
-  public txtFirstNameKeyup() : void {
+  public txtFirstNameKeyup(): void {
     this.customer.fullName = this.customer.lastName + ", " + this.customer.firstName + " " + this.customer.middleName;
   }
-  public txtMiddleNameKeyup() : void {
+  public txtMiddleNameKeyup(): void {
     this.customer.fullName = this.customer.lastName + ", " + this.customer.firstName + " " + this.customer.middleName;
   }
-  public txtLastNameKeyup() : void {
+  public txtLastNameKeyup(): void {
     this.customer.fullName = this.customer.lastName + ", " + this.customer.firstName + " " + this.customer.middleName;
   }
-  
+
 }

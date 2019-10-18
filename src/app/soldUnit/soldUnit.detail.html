@@ -31,23 +31,23 @@
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 60%;" align="right">
-                            <button id="btnPrintSoldUnit" class="btn btn-primary" (click)="btnPrintSoldUnitClick()">
+                            <button id="btnPrintSoldUnit" class="btn btn-primary" (click)="btnPrintSoldUnitClick()" id="btnPrintSoldUnit">
                                 <i class="fa fa-print fa-fw"></i> Print
                             </button>
                             <button id="btnLockSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary"
-                                (click)="btnLockSoldUnitClick()">
+                                (click)="btnLockSoldUnitClick()" id="btnLockSoldUnit">
                                 <i class="fa fa-lock fa-fw"></i> Lock
                             </button>
                             <button id="btnUnlockSoldUnit" [disabled]="!soldUnit.isLocked" class="btn btn-primary"
-                                (click)="btnUnlockSoldUnitClick()">
+                                (click)="btnUnlockSoldUnitClick()" id="btnUnlockSoldUnit">
                                 <i class="fa fa-unlock fa-fw"></i> Unlock
                             </button>
                             <button id="btnSaveSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary"
-                                (click)="btnSaveSoldUnitClick()">
+                                (click)="btnSaveSoldUnitClick()" id="btnSaveSoldUnit">
                                 <i class="fa fa-save fa-fw"></i> Save
                             </button>
                             <button id="btnCancelSoldUnit" [disabled]="!soldUnit.isLocked" class="btn btn-warning"
-                                (click)="btnCancelSoldUnitClick()">
+                                (click)="btnCancelSoldUnitClick()" id="btnCancelSoldUnit">
                                 <i class="fa fa-ban fa-fw"></i> Cancel
                             </button>
                             <button id="btnTransferSoldUnit" [disabled]="!soldUnit.isLocked" class="btn btn-warning"
@@ -691,7 +691,7 @@
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                     <button class="btn btn-primary btn-xs btn-block"
                                         (click)="btnEditSoldUnitCoOwnerClick()" data-toggle="modal"
-                                        data-backdrop="static" data-keyboard="false">
+                                        data-backdrop="static" data-keyboard="false" id="btnEditSoldUnitCoOwner">
                                         <i class="fa fa-edit fa-fw"></i> Edit
                                     </button>
                                 </ng-template>
@@ -700,7 +700,7 @@
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                     <button class="btn btn-danger btn-xs btn-block"
                                         (click)="btnDeleteSoldUnitCoOwnerClick()" data-toggle="modal"
-                                        data-backdrop="static" data-keyboard="false">
+                                        data-backdrop="static" data-keyboard="false" id="btnDeleteSoldUnitCoOwner">
                                         <i class="fa fa-trash fa-fw"></i> Delete
                                     </button>
                                 </ng-template>
@@ -776,7 +776,7 @@
             </div>
             <div class="modal-footer" align="right">
                 <button type="button" id="btnSoldUnitCoOwnerModalSave" class="btn btn-success"
-                    (click)="btnSaveSoldUnitCoOwnerModalClick()">
+                    (click)="btnSaveSoldUnitCoOwnerModalClick()" id="btnSaveSoldUnitCoOwnerModal">
                     <i class="fa fa-save fa-fw"></i> Save
                 </button>
                 <button type="button" id="btnSoldUnitCoOwnerModalClose" class="btn btn-danger"

@@ -1,10 +1,10 @@
 // angular
-import { Component,ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 // wijmo
-import {ObservableArray, CollectionView} from 'wijmo/wijmo';
+import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 
 // message box
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -17,10 +17,10 @@ import { SecurityService } from '../security/security.service';
 import { MstCustomer } from '../model/model.mst.customer';
 
 @Component({
-  templateUrl: './customer.list.html'
+    templateUrl: './customer.list.html'
 })
 export class CustomerList {
-    
+
     // ==================
     // private properties
     // ==================
@@ -29,10 +29,10 @@ export class CustomerList {
     private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
     // list
-    private customersSub : any;
+    private customersSub: any;
 
     // list operations
-    private customersDeletedSub : any;
+    private customersDeletedSub: any;
 
     // =================
     // public properties
@@ -42,7 +42,7 @@ export class CustomerList {
     public filterCustomer: string;
 
     // model(s)
-    public customer : MstCustomer = {
+    public customer: MstCustomer = {
         id: 0,
         customerCode: "",
         lastName: "",
@@ -80,9 +80,9 @@ export class CustomerList {
         spouseFirstName: "",
         spouseMiddleName: "",
         spouseBirthDate: this.currentDateString,
-        spouseCitizen : "",
-        spouseEmployer : "",
-        spouseTIN : "",
+        spouseCitizen: "",
+        spouseEmployer: "",
+        spouseTIN: "",
         remarks: "",
         status: "ACTIVE",
         picture: "",
@@ -94,26 +94,49 @@ export class CustomerList {
     };
 
     // list data source
-    public fgdCustomersData : ObservableArray;
-    public fgdCustomersCollection : CollectionView;
+    public fgdCustomersData: ObservableArray;
+    public fgdCustomersCollection: CollectionView;
 
     // modals
-    public mdlCustomerDeleteShow : boolean = false;
+    public mdlCustomerDeleteShow: boolean = false;
 
+    // userrights
+    private canEdit: boolean = false;
+    private canSave: boolean = false;
+    private canLock: boolean = false;
+    private canUnlock: boolean = false;
+    private canPrint: boolean = false;
+    private canDelete: boolean = false;
     // =======
     // angular
     // =======
 
     //constructor
     constructor(
-        private customerService : CustomerService,
-        private toastr : ToastsManager,
-        private viewContainer : ViewContainerRef,
-        private router : Router,
+        private customerService: CustomerService,
+        private toastr: ToastsManager,
+        private viewContainer: ViewContainerRef,
+        private router: Router,
         private securityService: SecurityService,
         private location: Location
     ) {
         this.toastr.setRootViewContainerRef(viewContainer);
+    }
+
+
+    public getUserRights() {
+        var userRightsData = localStorage.getItem('userRights')
+        var userRights = JSON.parse(userRightsData);
+        for (var i = 0; i < userRights.length; i++) {
+            if (userRights[i].page == 'CUSTOMER LIST') {
+                this.canEdit = userRights[i].canEdit;
+                this.canSave = userRights[i].canSave;
+                this.canLock = userRights[i].canLock;
+                this.canUnlock = userRights[i].canUnlock;
+                this.canPrint = userRights[i].canPrint;
+                this.canDelete = userRights[i].canDelete;
+            }
+        }
     }
 
     // ng
@@ -121,16 +144,25 @@ export class CustomerList {
         this.fgdCustomersData = new ObservableArray();
         this.fgdCustomersCollection = new CollectionView(this.fgdCustomersData);
 
-        if(this.securityService.openPage("CUSTOMER LIST") == true) {
+        if (this.securityService.openPage("CUSTOMER LIST") == true) {
             this.getCustomers();
         } else {
             this.toastr.error("No rights to open page.")
-            setTimeout(() => { this.location.back(); }, 1000);  
+            setTimeout(() => { this.location.back(); }, 1000);
+        }
+
+        this.getUserRights();
+
+        if (!this.canEdit) {
+            (<HTMLInputElement>document.getElementById("btnEditCustomer")).disabled = true;
+        }
+        if (!this.canDelete) {
+            (<HTMLInputElement>document.getElementById("btnDeleteCustomer")).disabled = true;
         }
     }
     ngOnDestroy() {
-        if( this.customersSub != null) this.customersSub.unsubscribe();
-        if( this.customersDeletedSub != null) this.customersDeletedSub.unsubscribe();
+        if (this.customersSub != null) this.customersSub.unsubscribe();
+        if (this.customersDeletedSub != null) this.customersDeletedSub.unsubscribe();
     }
 
     // ==============
@@ -138,20 +170,20 @@ export class CustomerList {
     // ==============
 
     // customer list
-    public getCustomers() : void {
+    public getCustomers(): void {
         let customers = new ObservableArray();
 
         this.customerService.getCustomers();
 
         this.customersSub = this.customerService.customersObservable.subscribe(
-          data => {
-            if (data.length > 0) {
-              this.fgdCustomersData = data;
-              this.fgdCustomersCollection = new CollectionView(this.fgdCustomersData);
-              this.fgdCustomersCollection.pageSize = 15;
-              this.fgdCustomersCollection.trackChanges = true;  
+            data => {
+                if (data.length > 0) {
+                    this.fgdCustomersData = data;
+                    this.fgdCustomersCollection = new CollectionView(this.fgdCustomersData);
+                    this.fgdCustomersCollection.pageSize = 15;
+                    this.fgdCustomersCollection.trackChanges = true;
+                }
             }
-          }
         );
     }
 
@@ -160,62 +192,62 @@ export class CustomerList {
     // ======
 
     // customer list operations
-    public btnAddCustomerClick() : void {
-        let btnAddCustomer:Element = document.getElementById("btnAddCustomer");
+    public btnAddCustomerClick(): void {
+        let btnAddCustomer: Element = document.getElementById("btnAddCustomer");
 
-        btnAddCustomer.setAttribute("disabled","true");
+        btnAddCustomer.setAttribute("disabled", "true");
         btnAddCustomer.innerHTML = "<i class='fa fa-plus fa-fw'></i> Adding...";
 
         this.customerService.addCustomer(this.customer, btnAddCustomer);
     }
-    public btnEditCustomerClick() : void {
+    public btnEditCustomerClick(): void {
         let selectedCustomer = this.fgdCustomersCollection.currentItem;
         this.router.navigate(['/customer', selectedCustomer.id]);
     }
-    public btnDeleteCustomerClick() : void {
+    public btnDeleteCustomerClick(): void {
         this.mdlCustomerDeleteShow = true;
     }
 
     // customer delete modal operations
-    public btnOkCustomerDeleteModalClick() : void {
-        let btnOkCustomerDeleteModal:Element = document.getElementById("btnOkCustomerDeleteModal");
-        let btnCloseCustomerDeleteModal:Element = document.getElementById("btnCloseCustomerDeleteModal");
-    
+    public btnOkCustomerDeleteModalClick(): void {
+        let btnOkCustomerDeleteModal: Element = document.getElementById("btnOkCustomerDeleteModal");
+        let btnCloseCustomerDeleteModal: Element = document.getElementById("btnCloseCustomerDeleteModal");
+
         let selectedCustomer = this.fgdCustomersCollection.currentItem;
-    
-        btnOkCustomerDeleteModal.setAttribute("disabled","disabled");
-        btnCloseCustomerDeleteModal.setAttribute("disabled","disabled");
-    
-        this.customerService.deleteCustomer(selectedCustomer.id,);
+
+        btnOkCustomerDeleteModal.setAttribute("disabled", "disabled");
+        btnCloseCustomerDeleteModal.setAttribute("disabled", "disabled");
+
+        this.customerService.deleteCustomer(selectedCustomer.id);
         this.customersDeletedSub = this.customerService.customerDeletedObservable.subscribe(
             data => {
-                if(data == 1) {
+                if (data == 1) {
                     this.toastr.success("Delete successful.");
-                    this.fgdCustomersCollection.remove​(selectedCustomer);
-    
+                    this.fgdCustomersCollection.remove(selectedCustomer);
+
                     btnOkCustomerDeleteModal.removeAttribute("disabled");
                     btnCloseCustomerDeleteModal.removeAttribute("disabled");
-    
+
                     this.mdlCustomerDeleteShow = false
-                } else if(data == 0) {
-                    this.toastr.error("Delete failed.");   
-    
+                } else if (data == 0) {
+                    this.toastr.error("Delete failed.");
+
                     btnOkCustomerDeleteModal.removeAttribute("disabled");
                     btnCloseCustomerDeleteModal.removeAttribute("disabled");
                 }
             }
         );
     }
-    public btnCloseCustomerDeleteModalClick() : void {
+    public btnCloseCustomerDeleteModalClick(): void {
         this.mdlCustomerDeleteShow = false;
     }
-    public btnCSVReportClick() : void {
+    public btnCSVReportClick(): void {
         var fileName = "customer.csv";
 
         var collection = this.fgdCustomersCollection;
         var data = "Customer List" + "\r\n\n";
         var columns = "";
-        
+
         // csv columns
         for (var s in collection.items[0]) columns += s + ",";
         columns = columns.slice(0, -1);
@@ -224,19 +256,19 @@ export class CustomerList {
         // csv records
         collection.moveToFirstPage();
         for (var p = 0; p < collection.pageCount; p++) {
-          for (var i = 0; i < collection.items.length; i++) {
-            var row = "";
-            for (var s in collection.items[i]) {
-              row += "\"" + collection.items[i][s] + "\",";
+            for (var i = 0; i < collection.items.length; i++) {
+                var row = "";
+                for (var s in collection.items[i]) {
+                    row += "\"" + collection.items[i][s] + "\",";
+                }
+                row.slice(0, row.length - 1);
+                data += row + "\r\n";
             }
-            row.slice(0, row.length - 1);
-            data += row + "\r\n";
-          }
-          collection.moveToNextPage();
+            collection.moveToNextPage();
         }
 
         // Create the csv blob
-        var csvData = new Blob([data], {type: 'text/csv;charset=utf-8;'});
+        var csvData = new Blob([data], { type: 'text/csv;charset=utf-8;' });
 
         // Create a link then click the link to down load the csv blob
         var csvURL = window.URL.createObjectURL(csvData);

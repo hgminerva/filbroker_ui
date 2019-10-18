@@ -25,6 +25,14 @@ export class CommissionList {
   // private properties
   // ==================
 
+  // user rights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   private currentDate = new Date();
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
@@ -93,6 +101,22 @@ export class CommissionList {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  
+public getUserRights() {
+  var userRightsData = localStorage.getItem('userRights')
+  var userRights = JSON.parse(userRightsData);
+  for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'COMMISSION LIST') {
+          this.canEdit = userRights[i].canEdit;
+          this.canSave = userRights[i].canSave;
+          this.canLock = userRights[i].canLock;
+          this.canUnlock = userRights[i].canUnlock;
+          this.canPrint = userRights[i].canPrint;
+          this.canDelete = userRights[i].canDelete;
+      }
+  }
+}
+
   // ng
   ngOnInit() {
     this.fgdCommissionData = new ObservableArray();
@@ -103,6 +127,15 @@ export class CommissionList {
     } else {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
+    }
+    this.getUserRights();
+
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnEditCommission")).disabled = true;
+    }
+
+    if (!this.canDelete) {
+      (<HTMLInputElement>document.getElementById("btnDeleteCommission")).disabled = true;
     }
   }
   ngOnDestroy() {

@@ -20,10 +20,18 @@ import { MstBroker } from '../model/model.mst.broker';
   templateUrl: './broker.detail.html'
 })
 export class BrokerDetail {
-  
+
   // ==================
   // private properties
   // ==================
+
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
 
   // list operation
   private brokerSub: any;
@@ -112,14 +120,47 @@ export class BrokerDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'BROKER DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
   // ng
   ngOnInit() {
-    if(this.securityService.openPage("BROKER DETAIL") == true) {
+    if (this.securityService.openPage("BROKER DETAIL") == true) {
       this.getBroker();
     } else {
       this.toastr.error("No rights to open page.")
-      setTimeout(() => { this.location.back(); }, 1000);  
+      setTimeout(() => { this.location.back(); }, 1000);
     }
+
+    this.getUserRights();
+
+    if (!this.canPrint) {
+      (<HTMLInputElement>document.getElementById("btnPrintBroker")).disabled = true;
+    }
+
+    if (!this.canLock) {
+      (<HTMLInputElement>document.getElementById("btnLockBroker")).disabled = true;
+    }
+
+    if (!this.canUnlock) {
+      (<HTMLInputElement>document.getElementById("btnUnlockBroker")).disabled = true;
+    }
+
+    if (!this.canSave) {
+      (<HTMLInputElement>document.getElementById("btnSaveBroker")).disabled = true;
+    }
+
   }
   ngOnDestroy() {
     if (this.brokerSub != null) this.brokerSub.unsubscribe();
@@ -312,76 +353,76 @@ export class BrokerDetail {
     );
   }
   public btnPrintBrokerClick(): void {
-    this.router.navigate(['/pdf', 'broker',this.broker.id]); 
+    this.router.navigate(['/pdf', 'broker', this.broker.id]);
   }
-  public btnUploadPictureClick(e: Event) : void {
+  public btnUploadPictureClick(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.brokerService.uploadBrokerPicture(target.files[0],"BROKER-" + this.broker.brokerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.brokerService.uploadBrokerPicture(target.files[0], "BROKER-" + this.broker.brokerCode + "-" + Date.now());
       this.brokerPictureSub = this.brokerService.brokerPictureObservable
-          .subscribe( data => {
-            this.broker.picture = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.broker.picture = data.fileUrl;
+        });
     }
   }
 
   // detail tab index click
   public tabDetail1Click(index: number) {
     for (var i = 0; i <= this.tabDetail1.length - 1; i++) {
-      if(index==i) this.tabDetail1[i] = true;
+      if (index == i) this.tabDetail1[i] = true;
       else this.tabDetail1[i] = false;
     }
   }
 
   // attachments
-  public btnOpenBrokerAttachment1Click(e: Event) : void {
+  public btnOpenBrokerAttachment1Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.brokerService.uploadBrokerPicture(target.files[0],"BROKERFILE1-" + this.broker.brokerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.brokerService.uploadBrokerPicture(target.files[0], "BROKERFILE1-" + this.broker.brokerCode + "-" + Date.now());
       this.brokerPictureSub = this.brokerService.brokerPictureObservable
-          .subscribe( data => {
-            this.broker.attachment1 = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.broker.attachment1 = data.fileUrl;
+        });
     }
   }
-  public btnOpenBrokerAttachment2Click(e: Event) : void {
+  public btnOpenBrokerAttachment2Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.brokerService.uploadBrokerPicture(target.files[0],"BROKERFILE2-" + this.broker.brokerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.brokerService.uploadBrokerPicture(target.files[0], "BROKERFILE2-" + this.broker.brokerCode + "-" + Date.now());
       this.brokerPictureSub = this.brokerService.brokerPictureObservable
-          .subscribe( data => {
-            this.broker.attachment2 = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.broker.attachment2 = data.fileUrl;
+        });
     }
   }
-  public btnOpenBrokerAttachment3Click(e: Event) : void {
+  public btnOpenBrokerAttachment3Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.brokerService.uploadBrokerPicture(target.files[0],"BROKERFILE3-" + this.broker.brokerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.brokerService.uploadBrokerPicture(target.files[0], "BROKERFILE3-" + this.broker.brokerCode + "-" + Date.now());
       this.brokerPictureSub = this.brokerService.brokerPictureObservable
-          .subscribe( data => {
-            this.broker.attachment3 = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.broker.attachment3 = data.fileUrl;
+        });
     }
   }
-  public btnOpenBrokerAttachment4Click(e: Event) : void {
+  public btnOpenBrokerAttachment4Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.brokerService.uploadBrokerPicture(target.files[0],"BROKERFILE4-" + this.broker.brokerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.brokerService.uploadBrokerPicture(target.files[0], "BROKERFILE4-" + this.broker.brokerCode + "-" + Date.now());
       this.brokerPictureSub = this.brokerService.brokerPictureObservable
-          .subscribe( data => {
-            this.broker.attachment4 = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.broker.attachment4 = data.fileUrl;
+        });
     }
   }
-  public btnOpenBrokerAttachment5Click(e: Event) : void {
+  public btnOpenBrokerAttachment5Click(e: Event): void {
     var target: HTMLInputElement = e.target as HTMLInputElement;
-    if(target.files.length > 0) {
-      this.brokerService.uploadBrokerPicture(target.files[0],"BROKERFILE5-" + this.broker.brokerCode + "-" + Date.now());
+    if (target.files.length > 0) {
+      this.brokerService.uploadBrokerPicture(target.files[0], "BROKERFILE5-" + this.broker.brokerCode + "-" + Date.now());
       this.brokerPictureSub = this.brokerService.brokerPictureObservable
-          .subscribe( data => {
-            this.broker.attachment5 = data.fileUrl;
-          });
+        .subscribe(data => {
+          this.broker.attachment5 = data.fileUrl;
+        });
     }
   }
 }

@@ -30,13 +30,13 @@
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 40%;" align="right">
-                            <button id="btnLockUnit" [disabled]="unit.isLocked" class="btn btn-primary" (click)="btnLockUnitClick()">
+                            <button id="btnLockUnit" [disabled]="unit.isLocked" class="btn btn-primary" (click)="btnLockUnitClick()" id="btnLockUnit">
                                 <i class="fa fa-lock fa-fw"></i> Lock
                             </button>
-                            <button id="btnUnlockUnit" [disabled]="!unit.isLocked" class="btn btn-primary" (click)="btnUnlockUnitClick()">
+                            <button id="btnUnlockUnit" [disabled]="!unit.isLocked" class="btn btn-primary" (click)="btnUnlockUnitClick()" id="btnUnlockUnit">
                                 <i class="fa fa-unlock fa-fw"></i> Unlock
                             </button>
-                            <button id="btnSaveUnit" [disabled]="unit.isLocked" class="btn btn-primary" (click)="btnSaveUnitClick()">
+                            <button id="btnSaveUnit" [disabled]="unit.isLocked" class="btn btn-primary" (click)="btnSaveUnitClick()" id="btnSaveUnit">
                                 <i class="fa fa-save fa-fw"></i> Save
                             </button>
                             <button id="btnCloseUnit" class="btn btn-danger" routerLink="/unit">

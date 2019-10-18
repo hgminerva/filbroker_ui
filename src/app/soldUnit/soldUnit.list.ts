@@ -108,6 +108,14 @@ export class SoldUnitList {
   // modal
   public mdlSoldUnitDeleteShow : boolean = false;
 
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   // =======
   // angular
   // =======
@@ -123,7 +131,20 @@ export class SoldUnitList {
 ) {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
-
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+        if (userRights[i].page == 'CUSTOMER DETAIL') {
+            this.canEdit = userRights[i].canEdit;
+            this.canSave = userRights[i].canSave;
+            this.canLock = userRights[i].canLock;
+            this.canUnlock = userRights[i].canUnlock;
+            this.canPrint = userRights[i].canPrint;
+            this.canDelete = userRights[i].canDelete;
+        }
+    }
+}
   // ng
   ngOnInit() {
     this.fgdSoldUnitData = new ObservableArray();
@@ -135,6 +156,16 @@ export class SoldUnitList {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
     } 
+
+    this.getUserRights();
+
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnEditSoldUnit")).disabled = true;
+    }
+
+    if (!this.canDelete) {
+      (<HTMLInputElement>document.getElementById("btnDeleteSoldUnit")).disabled = true;
+    }
   }
   ngOnDestroy() {
     if( this.soldUnitsSub != null) this.soldUnitsSub.unsubscribe();

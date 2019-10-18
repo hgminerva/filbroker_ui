@@ -28,16 +28,16 @@
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 40%;" align="right">
-                            <button id="btnPrintCommission" [disabled]="!commission.isLocked" class="btn btn-primary" (click)="btnPrintCommissionClick()">
+                            <button id="btnPrintCommission" [disabled]="!commission.isLocked" class="btn btn-primary" (click)="btnPrintCommissionClick()" id="btnPrintCommission">
                                 <i class="fa fa-print fa-fw"></i> Print
                             </button>
-                            <button id="btnLockCommission" [disabled]="commission.isLocked" class="btn btn-primary" (click)="btnLockCommissionClick()">
+                            <button id="btnLockCommission" [disabled]="commission.isLocked" class="btn btn-primary" (click)="btnLockCommissionClick()" id="btnLockCommission">
                                 <i class="fa fa-lock fa-fw"></i> Lock
                             </button>
-                            <button id="btnUnlockCommission" [disabled]="!commission.isLocked" class="btn btn-primary" (click)="btnUnlockCommissionClick()">
+                            <button id="btnUnlockCommission" [disabled]="!commission.isLocked" class="btn btn-primary" (click)="btnUnlockCommissionClick()" id="btnUnlockCommission"> 
                                 <i class="fa fa-unlock fa-fw"></i> Unlock
                             </button>
-                            <button id="btnSaveCommission" [disabled]="commission.isLocked" class="btn btn-primary" (click)="btnSaveCommissionClick()">
+                            <button id="btnSaveCommission" [disabled]="commission.isLocked" class="btn btn-primary" (click)="btnSaveCommissionClick()" id="btnSaveCommission">
                                 <i class="fa fa-save fa-fw"></i> Save
                             </button>
                             <button id="btnCloseCommission" class="btn btn-danger" routerLink="/commission">

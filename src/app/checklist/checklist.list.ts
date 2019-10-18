@@ -25,6 +25,15 @@ export class ChecklistList {
   // ==================
   // private properties
   // ==================
+
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   private currentDate = new Date();
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
@@ -90,6 +99,21 @@ export class ChecklistList {
   ){
     this.toastr.setRootViewContainerRef(viewContainer);
   }
+
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+        if (userRights[i].page == 'CUSTOMER DETAIL') {
+            this.canEdit = userRights[i].canEdit;
+            this.canSave = userRights[i].canSave;
+            this.canLock = userRights[i].canLock;
+            this.canUnlock = userRights[i].canUnlock;
+            this.canPrint = userRights[i].canPrint;
+            this.canDelete = userRights[i].canDelete;
+        }
+    }
+}
   
   // ng
   ngOnInit() {
@@ -101,6 +125,17 @@ export class ChecklistList {
     } else {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
+    }
+
+    this.getUserRights();
+
+    
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnEditChecklist")).disabled = true;
+    }
+
+    if (!this.canDelete) {
+      (<HTMLInputElement>document.getElementById("btnDeleteChecklist")).disabled = true;
     }
   }
   ngOnDestroy(){

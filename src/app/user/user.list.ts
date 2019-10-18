@@ -31,6 +31,14 @@ export class UserList {
     // list
     private usersSub : any;
 
+    // userrights
+    private canEdit: boolean = false;
+    private canSave: boolean = false;
+    private canLock: boolean = false;
+    private canUnlock: boolean = false;
+    private canPrint: boolean = false;
+    private canDelete: boolean = false;
+
     // =================
     // public properties
     // =================
@@ -68,6 +76,21 @@ export class UserList {
         this.toastr.setRootViewContainerRef(viewContainer);
     }
 
+    public getUserRights() {
+        var userRightsData = localStorage.getItem('userRights')
+        var userRights = JSON.parse(userRightsData);
+        for (var i = 0; i < userRights.length; i++) {
+            if (userRights[i].page == 'USER LIST') {
+                this.canEdit = userRights[i].canEdit;
+                this.canSave = userRights[i].canSave;
+                this.canLock = userRights[i].canLock;
+                this.canUnlock = userRights[i].canUnlock;
+                this.canPrint = userRights[i].canPrint;
+                this.canDelete = userRights[i].canDelete;
+            }
+        }
+    }
+
     // ng
     ngOnInit() {
         this.fgdUsersData = new ObservableArray();
@@ -79,6 +102,13 @@ export class UserList {
             this.toastr.error("No rights to open page.")
             setTimeout(() => { this.location.back(); }, 1000);  
         } 
+
+        this.getUserRights();
+
+        if (!this.canEdit) {
+            (<HTMLInputElement>document.getElementById("btnEditUser")).disabled = true;
+        }
+   
     }
     ngOnDestroy() {
         if( this.usersSub != null) this.usersSub.unsubscribe();

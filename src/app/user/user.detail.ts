@@ -1,10 +1,10 @@
 // angular
-import { Component,ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 // wijmo
-import {ObservableArray, CollectionView} from 'wijmo/wijmo';
+import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 
 // message box
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -27,20 +27,29 @@ export class UserDetail {
   // ==================
 
   // detail
-  private userSub : any;
+  private userSub: any;
 
   // detail operations
-  private userSavedSub : any;
+  private userSavedSub: any;
 
   // detail combo boxes
-  private userStatusesSub : any;
+  private userStatusesSub: any;
 
   // detail line1 (user rights)
-  private userRightsSub : any;
+  private userRightsSub: any;
 
   // detail line1 (user rights) operations
-  private userRightDeletedSub : any;
-  private userRightPagesSub : any;
+  private userRightDeletedSub: any;
+  private userRightPagesSub: any;
+
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
 
   // =================
   // public properties
@@ -49,11 +58,11 @@ export class UserDetail {
   public title: string = 'User Detail';
 
   // combo boxes data
-  public cmbUserStatusData : ObservableArray;
+  public cmbUserStatusData: ObservableArray;
   public cmbUserRightPagesData: ObservableArray;
 
   // model(s)
-  public user : MstUser = {
+  public user: MstUser = {
     id: 0,
     username: "",
     fullName: "",
@@ -62,31 +71,31 @@ export class UserDetail {
     aspNetId: ""
   };
   public userRight: MstUserRight = {
-    id:  0, 
-    userId:  0,
+    id: 0,
+    userId: 0,
     user: "",
     pageId: 0,
-    page:  "",
+    page: "",
     pageUrl: "",
     canEdit: false,
     canSave: false,
     canLock: false,
     canUnlock: false,
-    canPrint: false,  
+    canPrint: false,
     canDelete: false
   };
 
   // detail line1 (user rights) list
-  public fgdUserRightsData : ObservableArray;
-  public fgdUserRightsCollection : CollectionView;
+  public fgdUserRightsData: ObservableArray;
+  public fgdUserRightsCollection: CollectionView;
 
   // modal(s)
-  public mdlUserRightDeleteShow : boolean = false;
-  public mdlUserRightEditShow : boolean = false;
-  public mdlUserRightCopyShow : boolean = false;
+  public mdlUserRightDeleteShow: boolean = false;
+  public mdlUserRightEditShow: boolean = false;
+  public mdlUserRightCopyShow: boolean = false;
 
   // variable use to copy user rights
-  public copyUserRights : string;
+  public copyUserRights: string;
 
   // =======
   // angular
@@ -105,32 +114,61 @@ export class UserDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public get_UserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'CUSTOMER DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
   // ng
   ngOnInit() {
     this.fgdUserRightsData = new ObservableArray();
     this.fgdUserRightsCollection = new CollectionView(this.fgdUserRightsData);
 
-    if(this.securityService.openPage("USER DETAIL") == true) {
+    if (this.securityService.openPage("USER DETAIL") == true) {
       this.getUser();
     } else {
-        this.toastr.error("No rights to open page.")
-        setTimeout(() => { this.location.back(); }, 1000);  
-    } 
+      this.toastr.error("No rights to open page.")
+      setTimeout(() => { this.location.back(); }, 1000);
+    }
+
+    this.get_UserRights();
+
+    if (!this.canSave) {
+      (<HTMLInputElement>document.getElementById("btnSaveUser")).disabled = true;
+    }
+    
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnEditUserRights")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveUserRightEdit")).disabled = true;
+    }
+
+    if (!this.canDelete) {
+      (<HTMLInputElement>document.getElementById("btnDeleteUserRights")).disabled = true;
+    }
   }
   ngOnDestroy() {
-    if( this.userSub != null) this.userSub.unsubscribe();
-    if( this.userSavedSub != null) this.userSavedSub.unsubscribe();
-    if( this.userStatusesSub != null) this.userStatusesSub.unsubscribe();
-    if( this.userRightsSub != null) this.userRightsSub.unsubscribe();
-    if( this.userRightDeletedSub != null) this.userRightDeletedSub.unsubscribe();
-    if( this.userRightPagesSub != null) this.userRightPagesSub.unsubscribe();
+    if (this.userSub != null) this.userSub.unsubscribe();
+    if (this.userSavedSub != null) this.userSavedSub.unsubscribe();
+    if (this.userStatusesSub != null) this.userStatusesSub.unsubscribe();
+    if (this.userRightsSub != null) this.userRightsSub.unsubscribe();
+    if (this.userRightDeletedSub != null) this.userRightDeletedSub.unsubscribe();
+    if (this.userRightPagesSub != null) this.userRightPagesSub.unsubscribe();
   }
 
   // ===============
   // private methods
   // ===============
 
-  private getIdParameter() : number {
+  private getIdParameter(): number {
     let id = 0;
     this.activatedRoute.params.subscribe(params => {
       id = params['id'];
@@ -147,22 +185,22 @@ export class UserDetail {
     this.userService.getUser(this.getIdParameter());
     this.userSub = this.userService.userObservable
       .subscribe(
-          data => {
-            this.user.id= data.id;
-            this.user.username = data.username;
-            this.user.fullName = data.fullName;
-            this.user.password = data.password;
-            this.user.status = data.status;
-            this.user.aspNetId= data.aspNetId;
+        data => {
+          this.user.id = data.id;
+          this.user.username = data.username;
+          this.user.fullName = data.fullName;
+          this.user.password = data.password;
+          this.user.status = data.status;
+          this.user.aspNetId = data.aspNetId;
 
-            this.getUserStatuses(data);
-            this.getUserRights();
-          }
+          this.getUserStatuses(data);
+          this.getUserRights();
+        }
       );
   }
-  
+
   // detail comboxes
-  public getUserStatuses(detail : any) : void {
+  public getUserStatuses(detail: any): void {
     this.userService.getDropDowns();
     this.userStatusesSub = this.userService.dropDownsObservable.subscribe(
       data => {
@@ -188,7 +226,7 @@ export class UserDetail {
   }
 
   // detail line1 (user rights)
-  public getUserRights() : void {
+  public getUserRights(): void {
     this.userService.getUserRightsPerUser(this.user.id);
 
     this.userRightsSub = this.userService.userRightsObservable.subscribe(
@@ -196,13 +234,13 @@ export class UserDetail {
         this.fgdUserRightsData = data;
         this.fgdUserRightsCollection = new CollectionView(this.fgdUserRightsData);
         this.fgdUserRightsCollection.pageSize = 15;
-        this.fgdUserRightsCollection.trackChanges = true;  
+        this.fgdUserRightsCollection.trackChanges = true;
       }
     );
   }
 
   // detail line1 (user rights) combo boxes
-  public getUserRightPages() : void {
+  public getUserRightPages(): void {
     this.userService.getPages();
     this.userRightPagesSub = this.userService.pagesObservable.subscribe(
       data => {
@@ -222,7 +260,7 @@ export class UserDetail {
           this.userRight.pageId = selectedUserRight.pageId;
         }, 100);
       }
-    );    
+    );
   }
 
   // ======
@@ -230,31 +268,31 @@ export class UserDetail {
   // ======
 
   // detail operations
-  public btnSaveUserClick() : void {
-    let btnSaveUser:Element = document.getElementById("btnSaveUser");
+  public btnSaveUserClick(): void {
+    let btnSaveUser: Element = document.getElementById("btnSaveUser");
 
-    btnSaveUser.setAttribute("disabled","disabled");
+    btnSaveUser.setAttribute("disabled", "disabled");
     btnSaveUser.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
-    
+
     this.userService.saveUser(this.user);
-    this.userSub =  this.userService.userSavedObservable.subscribe(
+    this.userSub = this.userService.userSavedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Saving successful.");
-              btnSaveUser.removeAttribute("disabled");
-              btnSaveUser.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          } else if(data == 0) {
-              this.toastr.error("Saving failed.");   
-              btnSaveUser.removeAttribute("disabled");
-              btnSaveUser.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          }
+        if (data == 1) {
+          this.toastr.success("Saving successful.");
+          btnSaveUser.removeAttribute("disabled");
+          btnSaveUser.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        } else if (data == 0) {
+          this.toastr.error("Saving failed.");
+          btnSaveUser.removeAttribute("disabled");
+          btnSaveUser.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        }
       }
     );
   }
 
   // detail line1 (user rights) list operations
-  public btnAddUserRightsClick() : void {
-    this.userRight.id = 0; 
+  public btnAddUserRightsClick(): void {
+    this.userRight.id = 0;
     this.userRight.userId = this.user.id;
     this.userRight.user = this.user.username;
     this.userRight.pageId = 0;
@@ -270,10 +308,10 @@ export class UserDetail {
 
     this.getUserRightPages();
   }
-  public btnCopyUserRightsClick() : void {
-    this.mdlUserRightCopyShow = true;    
+  public btnCopyUserRightsClick(): void {
+    this.mdlUserRightCopyShow = true;
   }
-  public btnEditUserRightsClick() : void {
+  public btnEditUserRightsClick(): void {
     let selectedUserRight = this.fgdUserRightsCollection.currentItem;
 
     this.userRight.id = selectedUserRight.id;
@@ -285,24 +323,24 @@ export class UserDetail {
     this.userRight.canSave = selectedUserRight.canSave;
     this.userRight.canLock = selectedUserRight.canLock;
     this.userRight.canUnlock = selectedUserRight.canUnlock;
-    this.userRight.canPrint = selectedUserRight.canPrint;  
+    this.userRight.canPrint = selectedUserRight.canPrint;
     this.userRight.canDelete = selectedUserRight.canDelete;
 
     this.mdlUserRightEditShow = true
 
     this.getUserRightPages();
   }
-  public btnDeleteUserRightsClick() : void {
+  public btnDeleteUserRightsClick(): void {
     this.mdlUserRightDeleteShow = true;
   }
 
   // detail line1 (user rights) delete modal operations
-  public btnOkUserRightDeleteModalClick() : void {
+  public btnOkUserRightDeleteModalClick(): void {
     let btnOkUserRightDeleteModal: Element = document.getElementById("btnOkUserRightDeleteModal");
     let btnCloseUserRightDeleteModal: Element = document.getElementById("btnCloseUserRightDeleteModal");
 
-    btnOkUserRightDeleteModal.setAttribute("disabled","disabled");
-    btnCloseUserRightDeleteModal.setAttribute("disabled","disabled");
+    btnOkUserRightDeleteModal.setAttribute("disabled", "disabled");
+    btnCloseUserRightDeleteModal.setAttribute("disabled", "disabled");
 
     let selectedUserRight = this.fgdUserRightsCollection.currentItem;
 
@@ -312,12 +350,12 @@ export class UserDetail {
       data => {
         if (data == 1) {
           this.toastr.success("Delete successful.");
-          this.fgdUserRightsCollection.remove​(selectedUserRight);
+          this.fgdUserRightsCollection.remove(selectedUserRight);
 
           btnOkUserRightDeleteModal.removeAttribute("disabled");
           btnCloseUserRightDeleteModal.removeAttribute("disabled");
 
-          this.mdlUserRightDeleteShow = false; 
+          this.mdlUserRightDeleteShow = false;
         } else if (data == 0) {
           this.toastr.error("Delete failed.");
 
@@ -327,49 +365,49 @@ export class UserDetail {
       }
     );
   }
-  public btnCloseUserRightDeleteModalClick() : void {
+  public btnCloseUserRightDeleteModalClick(): void {
     this.mdlUserRightDeleteShow = false;
   }
 
   // detail line1 (user rights) copy modal operations
-  public btnOkUserRightCopyModalClick() : void {
+  public btnOkUserRightCopyModalClick(): void {
     // TO BE IMPLEMENTED!!!!!!!!
-    this.mdlUserRightCopyShow = false;    
+    this.mdlUserRightCopyShow = false;
   }
-  public btnCloseUserRightCopyModalClick() : void {
+  public btnCloseUserRightCopyModalClick(): void {
     this.mdlUserRightCopyShow = false;
   }
 
   // detail line1 (user rights) edit modal operations
-  public btnSaveUserRightEditClick() : void {
-    let btnSaveUserRightEdit:Element = document.getElementById("btnSaveUserRightEdit");
-    let btnCloseUserRightEdit:Element = document.getElementById("btnCloseUserRightEdit");
+  public btnSaveUserRightEditClick(): void {
+    let btnSaveUserRightEdit: Element = document.getElementById("btnSaveUserRightEdit");
+    let btnCloseUserRightEdit: Element = document.getElementById("btnCloseUserRightEdit");
 
-    btnSaveUserRightEdit.setAttribute("disabled","disabled");
+    btnSaveUserRightEdit.setAttribute("disabled", "disabled");
     btnSaveUserRightEdit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
-    btnCloseUserRightEdit.setAttribute("disabled","disabled");
+    btnCloseUserRightEdit.setAttribute("disabled", "disabled");
 
     this.userService.saveUserRight(this.userRight);
-    this.userSub =  this.userService.userRightSavedObservable.subscribe(
+    this.userSub = this.userService.userRightSavedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Saving successful.");
-              btnSaveUserRightEdit.removeAttribute("disabled");
-              btnSaveUserRightEdit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-              btnCloseUserRightEdit.removeAttribute("disabled");
+        if (data == 1) {
+          this.toastr.success("Saving successful.");
+          btnSaveUserRightEdit.removeAttribute("disabled");
+          btnSaveUserRightEdit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+          btnCloseUserRightEdit.removeAttribute("disabled");
 
-              this.mdlUserRightEditShow = false;
-              this.getUserRights();
-          } else if(data == 0) {
-              this.toastr.error("Saving failed.");   
-              btnSaveUserRightEdit.removeAttribute("disabled");
-              btnSaveUserRightEdit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-              btnCloseUserRightEdit.removeAttribute("disabled");
-          }
+          this.mdlUserRightEditShow = false;
+          this.getUserRights();
+        } else if (data == 0) {
+          this.toastr.error("Saving failed.");
+          btnSaveUserRightEdit.removeAttribute("disabled");
+          btnSaveUserRightEdit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+          btnCloseUserRightEdit.removeAttribute("disabled");
+        }
       }
     );
   }
-  public btnCloseUserRightEditClick() : void {
+  public btnCloseUserRightEditClick(): void {
     this.mdlUserRightEditShow = false;
   }
 }

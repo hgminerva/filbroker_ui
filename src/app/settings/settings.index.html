@@ -33,7 +33,7 @@
                     </tr>
                 </table>
             </div>
-
+ 
             <!-- fields  -->
             <div class="card-body">
 
@@ -184,14 +184,14 @@
                 <wj-flex-grid #fgdDropDowns [itemsSource]="fgdDropDownsCollection" [selectionMode]="3">
                     <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditDropDownClick()">
+                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditDropDownClick()" id="btnEditDropDown">
                                 <i class="fa fa-edit fa-fw"></i> Edit
                             </button>
                         </ng-template>
                     </wj-flex-grid-column>
                     <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteDropDownClick()">
+                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteDropDownClick()" id="btnDeleteDropDown">
                                 <i class="fa fa-trash fa-fw"></i> Delete
                             </button>
                         </ng-template>
@@ -285,7 +285,7 @@
                 </div>
             </div>
             <div class="modal-footer" align="right">
-                <button type="button" id="btnSaveDropDownEditModal" class="btn btn-success" (click)="btnSaveDropDownEditModalClick()">
+                <button type="button" id="btnSaveDropDownEditModal" class="btn btn-success" (click)="btnSaveDropDownEditModalClick()" id="btnSaveDropDownEditModal">  
                     <i class="fa fa-check fa-fw"></i> Save</button>
                 <button type="button" id="btnCloseDrownDownEditModal" class="btn btn-danger" (click)="btnCloseDrownDownEditModalClick()">
                     <i class="fa fa-times fa-fw"></i> Close </button>

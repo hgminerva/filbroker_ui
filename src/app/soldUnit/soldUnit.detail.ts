@@ -46,6 +46,14 @@ export class SoldUnitDetail {
   private soldUnitUnlockedSub: any;
   private soldUnitCancelSub: any;
   private soldUnitTransferSub: any;
+  
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
 
   // detail line1 (checklist requirements)
   private soldUnitRequirementsSub: any;
@@ -274,6 +282,21 @@ export class SoldUnitDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+        if (userRights[i].page == 'SOLD UNIT DETAIL') {
+            this.canEdit = userRights[i].canEdit;
+            this.canSave = userRights[i].canSave;
+            this.canLock = userRights[i].canLock;
+            this.canUnlock = userRights[i].canUnlock;
+            this.canPrint = userRights[i].canPrint;
+            this.canDelete = userRights[i].canDelete;
+        }
+    }
+  }
+
   // ng
   ngOnInit() {
     this.fgdSoldUnitRequirementsData = new ObservableArray();
@@ -294,6 +317,35 @@ export class SoldUnitDetail {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);
     }
+
+    this.getUserRights();
+
+    if (!this.canPrint) {
+      (<HTMLInputElement>document.getElementById("btnPrintSoldUnit")).disabled = true;
+    }
+    
+    if (!this.canLock) {
+      (<HTMLInputElement>document.getElementById("btnLockSoldUnit")).disabled = true;
+    }
+
+    if (!this.canUnlock) {
+      (<HTMLInputElement>document.getElementById("btnUnlockSoldUnit")).disabled = true;
+    }
+
+    if (!this.canSave) {
+      (<HTMLInputElement>document.getElementById("btnSaveSoldUnit")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveSoldUnitCoOwnerModal")).disabled = true;
+
+    }
+
+    if (!this.canEdit) {
+      (<HTMLInputElement>document.getElementById("btnEditSoldUnitCoOwner")).disabled = true;
+    }
+
+    if (!this.canDelete) {
+      (<HTMLInputElement>document.getElementById("btnDeleteSoldUnitCoOwner")).disabled = true;
+    }
+
   }
   ngOnDestroy() {
     if (this.soldUnitSub != null) this.soldUnitSub.unsubscribe();
