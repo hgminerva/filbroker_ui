@@ -128,15 +128,6 @@ export class ChecklistList {
     }
 
     this.getUserRights();
-
-    
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditChecklist")).disabled = true;
-    }
-
-    if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteChecklist")).disabled = true;
-    }
   }
   ngOnDestroy(){
     if(this.checklistsSub!=null) this.checklistsSub.unsubscribe();

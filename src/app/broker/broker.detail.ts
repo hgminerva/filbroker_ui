@@ -146,19 +146,19 @@ export class BrokerDetail {
     this.getUserRights();
 
     if (!this.canPrint) {
-      (<HTMLInputElement>document.getElementById("btnPrintBroker")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnPrintBroker")).hidden = true;
     }
 
     if (!this.canLock) {
-      (<HTMLInputElement>document.getElementById("btnLockBroker")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnLockBroker")).hidden = true;
     }
 
     if (!this.canUnlock) {
-      (<HTMLInputElement>document.getElementById("btnUnlockBroker")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnUnlockBroker")).hidden = true;
     }
 
     if (!this.canSave) {
-      (<HTMLInputElement>document.getElementById("btnSaveBroker")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveBroker")).hidden = true;
     }
 
   }

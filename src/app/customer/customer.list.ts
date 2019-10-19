@@ -152,13 +152,6 @@ export class CustomerList {
         }
 
         this.getUserRights();
-
-        if (!this.canEdit) {
-            (<HTMLInputElement>document.getElementById("btnEditCustomer")).disabled = true;
-        }
-        if (!this.canDelete) {
-            (<HTMLInputElement>document.getElementById("btnDeleteCustomer")).disabled = true;
-        }
     }
     ngOnDestroy() {
         if (this.customersSub != null) this.customersSub.unsubscribe();
@@ -206,6 +199,9 @@ export class CustomerList {
     }
     public btnDeleteCustomerClick(): void {
         this.mdlCustomerDeleteShow = true;
+        if (!this.canDelete) {
+            (<HTMLInputElement>document.getElementById("btnOkCustomerDeleteModal")).hidden = true;
+        }
     }
 
     // customer delete modal operations

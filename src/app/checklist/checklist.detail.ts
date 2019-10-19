@@ -147,28 +147,28 @@ export class ChecklistDetail {
 
 
     if (!this.canPrint) {
-      (<HTMLInputElement>document.getElementById("btnPrintChecklist")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnPrintChecklist")).hidden = true;
     }
 
     if (!this.canLock) {
-      (<HTMLInputElement>document.getElementById("btnLockChecklist")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnLockChecklist")).hidden = true;
     }
 
     if (!this.canUnlock) {
-      (<HTMLInputElement>document.getElementById("btnUnlockChecklist")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnUnlockChecklist")).hidden = true;
     }
 
     if (!this.canSave) {
-      (<HTMLInputElement>document.getElementById("btnSaveChecklist")).disabled = true;
-      (<HTMLInputElement>document.getElementById("btnSaveChecklistRequirementEdit")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveChecklist")).hidden = true;
+      (<HTMLInputElement>document.getElementById("btnSaveChecklistRequirementEdit")).hidden= true;
     }
 
     if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditChecklistRequirements")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnEditChecklistRequirements")).hidden = true;
     }
 
     if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteChecklistRequirements")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnDeleteChecklistRequirements")).hidden= true;
     }
   }
   ngOnDestroy() {

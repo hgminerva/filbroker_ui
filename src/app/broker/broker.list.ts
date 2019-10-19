@@ -34,6 +34,14 @@ export class BrokerList {
   // list operations
   private brokerDeletedSub: any;
 
+  // userrights
+  public canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   // =================
   // public properties
   // =================
@@ -107,6 +115,21 @@ export class BrokerList {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
+  public getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'BROKER LIST') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
+
   // ng
   ngOnInit() {
     this.fgdBrokerData = new ObservableArray();
@@ -118,6 +141,9 @@ export class BrokerList {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
     }
+
+    this.getUserRights();
+ 
   }
   ngOnDestroy() {
     if( this.brokersSub != null) this.brokersSub.unsubscribe();
@@ -165,6 +191,7 @@ export class BrokerList {
 
   // delete broker modal operations
   public btnOkBrokerDeleteModalClick():  void {
+    
     let btnOkBrokerDeleteModal: Element = document.getElementById("btnOkBrokerDeleteModal");
     let btnCloseBrokerDeleteModal: Element = document.getElementById("btnCloseBrokerDeleteModal");
 

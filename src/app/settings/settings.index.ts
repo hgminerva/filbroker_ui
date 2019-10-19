@@ -144,15 +144,6 @@ export class SettingsIndex {
 
     if (!this.canSave) {
       (<HTMLInputElement>document.getElementById("btnSaveSettings")).disabled = true;
-      (<HTMLInputElement>document.getElementById("btnSaveDropDownEditModal")).disabled = true;
-    }
-
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditDropDown")).disabled = true;
-    }
-
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnDeleteDropDown")).disabled = true;
     }
   }
   ngOnDestroy() {

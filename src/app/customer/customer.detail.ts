@@ -164,16 +164,16 @@ export class CustomerDetail {
     this.getUserRights();
     
     if (!this.canPrint) {
-      (<HTMLInputElement>document.getElementById("btnPrintCustomer")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnPrintCustomer")).hidden = true;
     }
     if (!this.canLock) {
-      (<HTMLInputElement>document.getElementById("btnLockCustomer")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnLockCustomer")).hidden = true;
     }
     if (!this.canUnlock)  {
-      (<HTMLInputElement>document.getElementById("btnUnlockCustomer")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnUnlockCustomer")).hidden = true;
     }
     if (!this.canSave)  {
-      (<HTMLInputElement>document.getElementById("btnSaveCustomer")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveCustomer")).hidden = true;
     }
   }
   public ngOnDestroy() {

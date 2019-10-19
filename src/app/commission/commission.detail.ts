@@ -132,19 +132,19 @@ export class CommissionDetail {
 
     this.getUserRights();
     if (!this.canPrint) {
-      (<HTMLInputElement>document.getElementById("btnPrintCommission")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnPrintCommission")).hidden = true;
     }
     
     if (!this.canLock) {
-      (<HTMLInputElement>document.getElementById("btnLockCommission")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnLockCommission")).hidden = true;
     }
 
     if (!this.canUnlock) {
-      (<HTMLInputElement>document.getElementById("btnUnlockCommission")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnUnlockCommission")).hidden= true;
     }
 
     if (!this.canSave) {
-      (<HTMLInputElement>document.getElementById("btnSaveCommission")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveCommission")).hidden = true;
     }
   }
   ngOnDestroy() {

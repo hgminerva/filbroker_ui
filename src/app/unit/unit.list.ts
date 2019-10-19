@@ -140,13 +140,7 @@ export class UnitList {
       setTimeout(() => { this.location.back(); }, 1000);
     }
 
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditUnit")).disabled = true;
-    }
-
-    if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteUnit")).disabled = true;
-    }
+    this.getUserRights();
   }
   ngOnDestroy() {
     if (this.unitsSub != null) this.unitsSub.unsubscribe();

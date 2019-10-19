@@ -38,16 +38,16 @@
             <div class="card-body">
                 <wj-flex-grid #fgdProjects [itemsSource]="fgdProjectsCollection" [selectionMode]="3" [frozenColumns]="2">
                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                    <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditProjectClick()">
+                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditProjectClick()" id="btnEditProject">
                                 <i class="fa fa-edit fa-fw"></i> Edit
                             </button>
                         </ng-template>
                     </wj-flex-grid-column>
-                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                    <wj-flex-grid-column  *ngIf="canDelete"[header]="Delete" [isReadOnly]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteProjectClick()">
+                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteProjectClick()" id="btnDeleteProject">
                                 <i class="fa fa-trash fa-fw"></i> Delete
                             </button>
                         </ng-template>

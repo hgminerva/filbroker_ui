@@ -128,15 +128,8 @@ public getUserRights() {
       this.toastr.error("No rights to open page.")
       setTimeout(() => { this.location.back(); }, 1000);  
     }
+    
     this.getUserRights();
-
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditCommission")).disabled = true;
-    }
-
-    if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteCommission")).disabled = true;
-    }
   }
   ngOnDestroy() {
     if( this.commissionsSub != null) this.commissionsSub.unsubscribe();

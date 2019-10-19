@@ -21,9 +21,9 @@
                     <div class="card-body">
                         <wj-flex-grid #fgdUnits [itemsSource]="fgdUnitsCollection" [selectionMode]="3" [frozenColumns]="2">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                            <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                                    <button class="btn btn-primary btn-xs btn-block" (click)="btnPickUnitClick()" data-toggle="modal" data-backdrop="static"
+                                    <button *ngIf="canDelete" class="btn btn-primary btn-xs btn-block" (click)="btnPickUnitClick()" data-toggle="modal" data-backdrop="static"
                                         data-keyboard="false">
                                         <i class="fa fa-edit fa-fw"></i> Pick
                                     </button>

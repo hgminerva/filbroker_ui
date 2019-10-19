@@ -159,13 +159,6 @@ export class SoldUnitList {
 
     this.getUserRights();
 
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditSoldUnit")).disabled = true;
-    }
-
-    if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteSoldUnit")).disabled = true;
-    }
   }
   ngOnDestroy() {
     if( this.soldUnitsSub != null) this.soldUnitsSub.unsubscribe();

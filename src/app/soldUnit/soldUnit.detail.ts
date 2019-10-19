@@ -321,29 +321,29 @@ export class SoldUnitDetail {
     this.getUserRights();
 
     if (!this.canPrint) {
-      (<HTMLInputElement>document.getElementById("btnPrintSoldUnit")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnPrintSoldUnit")).hidden= true;
     }
     
     if (!this.canLock) {
-      (<HTMLInputElement>document.getElementById("btnLockSoldUnit")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnLockSoldUnit")).hidden = true;
     }
 
     if (!this.canUnlock) {
-      (<HTMLInputElement>document.getElementById("btnUnlockSoldUnit")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnUnlockSoldUnit")).hidden = true;
     }
 
     if (!this.canSave) {
-      (<HTMLInputElement>document.getElementById("btnSaveSoldUnit")).disabled = true;
-      (<HTMLInputElement>document.getElementById("btnSaveSoldUnitCoOwnerModal")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveSoldUnit")).hidden = true;
+      (<HTMLInputElement>document.getElementById("btnSaveSoldUnitCoOwnerModal")).hidden= true;
 
     }
 
     if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditSoldUnitCoOwner")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnEditSoldUnitCoOwner")).hidden = true;
     }
 
     if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteSoldUnitCoOwner")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnDeleteSoldUnitCoOwner")).hidden = true;
     }
 
   }
