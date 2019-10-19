@@ -120,20 +120,6 @@ export class BrokerDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
-  public getUserRights() {
-    var userRightsData = localStorage.getItem('userRights')
-    var userRights = JSON.parse(userRightsData);
-    for (var i = 0; i < userRights.length; i++) {
-      if (userRights[i].page == 'BROKER DETAIL') {
-        this.canEdit = userRights[i].canEdit;
-        this.canSave = userRights[i].canSave;
-        this.canLock = userRights[i].canLock;
-        this.canUnlock = userRights[i].canUnlock;
-        this.canPrint = userRights[i].canPrint;
-        this.canDelete = userRights[i].canDelete;
-      }
-    }
-  }
   // ng
   ngOnInit() {
     if (this.securityService.openPage("BROKER DETAIL") == true) {
@@ -162,6 +148,7 @@ export class BrokerDetail {
     }
 
   }
+
   ngOnDestroy() {
     if (this.brokerSub != null) this.brokerSub.unsubscribe();
 
@@ -176,6 +163,24 @@ export class BrokerDetail {
   // ===============
   // private methods
   // ===============
+
+  // ===============
+  // Get User Rights
+  // ===============
+  private getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'BROKER DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
 
   private getIdParameter(): number {
     let id = 0;

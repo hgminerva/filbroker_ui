@@ -25,6 +25,14 @@ export class BrokerList {
   // private properties
   // ==================
 
+  // user rights
+  public canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   private currentDate = new Date();
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
@@ -33,14 +41,6 @@ export class BrokerList {
 
   // list operations
   private brokerDeletedSub: any;
-
-  // userrights
-  public canEdit: boolean = false;
-  private canSave: boolean = false;
-  private canLock: boolean = false;
-  private canUnlock: boolean = false;
-  private canPrint: boolean = false;
-  private canDelete: boolean = false;
 
   // =================
   // public properties
@@ -115,21 +115,6 @@ export class BrokerList {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
-  public getUserRights() {
-    var userRightsData = localStorage.getItem('userRights')
-    var userRights = JSON.parse(userRightsData);
-    for (var i = 0; i < userRights.length; i++) {
-      if (userRights[i].page == 'BROKER LIST') {
-        this.canEdit = userRights[i].canEdit;
-        this.canSave = userRights[i].canSave;
-        this.canLock = userRights[i].canLock;
-        this.canUnlock = userRights[i].canUnlock;
-        this.canPrint = userRights[i].canPrint;
-        this.canDelete = userRights[i].canDelete;
-      }
-    }
-  }
-
   // ng
   ngOnInit() {
     this.fgdBrokerData = new ObservableArray();
@@ -148,6 +133,24 @@ export class BrokerList {
   ngOnDestroy() {
     if( this.brokersSub != null) this.brokersSub.unsubscribe();
     if( this.brokerDeletedSub != null) this.brokerDeletedSub.unsubscribe();
+  }
+
+  // ===============
+  // Get User Rights
+  // ===============
+  private getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'BROKER LIST') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
   }
 
   // ==============

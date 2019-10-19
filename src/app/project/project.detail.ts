@@ -130,7 +130,7 @@ export class ProjectDetail {
       }
     }
   }
-  
+
   // ng
   ngOnInit() {
     this.fgdHouseModelsData = new ObservableArray();

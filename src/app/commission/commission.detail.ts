@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 // wijmo
-import {ObservableArray, CollectionView} from 'wijmo/wijmo';
+import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 
 // message box 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -37,18 +37,18 @@ export class CommissionDetail {
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
   // detail
-  private commissionSub : any;
+  private commissionSub: any;
 
   // detail operations
-  private commissionSavedSub : any;
-  private commissionLockedSub : any;
-  private commissionUnlockedSub : any;
+  private commissionSavedSub: any;
+  private commissionLockedSub: any;
+  private commissionUnlockedSub: any;
 
   // combo boxes
-  private cmbBrokerSub : any;
-  private cmbSoldUnitSub : any;
-  private cmbDropDownsSub : any;
-  private cmbUserSub : any;  
+  private cmbBrokerSub: any;
+  private cmbSoldUnitSub: any;
+  private cmbDropDownsSub: any;
+  private cmbUserSub: any;
 
   // =================
   // public properties
@@ -57,7 +57,7 @@ export class CommissionDetail {
   public title: string = 'Commission Detail';
 
   // model(s)
-  public commission : TrnCommissionRequest = {
+  public commission: TrnCommissionRequest = {
     id: 0,
     commissionRequestNumber: "",
     commissionRequestDate: this.currentDateString,
@@ -83,11 +83,11 @@ export class CommissionDetail {
   };
 
   // combo boxes
-  public cmbBrokerData : ObservableArray;
-  public cmbSoldUnitData : ObservableArray;
-  public cmbCommissionNumberData : ObservableArray;
-  public cmbStatusData : ObservableArray;
-  public cmbUserData : ObservableArray;
+  public cmbBrokerData: ObservableArray;
+  public cmbSoldUnitData: ObservableArray;
+  public cmbCommissionNumberData: ObservableArray;
+  public cmbStatusData: ObservableArray;
+  public cmbUserData: ObservableArray;
 
   // =======
   // angular
@@ -106,62 +106,66 @@ export class CommissionDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
-  public getUserRights() {
-    var userRightsData = localStorage.getItem('userRights')
-    var userRights = JSON.parse(userRightsData);
-    for (var i = 0; i < userRights.length; i++) {
-        if (userRights[i].page == 'COMMISSION DETAIL') {
-            this.canEdit = userRights[i].canEdit;
-            this.canSave = userRights[i].canSave;
-            this.canLock = userRights[i].canLock;
-            this.canUnlock = userRights[i].canUnlock;
-            this.canPrint = userRights[i].canPrint;
-            this.canDelete = userRights[i].canDelete;
-        }
-    }
-}
-
   // ng
   ngOnInit() {
-    if(this.securityService.openPage("COMMISSION DETAIL") == true) {
-      this.getCommission(); 
+    if (this.securityService.openPage("COMMISSION DETAIL") == true) {
+      this.getCommission();
     } else {
       this.toastr.error("No rights to open page.")
-      setTimeout(() => { this.location.back(); }, 1000);  
+      setTimeout(() => { this.location.back(); }, 1000);
     }
 
     this.getUserRights();
     if (!this.canPrint) {
       (<HTMLInputElement>document.getElementById("btnPrintCommission")).hidden = true;
     }
-    
+
     if (!this.canLock) {
       (<HTMLInputElement>document.getElementById("btnLockCommission")).hidden = true;
     }
 
     if (!this.canUnlock) {
-      (<HTMLInputElement>document.getElementById("btnUnlockCommission")).hidden= true;
+      (<HTMLInputElement>document.getElementById("btnUnlockCommission")).hidden = true;
     }
 
     if (!this.canSave) {
       (<HTMLInputElement>document.getElementById("btnSaveCommission")).hidden = true;
     }
   }
-  ngOnDestroy() {
-    if( this.commissionSub != null) this.commissionSub.unsubscribe();
-    if( this.commissionSavedSub != null) this.commissionSavedSub.unsubscribe();
-    if( this.commissionLockedSub != null) this.commissionLockedSub.unsubscribe();
-    if( this.commissionUnlockedSub != null) this.commissionUnlockedSub.unsubscribe();
 
-    if( this.cmbBrokerSub != null) this.cmbBrokerSub.unsubscribe();
-    if( this.cmbSoldUnitSub != null) this.cmbSoldUnitSub.unsubscribe();
-    if( this.cmbDropDownsSub != null) this.cmbDropDownsSub.unsubscribe();
-    if( this.cmbUserSub != null) this.cmbUserSub.unsubscribe();
+  ngOnDestroy() {
+    if (this.commissionSub != null) this.commissionSub.unsubscribe();
+    if (this.commissionSavedSub != null) this.commissionSavedSub.unsubscribe();
+    if (this.commissionLockedSub != null) this.commissionLockedSub.unsubscribe();
+    if (this.commissionUnlockedSub != null) this.commissionUnlockedSub.unsubscribe();
+
+    if (this.cmbBrokerSub != null) this.cmbBrokerSub.unsubscribe();
+    if (this.cmbSoldUnitSub != null) this.cmbSoldUnitSub.unsubscribe();
+    if (this.cmbDropDownsSub != null) this.cmbDropDownsSub.unsubscribe();
+    if (this.cmbUserSub != null) this.cmbUserSub.unsubscribe();
   }
 
   // ===============
   // private methods
   // ===============
+
+  // ===============
+  // Get User Rights
+  // ===============
+  private getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'COMMISSION DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
 
   private getIdParameter() {
     let id = 0;
@@ -169,7 +173,7 @@ export class CommissionDetail {
       id = params['id'];
     });
     return id;
-  } 
+  }
 
   // ==============
   // public methods
@@ -214,7 +218,7 @@ export class CommissionDetail {
   }
 
   // combo boxes
-  public getCmbBrokerData(defaultValue : any) : void {
+  public getCmbBrokerData(defaultValue: any): void {
     this.commissionService.getBrokers();
 
     this.cmbBrokerSub = this.commissionService.brokersObservable.subscribe(
@@ -225,7 +229,7 @@ export class CommissionDetail {
       }
     );
   }
-  public getCmbSoldUnitData(defaultValue : any) : void {
+  public getCmbSoldUnitData(defaultValue: any): void {
     this.commissionService.getSoldUnits();
 
     this.cmbSoldUnitSub = this.commissionService.soldUnitsObservable.subscribe(
@@ -236,7 +240,7 @@ export class CommissionDetail {
       }
     );
   }
-  public getCmbDropDownsData(defaultValue : any) : void {
+  public getCmbDropDownsData(defaultValue: any): void {
     let commissionNumbers = new ObservableArray();
     let statuses = new ObservableArray();
 
@@ -267,7 +271,7 @@ export class CommissionDetail {
       }
     );
   }
-  public getCmbUserData(defaultValue : any) : void {
+  public getCmbUserData(defaultValue: any): void {
     this.commissionService.getUsers();
 
     this.cmbUserSub = this.commissionService.usersObservable.subscribe(
@@ -286,72 +290,72 @@ export class CommissionDetail {
   // ======
 
   // detail operations
-  public btnSaveCommissionClick() : void {
+  public btnSaveCommissionClick(): void {
     let btnSaveCommission: Element = document.getElementById("btnSaveCommission");
 
-    btnSaveCommission.setAttribute("disabled","disabled");
+    btnSaveCommission.setAttribute("disabled", "disabled");
     btnSaveCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
-    
+
     this.commissionService.saveCommission(this.commission);
-    this.commissionSavedSub =  this.commissionService.commissionSavedObservable.subscribe(
+    this.commissionSavedSub = this.commissionService.commissionSavedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Saving successful.");
-              btnSaveCommission.removeAttribute("disabled");
-              btnSaveCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          } else if(data == 0) {
-              this.toastr.error("Saving failed.");   
-              btnSaveCommission.removeAttribute("disabled");
-              btnSaveCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          }
+        if (data == 1) {
+          this.toastr.success("Saving successful.");
+          btnSaveCommission.removeAttribute("disabled");
+          btnSaveCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        } else if (data == 0) {
+          this.toastr.error("Saving failed.");
+          btnSaveCommission.removeAttribute("disabled");
+          btnSaveCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        }
       }
     );
   }
-  public btnLockCommissionClick() : void {
+  public btnLockCommissionClick(): void {
     let btnLockCommission: Element = document.getElementById("btnLockCommission");
 
-    btnLockCommission.setAttribute("disabled","disabled");
+    btnLockCommission.setAttribute("disabled", "disabled");
     btnLockCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Locking...";
 
     this.commissionService.lockCommission(this.commission);
-    this.commissionLockedSub =  this.commissionService.commissionLockedObservable.subscribe(
+    this.commissionLockedSub = this.commissionService.commissionLockedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Locking successful.");
-              this.commission.isLocked = true;
-              btnLockCommission.removeAttribute("disabled");
-              btnLockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
-          } else if(data == 0) {
-              this.toastr.error("Locking failed.");   
-              btnLockCommission.removeAttribute("disabled");
-              btnLockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
-          }
+        if (data == 1) {
+          this.toastr.success("Locking successful.");
+          this.commission.isLocked = true;
+          btnLockCommission.removeAttribute("disabled");
+          btnLockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
+        } else if (data == 0) {
+          this.toastr.error("Locking failed.");
+          btnLockCommission.removeAttribute("disabled");
+          btnLockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
+        }
       }
     );
   }
-  public btnUnlockCommissionClick() : void {
+  public btnUnlockCommissionClick(): void {
     let btnUnlockCommission: Element = document.getElementById("btnUnlockCommission");
 
-    btnUnlockCommission.setAttribute("disabled","disabled");
+    btnUnlockCommission.setAttribute("disabled", "disabled");
     btnUnlockCommission.innerHTML = "<i class='fa fa-plus fa-fw'></i> Unlocking...";
 
     this.commissionService.unlockCommission(this.commission);
     this.commissionUnlockedSub = this.commissionService.commissionUnlockedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Unlocking successful.");
-              this.commission.isLocked = false;
-              btnUnlockCommission.removeAttribute("disabled");
-              btnUnlockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
-          } else if(data == 0) {
-              this.toastr.error("Unlocking failed.");   
-              btnUnlockCommission.removeAttribute("disabled");
-              btnUnlockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
-          }
+        if (data == 1) {
+          this.toastr.success("Unlocking successful.");
+          this.commission.isLocked = false;
+          btnUnlockCommission.removeAttribute("disabled");
+          btnUnlockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
+        } else if (data == 0) {
+          this.toastr.error("Unlocking failed.");
+          btnUnlockCommission.removeAttribute("disabled");
+          btnUnlockCommission.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
+        }
       }
     );
   }
-  public btnPrintCommissionClick() : void {
+  public btnPrintCommissionClick(): void {
     this.toastr.success("Not yet implemented.");
   }
 

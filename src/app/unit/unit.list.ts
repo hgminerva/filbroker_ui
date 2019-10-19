@@ -26,6 +26,14 @@ export class UnitList {
   // private properties
   // ==================
 
+  // User Rights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   private currentDate = new Date();
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
@@ -36,14 +44,6 @@ export class UnitList {
 
   // filters
   private projectsSub: any;
-
-  // userrights
-  private canEdit: boolean = false;
-  private canSave: boolean = false;
-  private canLock: boolean = false;
-  private canUnlock: boolean = false;
-  private canPrint: boolean = false;
-  private canDelete: boolean = false;
 
   // =================
   // public properties
@@ -111,20 +111,6 @@ export class UnitList {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
-  public getUserRights() {
-    var userRightsData = localStorage.getItem('userRights')
-    var userRights = JSON.parse(userRightsData);
-    for (var i = 0; i < userRights.length; i++) {
-      if (userRights[i].page == 'CUSTOMER DETAIL') {
-        this.canEdit = userRights[i].canEdit;
-        this.canSave = userRights[i].canSave;
-        this.canLock = userRights[i].canLock;
-        this.canUnlock = userRights[i].canUnlock;
-        this.canPrint = userRights[i].canPrint;
-        this.canDelete = userRights[i].canDelete;
-      }
-    }
-  }
   // ng
   ngOnInit() {
     this.fgdUnitsData = new ObservableArray();
@@ -142,12 +128,31 @@ export class UnitList {
 
     this.getUserRights();
   }
+
   ngOnDestroy() {
     if (this.unitsSub != null) this.unitsSub.unsubscribe();
     if (this.projectsSub != null) this.projectsSub.unsubscribe();
 
     if (this.unitDeletedSub != null) this.unitDeletedSub.unsubscribe();
     if (this.unitUpdatePriceSub != null) this.unitUpdatePriceSub.unsubscribe();
+  }
+
+  //================
+  // Get User Rights
+  //================
+  private getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'CUSTOMER DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
   }
 
   // ==============

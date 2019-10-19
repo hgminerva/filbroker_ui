@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 // wijmo
-import {ObservableArray, CollectionView} from 'wijmo/wijmo';
+import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 
 // message box
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -29,20 +29,20 @@ export class UnitDetail {
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
   // detail
-  private unitSub : any;
+  private unitSub: any;
 
   // detail operations
-  private unitSavedSub : any;
-  private unitLockedSub : any;
-  private unitUnlockedSub : any;
+  private unitSavedSub: any;
+  private unitLockedSub: any;
+  private unitUnlockedSub: any;
 
   // change price history
-  private unitPricesSub : any;
+  private unitPricesSub: any;
 
   // combo boxes
-  private cmbHouseModelSub : any;
-  private cmbUnitStatusSub : any;
-  
+  private cmbHouseModelSub: any;
+  private cmbUnitStatusSub: any;
+
   // userrights
   private canEdit: boolean = false;
   private canSave: boolean = false;
@@ -59,7 +59,7 @@ export class UnitDetail {
   public title = 'Unit Detail';
 
   // model(s)
-  public unit : MstUnit = {
+  public unit: MstUnit = {
     id: 0,
     unitCode: "",
     block: "",
@@ -82,12 +82,12 @@ export class UnitDetail {
   };
 
   // combo boxes data
-  public cmbHouseModelData : ObservableArray;
-  public cmbUnitStatusData : ObservableArray;
+  public cmbHouseModelData: ObservableArray;
+  public cmbUnitStatusData: ObservableArray;
 
   // change price history
-  public fgdUnitPricesData : ObservableArray;
-  public fgdUnitPricesCollection : CollectionView;
+  public fgdUnitPricesData: ObservableArray;
+  public fgdUnitPricesCollection: CollectionView;
 
   // =======
   // angular
@@ -110,52 +110,58 @@ export class UnitDetail {
     var userRightsData = localStorage.getItem('userRights')
     var userRights = JSON.parse(userRightsData);
     for (var i = 0; i < userRights.length; i++) {
-        if (userRights[i].page == 'UNIT DETAIL') {
-            this.canEdit = userRights[i].canEdit;
-            this.canSave = userRights[i].canSave;
-            this.canLock = userRights[i].canLock;
-            this.canUnlock = userRights[i].canUnlock;
-            this.canPrint = userRights[i].canPrint;
-            this.canDelete = userRights[i].canDelete;
-        }
+      if (userRights[i].page == 'UNIT DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
     }
-}
+  }
 
   // ng
   ngOnInit() {
     this.fgdUnitPricesData = new ObservableArray();
     this.fgdUnitPricesCollection = new CollectionView(this.fgdUnitPricesData);
 
-    if(this.securityService.openPage("UNIT DETAIL") == true) {
-      this.getUnit(); 
+    if (this.securityService.openPage("UNIT DETAIL") == true) {
+      this.getUnit();
     } else {
       this.toastr.error("No rights to open page.")
-      setTimeout(() => { this.location.back(); }, 1000);  
-    } 
-    this.getUserRights();
-    if (!this.canUnlock) {
-      (<HTMLInputElement>document.getElementById("btnLockUnit")).disabled = true;
+      setTimeout(() => { this.location.back(); }, 1000);
     }
-    
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnSaveUnit")).disabled = true;
+
+    this.getUserRights();
+
+    if (!this.canLock) {
+      (<HTMLInputElement>document.getElementById("btnLockUnit")).hidden = true;
+    }
+
+    if (!this.canUnlock) {
+      (<HTMLInputElement>document.getElementById("btnUnLockUnit")).hidden = true;
     }
 
     if (!this.canSave) {
-      (<HTMLInputElement>document.getElementById("btnDeleteUserRights")).disabled = true;
+      (<HTMLInputElement>document.getElementById("btnSaveUnit")).hidden = true;
+    }
+
+    if (!this.canDelete) {
+      (<HTMLInputElement>document.getElementById("btnDeleteUserRights")).hidden = true;
     }
   }
   ngOnDestroy() {
-    if( this.unitSub != null) this.unitSub.unsubscribe();
+    if (this.unitSub != null) this.unitSub.unsubscribe();
 
-    if( this.unitSavedSub != null) this.unitSavedSub.unsubscribe();
-    if( this.unitLockedSub != null) this.unitLockedSub.unsubscribe();
-    if( this.unitUnlockedSub != null) this.unitUnlockedSub.unsubscribe();
+    if (this.unitSavedSub != null) this.unitSavedSub.unsubscribe();
+    if (this.unitLockedSub != null) this.unitLockedSub.unsubscribe();
+    if (this.unitUnlockedSub != null) this.unitUnlockedSub.unsubscribe();
 
-    if( this.cmbHouseModelSub != null) this.cmbHouseModelSub.unsubscribe();
-    if( this.cmbUnitStatusSub != null) this.cmbUnitStatusSub.unsubscribe();
+    if (this.cmbHouseModelSub != null) this.cmbHouseModelSub.unsubscribe();
+    if (this.cmbUnitStatusSub != null) this.cmbUnitStatusSub.unsubscribe();
 
-    if( this.unitPricesSub != null) this.unitPricesSub.unsubscribe();
+    if (this.unitPricesSub != null) this.unitPricesSub.unsubscribe();
   }
 
   // ===============
@@ -215,13 +221,13 @@ export class UnitDetail {
         this.fgdUnitPricesData = data;
         this.fgdUnitPricesCollection = new CollectionView(this.fgdUnitPricesData);
         this.fgdUnitPricesCollection.pageSize = 15;
-        this.fgdUnitPricesCollection.trackChanges = true;  
+        this.fgdUnitPricesCollection.trackChanges = true;
       }
     );
   }
 
   // combo boxes
-  public getHouseModelsPerProject(defaultValue : number) : void {
+  public getHouseModelsPerProject(defaultValue: number): void {
     this.unitService.getHouseModelsPerProject(this.unit.projectId);
 
     this.cmbHouseModelSub = this.unitService.houseModelsObservable.subscribe(
@@ -233,7 +239,7 @@ export class UnitDetail {
       }
     );
   }
-  public getUnitStatuses(defaultValue : string) : void {
+  public getUnitStatuses(defaultValue: string): void {
     this.unitService.getDropDowns();
 
     this.cmbUnitStatusSub = this.unitService.dropDownsObservable.subscribe(
@@ -258,7 +264,7 @@ export class UnitDetail {
           this.unit.status = defaultValue;
         }, 100);
       }
-    );     
+    );
   }
 
   // ======
@@ -266,77 +272,77 @@ export class UnitDetail {
   // ======
 
   // detail operations
-  public btnSaveUnitClick() : void {
-    let btnSaveUnit:Element = document.getElementById("btnSaveUnit");
+  public btnSaveUnitClick(): void {
+    let btnSaveUnit: Element = document.getElementById("btnSaveUnit");
 
-    btnSaveUnit.setAttribute("disabled","disabled");
+    btnSaveUnit.setAttribute("disabled", "disabled");
     btnSaveUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
-    
+
     this.unitService.saveUnit(this.unit);
-    this.unitSavedSub =  this.unitService.unitSavedObservable.subscribe(
+    this.unitSavedSub = this.unitService.unitSavedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Saving successful.");
-              btnSaveUnit.removeAttribute("disabled");
-              btnSaveUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          } else if(data == 0) {
-              this.toastr.error("Saving failed.");   
-              btnSaveUnit.removeAttribute("disabled");
-              btnSaveUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
-          }
+        if (data == 1) {
+          this.toastr.success("Saving successful.");
+          btnSaveUnit.removeAttribute("disabled");
+          btnSaveUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        } else if (data == 0) {
+          this.toastr.error("Saving failed.");
+          btnSaveUnit.removeAttribute("disabled");
+          btnSaveUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+        }
       }
     );
   }
-  public btnLockUnitClick() : void {
-    let btnLockUnit:Element = document.getElementById("btnLockUnit");
+  public btnLockUnitClick(): void {
+    let btnLockUnit: Element = document.getElementById("btnLockUnit");
 
-    btnLockUnit.setAttribute("disabled","disabled");
+    btnLockUnit.setAttribute("disabled", "disabled");
     btnLockUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Locking...";
 
     this.unitService.lockUnit(this.unit);
-    this.unitLockedSub =  this.unitService.unitLockedObservable.subscribe(
+    this.unitLockedSub = this.unitService.unitLockedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Locking successful.");
-              this.unit.isLocked = true;
-              btnLockUnit.removeAttribute("disabled");
-              btnLockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
-          } else if(data == 0) {
-              this.toastr.error("Locking failed.");   
-              btnLockUnit.removeAttribute("disabled");
-              btnLockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
-          }
+        if (data == 1) {
+          this.toastr.success("Locking successful.");
+          this.unit.isLocked = true;
+          btnLockUnit.removeAttribute("disabled");
+          btnLockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
+        } else if (data == 0) {
+          this.toastr.error("Locking failed.");
+          btnLockUnit.removeAttribute("disabled");
+          btnLockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Lock";
+        }
       }
     );
   }
-  public btnUnlockUnitClick() : void {
-    let btnUnlockUnit:Element = document.getElementById("btnUnlockUnit");
+  public btnUnlockUnitClick(): void {
+    let btnUnlockUnit: Element = document.getElementById("btnUnlockUnit");
 
-    btnUnlockUnit.setAttribute("disabled","disabled");
+    btnUnlockUnit.setAttribute("disabled", "disabled");
     btnUnlockUnit.innerHTML = "<i class='fa fa-plus fa-fw'></i> Unlocking...";
 
     this.unitService.unlockUnit(this.unit);
     this.unitUnlockedSub = this.unitService.unitUnlockedObservable.subscribe(
       data => {
-          if(data == 1) {
-              this.toastr.success("Unlocking successful.");
-              this.unit.isLocked = false;
-              btnUnlockUnit.removeAttribute("disabled");
-              btnUnlockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
-          } else if(data == 0) {
-              this.toastr.error("Unlocking failed.");   
-              btnUnlockUnit.removeAttribute("disabled");
-              btnUnlockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
-          }
+        if (data == 1) {
+          this.toastr.success("Unlocking successful.");
+          this.unit.isLocked = false;
+          btnUnlockUnit.removeAttribute("disabled");
+          btnUnlockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
+        } else if (data == 0) {
+          this.toastr.error("Unlocking failed.");
+          btnUnlockUnit.removeAttribute("disabled");
+          btnUnlockUnit.innerHTML = "<i class='fa fa-lock fa-fw'></i> Unlock";
+        }
       }
     );
   }
 
   // unit code events
-  public txtBlockKeyup() : void {
+  public txtBlockKeyup(): void {
     this.unit.unitCode = this.unit.block + this.unit.lot;
   }
-  public txtLotKeyup() : void {
+  public txtLotKeyup(): void {
     this.unit.unitCode = this.unit.block + this.unit.lot;
   }
 

@@ -116,21 +116,6 @@ export class ChecklistDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
-  public getUserRights() {
-    var userRightsData = localStorage.getItem('userRights')
-    var userRights = JSON.parse(userRightsData);
-    for (var i = 0; i < userRights.length; i++) {
-      if (userRights[i].page == 'CHECKLIST DETAIL') {
-        this.canEdit = userRights[i].canEdit;
-        this.canSave = userRights[i].canSave;
-        this.canLock = userRights[i].canLock;
-        this.canUnlock = userRights[i].canUnlock;
-        this.canPrint = userRights[i].canPrint;
-        this.canDelete = userRights[i].canDelete;
-      }
-    }
-  }
-
   // ng
   ngOnInit() {
     this.fgdChecklistRequirementsData = new ObservableArray();
@@ -160,17 +145,10 @@ export class ChecklistDetail {
 
     if (!this.canSave) {
       (<HTMLInputElement>document.getElementById("btnSaveChecklist")).hidden = true;
-      (<HTMLInputElement>document.getElementById("btnSaveChecklistRequirementEdit")).hidden= true;
-    }
-
-    if (!this.canEdit) {
-      (<HTMLInputElement>document.getElementById("btnEditChecklistRequirements")).hidden = true;
-    }
-
-    if (!this.canDelete) {
-      (<HTMLInputElement>document.getElementById("btnDeleteChecklistRequirements")).hidden= true;
+      (<HTMLInputElement>document.getElementById("btnSaveChecklistRequirementEdit")).hidden = true;
     }
   }
+
   ngOnDestroy() {
     if (this.checklistSub != null) this.checklistSub.unsubscribe();
     if (this.checklistSavedSub != null) this.checklistSavedSub.unsubscribe();
@@ -187,6 +165,24 @@ export class ChecklistDetail {
   // ===============
   // private methods
   // ===============
+
+  // ===============
+  // Get User Rights
+  // ===============
+  private getUserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'CHECKLIST DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
 
   private getIdParameter(): number {
     let id = 0;

@@ -26,6 +26,14 @@ export class UserDetail {
   // private properties
   // ==================
 
+  // user rights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
+
   // detail
   private userSub: any;
 
@@ -41,15 +49,6 @@ export class UserDetail {
   // detail line1 (user rights) operations
   private userRightDeletedSub: any;
   private userRightPagesSub: any;
-
-  // userrights
-  private canEdit: boolean = false;
-  private canSave: boolean = false;
-  private canLock: boolean = false;
-  private canUnlock: boolean = false;
-  private canPrint: boolean = false;
-  private canDelete: boolean = false;
-
 
   // =================
   // public properties
@@ -114,20 +113,6 @@ export class UserDetail {
     this.toastr.setRootViewContainerRef(viewContainer);
   }
 
-  public get_UserRights() {
-    var userRightsData = localStorage.getItem('userRights')
-    var userRights = JSON.parse(userRightsData);
-    for (var i = 0; i < userRights.length; i++) {
-      if (userRights[i].page == 'CUSTOMER DETAIL') {
-        this.canEdit = userRights[i].canEdit;
-        this.canSave = userRights[i].canSave;
-        this.canLock = userRights[i].canLock;
-        this.canUnlock = userRights[i].canUnlock;
-        this.canPrint = userRights[i].canPrint;
-        this.canDelete = userRights[i].canDelete;
-      }
-    }
-  }
   // ng
   ngOnInit() {
     this.fgdUserRightsData = new ObservableArray();
@@ -145,7 +130,7 @@ export class UserDetail {
     if (!this.canSave) {
       (<HTMLInputElement>document.getElementById("btnSaveUser")).disabled = true;
     }
-    
+
     if (!this.canEdit) {
       (<HTMLInputElement>document.getElementById("btnEditUserRights")).disabled = true;
       (<HTMLInputElement>document.getElementById("btnSaveUserRightEdit")).disabled = true;
@@ -155,6 +140,7 @@ export class UserDetail {
       (<HTMLInputElement>document.getElementById("btnDeleteUserRights")).disabled = true;
     }
   }
+
   ngOnDestroy() {
     if (this.userSub != null) this.userSub.unsubscribe();
     if (this.userSavedSub != null) this.userSavedSub.unsubscribe();
@@ -167,6 +153,24 @@ export class UserDetail {
   // ===============
   // private methods
   // ===============
+
+  //================
+  // Get User Rights
+  //================
+  private get_UserRights() {
+    var userRightsData = localStorage.getItem('userRights')
+    var userRights = JSON.parse(userRightsData);
+    for (var i = 0; i < userRights.length; i++) {
+      if (userRights[i].page == 'CUSTOMER DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
+    }
+  }
 
   private getIdParameter(): number {
     let id = 0;
