@@ -120,7 +120,7 @@ export class ProjectDetail {
     var userRightsData = localStorage.getItem('userRights')
     var userRights = JSON.parse(userRightsData);
     for (var i = 0; i < userRights.length; i++) {
-      if (userRights[i].page == 'CHECKLIST DETAIL') {
+      if (userRights[i].page == 'PROJECT DETAIL') {
         this.canEdit = userRights[i].canEdit;
         this.canSave = userRights[i].canSave;
         this.canLock = userRights[i].canLock;
