@@ -28,7 +28,7 @@ export class FooterService {
     ) { }
 
     public getUsers() : void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUser/List";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstUser/List";
         let users = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {

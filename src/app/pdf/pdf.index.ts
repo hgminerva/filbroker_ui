@@ -20,6 +20,8 @@ export class PDFIndex {
   private pdfSoldUnitProposalSub : any;
   private pdfSoldUnitContractSub : any;
   private pdfSoldUnitEquityScheduleSub : any;
+  private pdfSoldUnitReservationAgreementSub : any;
+  private pdfSoldUnitBuyersUndertakingSub : any;
 
   public title: string = "PDF";
   public report: string = "";
@@ -48,6 +50,8 @@ export class PDFIndex {
       if(this.report == "soldunitproposal") this.getPDFSoldUnitProposal(this.id);
       if(this.report == "soldunitcontract") this.getPDFSoldUnitContract(this.id);
       if(this.report == "soldunitequityschedule") this.getPDFSoldUnitEquitySchedule(this.id);
+      if(this.report == "reservationagreement") this.getPDFSoldUnitReservationAgreement(this.id);
+      if(this.report == "buyersundertaking") this.getPDFSoldUnitBuyersUndertaking(this.id);
     });
   }
   ngOnDestroy() {
@@ -129,11 +133,32 @@ export class PDFIndex {
       }
     );
   }
+  public getPDFSoldUnitReservationAgreement(id: number) : void {
+    this.pdfService.getPDFSoldUnitReservationAgreement(id);
+    this.pdfSoldUnitReservationAgreementSub = this.pdfService.pdfSoldUnitReservationAgreementObservable.subscribe(
+      data => {
+        this.pdfUrl = URL.createObjectURL(data);
+
+        let printPDF: Element = document.getElementById("printPDF");
+        printPDF.setAttribute("src",this.pdfUrl);
+      }
+    );
+  }
+  public getPDFSoldUnitBuyersUndertaking(id: number) : void {
+    this.pdfService.getPDFSoldUnitBuyersUndertaking(id);
+    this.pdfSoldUnitBuyersUndertakingSub = this.pdfService.pdfSoldUnitBuyersUndertakingObservable.subscribe(
+      data => {
+        this.pdfUrl = URL.createObjectURL(data);
+
+        let printPDF: Element = document.getElementById("printPDF");
+        printPDF.setAttribute("src",this.pdfUrl);
+      }
+    );
+  }
 
   // ======
   // events
   // ======
-
   public btnPrintPDFClick(): void {
     window.frames["printPDF"].focus();
     window.frames["printPDF"].print();
@@ -141,5 +166,4 @@ export class PDFIndex {
   public btnClosePDFClick(): void {
     this.location.back();
   }
-  
 }

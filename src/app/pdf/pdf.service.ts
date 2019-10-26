@@ -49,6 +49,12 @@ export class PDFService {
     public pdfSoldUnitEquityScheduleSource = new Subject<Blob>();
     public pdfSoldUnitEquityScheduleObservable = this.pdfSoldUnitEquityScheduleSource.asObservable();
 
+    public pdfSoldUnitReservationAgreementSource = new Subject<Blob>();
+    public pdfSoldUnitReservationAgreementObservable = this.pdfSoldUnitReservationAgreementSource.asObservable();
+
+    public pdfSoldUnitBuyersUndertakingSource = new Subject<Blob>();
+    public pdfSoldUnitBuyersUndertakingObservable = this.pdfSoldUnitBuyersUndertakingSource.asObservable();
+
     // =======
     // angular
     // =======
@@ -65,8 +71,8 @@ export class PDFService {
     // ==============
 
     public getPDFCustomer(id: number): void {
-        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Customer/" + id;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Customer/" + id;
+        // let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/Customer/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/Customer/" + id;
         
         console.log(url);
 
@@ -76,8 +82,7 @@ export class PDFService {
         });
     }
     public getPDFBroker(id: number): void {
-        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Broker/" + id;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Broker/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/Broker/" + id;
         
         console.log(url);
 
@@ -87,9 +92,7 @@ export class PDFService {
         });
     }
     public getPDFChecklist(id: number): void {
-        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Checklist/" + id;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Checklist/" + id;
-
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/Checklist/" + id;
 
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
             let pdf = new Blob([response.blob()], { type: 'application/pdf' });
@@ -97,8 +100,7 @@ export class PDFService {
         });
     }
     public getPDFSoldUnitProposal(id: number): void {
-        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitProposal/" + id;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitProposal/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/SoldUnitProposal/" + id;
 
 
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
@@ -107,8 +109,7 @@ export class PDFService {
         });
     }
     public getPDFSoldUnitContract(id: number): void {
-        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitContract/" + id;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitContract/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/SoldUnitContract/" + id;
 
         
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
@@ -117,13 +118,28 @@ export class PDFService {
         });
     }
     public getPDFSoldUnitEquitySchedule(id: number) : void {
-        // let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitEquitySchedule/" + id;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitEquitySchedule/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/SoldUnitEquitySchedule/" + id;
         
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
             let pdf = new Blob([response.blob()], { type: 'application/pdf' });
             this.pdfSoldUnitEquityScheduleSource.next(pdf);
         });
     }
-    
+    public getPDFSoldUnitReservationAgreement(id: number): void {
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/ReservationAgreement/" + id;
+
+        
+        this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
+            let pdf = new Blob([response.blob()], { type: 'application/pdf' });
+            this.pdfSoldUnitReservationAgreementSource.next(pdf);
+        });
+    }
+    public getPDFSoldUnitBuyersUndertaking(id: number) : void {
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/BuyersUndertaking/" + id;
+        
+        this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
+            let pdf = new Blob([response.blob()], { type: 'application/pdf' });
+            this.pdfSoldUnitBuyersUndertakingSource.next(pdf);
+        });
+    }
 }

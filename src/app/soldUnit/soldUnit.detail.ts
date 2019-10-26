@@ -807,10 +807,10 @@ export class SoldUnitDetail {
     }
   }
   public btnPrintReservationAgreementClick(): void {
-    this.router.navigate(['/pdf', 'ReservationAgreement', this.soldUnit.id]);
+    this.router.navigate(['/pdf', 'reservationagreement', this.soldUnit.id]);
   }
   public btnPrintBuyersUndertakingClick(): void {
-    this.router.navigate(['/pdf', 'BuyersUndertaking', this.soldUnit.id]);
+    this.router.navigate(['/pdf', 'buyersundertaking', this.soldUnit.id]);
   }
   public btnCancelSoldUnitClick(): void {
     if (this.soldUnit.status == "SOLD") {
