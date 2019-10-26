@@ -806,6 +806,12 @@ export class SoldUnitDetail {
       this.toastr.error("This unit is not sold.");
     }
   }
+  public btnPrintReservationAgreementClick(): void {
+    this.router.navigate(['/pdf', 'ReservationAgreement', this.soldUnit.id]);
+  }
+  public btnPrintBuyersUndertakingClick(): void {
+    this.router.navigate(['/pdf', 'BuyersUndertaking', this.soldUnit.id]);
+  }
   public btnCancelSoldUnitClick(): void {
     if (this.soldUnit.status == "SOLD") {
       this.mdlSoldUnitCancelModalShow = true;
