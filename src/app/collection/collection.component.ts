@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-
-// wijmo
 import { ObservableArray, CollectionView } from 'wijmo/wijmo';
-
-// message box 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { CollectionService } from './collection.service';
 import { TrnCollectionModel } from '../model/model.trn.collection';
-
-
 
 @Component({
   selector: 'app-collection',
@@ -20,17 +14,12 @@ import { TrnCollectionModel } from '../model/model.trn.collection';
 export class CollectionComponent implements OnInit {
   title = "Collection";
 
-  // filters
   public calDateStartData = new Date();
   public calDateEndData = new Date();
-
-  // list grid data source
   public fgdCollectionData: ObservableArray;
   public fgdCollectionCollectionView: CollectionView;
-
-  private collectionSub: any;
-  private collectionsDeletedSub: any;
-
+  public collectionSub: any;
+  public collectionsDeletedSub: any;
   public mdlDeleteCollectionShow: boolean = false;
   public currentCollectionNumber: "";
 
@@ -58,7 +47,7 @@ export class CollectionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.geCollectionList();
   }
 
   public geCollectionList(): void {
@@ -77,24 +66,21 @@ export class CollectionComponent implements OnInit {
     );
   }
 
-  // Add Collection
   public btnAddCollectionClick(): void {
     let btnAddCollection: Element = document.getElementById("btnAddCollection");
     btnAddCollection.setAttribute("disabled", "true");
     btnAddCollection.innerHTML = "<i class='fa fa-plus fa-fw'></i> Adding...";
 
     this.collectionService.addCollection(btnAddCollection);
-
   }
 
   public btnEditCollectionClick(): void {
     let selectedCollection = this.fgdCollectionCollectionView.currentItem;
+
     setTimeout(() => {
       this.router.navigate(['/collectionDetail/', selectedCollection.Id]);
     }, 1000);
   }
-
- 
 
   public btnDeleteCollectionClick(): void {
     this.mdlDeleteCollectionShow = true;
@@ -139,5 +125,4 @@ export class CollectionComponent implements OnInit {
     if (this.collectionSub != null) this.collectionSub.unsubscribe();
     if (this.collectionsDeletedSub != null) this.collectionsDeletedSub.unsubscribe();
   }
-
 }

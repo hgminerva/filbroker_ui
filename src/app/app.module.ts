@@ -49,6 +49,8 @@ import { UnitQuery } from './unit/unit.query';
 import { SettingsIndex } from './settings/settings.index';
 import { ReportsIndex } from './reports/reports.index';
 import { PDFIndex } from './pdf/pdf.index';
+import { CollectionComponent } from './collection/collection.component';
+import { CollectionDetailComponent } from './collection/collection-detail.component';
 
 // My Services
 import { AccountService } from './account/account.service';
@@ -65,10 +67,7 @@ import { ReportsService } from './reports/reports.service';
 import { FooterService } from './footer/footer.service';
 import { PDFService } from './pdf/pdf.service';
 import { SecurityService } from './security/security.service';
-import { CollectionComponent } from './collection/collection.component';
 import { CollectionService } from './collection/collection.service';
-import { CollectionDetailComponent } from './collection-detail/collection-detail.component';
-import { CollectionDetailService } from './collection-detail/collection-detail.service';
 
 const routes: Routes = [
   { path: '', component: HomeLanding },
@@ -97,7 +96,6 @@ const routes: Routes = [
   { path: 'pdf/:report/:id', component: PDFIndex },
   { path: 'collection', component: CollectionComponent },
   { path: 'collectionDetail/:id', component: CollectionDetailComponent }
-
 ];
 
 @NgModule({
@@ -153,8 +151,7 @@ const routes: Routes = [
     FooterService,
     PDFService,
     SecurityService,
-    CollectionService,
-    CollectionDetailService
+    CollectionService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewContainerRef, ViewChild, ElementRef } from '@angular/core';
-
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-// wijmo
 import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 import { WjComboBox } from 'wijmo/wijmo.angular2.input';
-
-// message box 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { TrnCollectionModel } from '../model/model.trn.collection';
-import { CollectionDetailService } from './collection-detail.service';
+import { CollectionService } from './collection.service';
 import { TrnCollectionPayment } from '../model/model.trn.collection.payment';
 import { DateTime } from '../../../wijmo/NpmImages/wijmo-amd-min/wijmo';
 
@@ -21,41 +16,34 @@ import { DateTime } from '../../../wijmo/NpmImages/wijmo-amd-min/wijmo';
   styleUrls: ['./collection-detail.component.css']
 })
 export class CollectionDetailComponent implements OnInit {
-
   public title = "Collection Detail";
 
   @ViewChild('cmbCustomer') cboCustomer: WjComboBox;
+  @ViewChild('cmbSoldUnit') cmbSoldUnit: WjComboBox;
+  @ViewChild('cmbSoldUnitProject') cmbSoldUnitProject: WjComboBox;
+  @ViewChild('cmbPayType') cmbPayType: WjComboBox;
   @ViewChild('cmbPreparedBy') cmbPreparedBy: WjComboBox;
   @ViewChild('cmbCheckedBy') cmbCheckedBy: WjComboBox;
   @ViewChild('cmbApprovedBy') cmbApprovedBy: WjComboBox;
 
-  @ViewChild('cmbSoldUnit') cmbSoldUnit: WjComboBox;
-  @ViewChild('cmbSoldUnitProject') cmbSoldUnitProject: WjComboBox;
-  @ViewChild('cmbPayType') cmbPayType: WjComboBox;
-
-  private cmbCustomersSub: any;
-  private cmbUsersSub: any;
-  private collectionDetailSub: any;
-  private collectionLockedSub: any;
-  private collectionUnlockedSub: any;
-  private collectionSavedSub: any;
-  private cmbSoldUnitSub: any;
-  private cmbSoldUnitProjectSub: any;
-  private cmbPayTypeSub: any;
-  private collectionPaymentSub: any;
+  public cmbCustomersSub: any;
+  public cmbUsersSub: any;
+  public collectionDetailSub: any;
+  public collectionLockedSub: any;
+  public collectionUnlockedSub: any;
+  public collectionSavedSub: any;
+  public cmbSoldUnitSub: any;
+  public cmbSoldUnitProjectSub: any;
+  public cmbPayTypeSub: any;
+  public collectionPaymentSub: any;
   public collectionPaymentSavedSub: any;
   public updateCollectionPaymentSub: any;
-
-
   public fgdCollectionPaymentData: ObservableArray;
   public fgdCollectionPaymentCollectionView: CollectionView;
-
   public mdlAddCollectionPaymentShow: boolean = false;
-
   public saveAction: string = "";
-
   public cmbCustomersData: ObservableArray;
-  public cmbUsersData: ObservableArray; // (cmbPreparedBy, cmbCheckedBy, cmbApprovedBy)
+  public cmbUsersData: ObservableArray; 
   public cmbSoldUnitData: ObservableArray;
   public cmbSoldUnitProjectData: ObservableArray;
   public cmbPayTypeData: ObservableArray;
@@ -78,23 +66,24 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   constructor(
-    private collectionDetailService: CollectionDetailService,
+    private collectionService: CollectionService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private toastr: ToastsManager,
   ) { }
 
   ngOnInit() {
+
+
     setTimeout(() => {
       this.getCollectionDetail();
     }, 3000);
   }
 
-  // detail combo boxes
   public getCmbCustomers(customerId: number): void {
-    this.collectionDetailService.getCustomers();
+    this.collectionService.getCustomers();
 
-    this.cmbCustomersSub = this.collectionDetailService.customersObservable.subscribe(
+    this.cmbCustomersSub = this.collectionService.customersObservable.subscribe(
       data => {
         let collectionCustomerData = new ObservableArray();
 
@@ -115,11 +104,10 @@ export class CollectionDetailComponent implements OnInit {
     );
   }
 
-  // detail combo boxes
   public getCmbUser(user: any) {
-    this.collectionDetailService.getUsers();
+    this.collectionService.getUsers();
 
-    this.cmbUsersSub = this.collectionDetailService.usersObservable.subscribe(
+    this.cmbUsersSub = this.collectionService.usersObservable.subscribe(
       data => {
         let userData = new ObservableArray();
         if (data.length > 0) {
@@ -152,11 +140,9 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   private getCollectionDetail(): void {
-    console.log(this.getIdParameter());
+    this.collectionService.getCollectionDetail(this.getIdParameter());
 
-    this.collectionDetailService.getCollectionDetail(this.getIdParameter());
-
-    this.collectionDetailSub = this.collectionDetailService.collectionDetailObservable.subscribe(
+    this.collectionDetailSub = this.collectionService.collectionDetailObservable.subscribe(
       data => {
         this.CollectionDetail.Id = data.Id;
         this.CollectionDetail.CollectionNumber = data.CollectionNumber;
@@ -179,8 +165,8 @@ export class CollectionDetailComponent implements OnInit {
     btnSaveCollection.setAttribute("disabled", "disabled");
     btnSaveCollection.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
 
-    this.collectionDetailService.saveCollection(this.CollectionDetail);
-    this.collectionSavedSub = this.collectionDetailService.collectionSaveObservable.subscribe(
+    this.collectionService.saveCollection(this.CollectionDetail);
+    this.collectionSavedSub = this.collectionService.collectionSaveObservable.subscribe(
       data => {
         if (data == 1) {
           this.toastr.success("Saving successful.");
@@ -201,8 +187,8 @@ export class CollectionDetailComponent implements OnInit {
     btnLockCollection.setAttribute("disabled", "disabled");
     btnLockCollection.innerHTML = "<i class='fa fa-plus fa-fw'></i> Locking...";
 
-    this.collectionDetailService.lockCollection(this.CollectionDetail);
-    this.collectionLockedSub = this.collectionDetailService.collectionLockedObservable.subscribe(
+    this.collectionService.lockCollection(this.CollectionDetail);
+    this.collectionLockedSub = this.collectionService.collectionLockedObservable.subscribe(
       data => {
         if (data == 1) {
           this.toastr.success("Locking successful.");
@@ -224,8 +210,8 @@ export class CollectionDetailComponent implements OnInit {
     btnUnlockCollection.setAttribute("disabled", "disabled");
     btnUnlockCollection.innerHTML = "<i class='fa fa-plus fa-fw'></i> Unlocking...";
 
-    this.collectionDetailService.unLockCollection(this.CollectionDetail);
-    this.collectionUnlockedSub = this.collectionDetailService.collectionUnLockedObservable.subscribe(
+    this.collectionService.unLockCollection(this.CollectionDetail);
+    this.collectionUnlockedSub = this.collectionService.collectionUnLockedObservable.subscribe(
       data => {
         if (data == 1) {
           this.toastr.success("Unlocking successful.");
@@ -242,10 +228,9 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public geCollectionPaymentList(): void {
+    this.collectionService.getCollectionPayments(this.getIdParameter());
 
-    this.collectionDetailService.getCollectionPayments(this.getIdParameter());
-
-    this.collectionPaymentSub = this.collectionDetailService.collectionPaymentSourceObservable.subscribe(
+    this.collectionPaymentSub = this.collectionService.collectionPaymentSourceObservable.subscribe(
       data => {
         setTimeout(() => {
           this.fgdCollectionPaymentData = data;
@@ -257,8 +242,6 @@ export class CollectionDetailComponent implements OnInit {
     );
   }
 
-
-  // Add Collection
   public btnAddCollectionPaymentShowModalClick(): void {
     this.saveAction = "Add";
     this.mdlAddCollectionPaymentShow = true;
@@ -276,7 +259,7 @@ export class CollectionDetailComponent implements OnInit {
     Id: 0,
     CollectionId: 0,
     SoldUnitId: 0,
-    PayType: "",
+    PayType: 0,
     Amount: 0,
     CheckNumber: "",
     CheckDate: new Date,
@@ -285,8 +268,8 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public getCmbSoldUnits(): void {
-    this.collectionDetailService.getSoldUnits();
-    this.cmbSoldUnitSub = this.collectionDetailService.soldUnitsObservable.subscribe(
+    this.collectionService.getSoldUnits();
+    this.cmbSoldUnitSub = this.collectionService.soldUnitsObservable.subscribe(
       data => {
         let soldUnitData = new ObservableArray();
 
@@ -312,8 +295,8 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public getSysDropDown(): void {
-    this.collectionDetailService.getSysDropDown();
-    this.cmbPayTypeSub = this.collectionDetailService.sysDropDownSourceObservable.subscribe(
+    this.collectionService.getSysDropDown();
+    this.cmbPayTypeSub = this.collectionService.sysDropDownSourceObservable.subscribe(
       data => {
         let sysDropDownData = new ObservableArray();
 
@@ -330,9 +313,7 @@ export class CollectionDetailComponent implements OnInit {
     );
   }
 
-
   public btnSaveCollectionPaymentModalClick(): void {
-
     if (this.saveAction == "Save") {
       this.saveCollectionPayment();
     }
@@ -340,7 +321,6 @@ export class CollectionDetailComponent implements OnInit {
     if (this.saveAction == "Edit") {
       this.updateCollecitonPayment();
     }
-
   }
 
   public saveCollectionPayment(): void {
@@ -349,8 +329,8 @@ export class CollectionDetailComponent implements OnInit {
     btnSaveCollectionPaymentModal.setAttribute("disabled", "disabled");
     btnSaveCollectionPaymentModal.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
 
-    this.collectionDetailService.addCollectionPayment(this.CollecitonPayment);
-    this.collectionPaymentSavedSub = this.collectionDetailService.saveCollectionPaymentObservable.subscribe(
+    this.collectionService.addCollectionPayment(this.CollecitonPayment);
+    this.collectionPaymentSavedSub = this.collectionService.saveCollectionPaymentObservable.subscribe(
       data => {
         if (data == 1) {
           this.toastr.success("Saving successful.");
@@ -373,8 +353,8 @@ export class CollectionDetailComponent implements OnInit {
     btnSaveCollectionPaymentModal.setAttribute("disabled", "disabled");
     btnSaveCollectionPaymentModal.innerHTML = "<i class='fa fa-plus fa-fw'></i> Saving...";
 
-    this.collectionDetailService.updateCollectionPayment(this.CollecitonPayment);
-    this.updateCollectionPaymentSub = this.collectionDetailService.updateCollectionPaymentObservable.subscribe(
+    this.collectionService.updateCollectionPayment(this.CollecitonPayment);
+    this.updateCollectionPaymentSub = this.collectionService.updateCollectionPaymentObservable.subscribe(
       data => {
         if (data == 1) {
           this.toastr.success("Saving successful.");
@@ -390,7 +370,6 @@ export class CollectionDetailComponent implements OnInit {
       }
     );
   }
-
 
   public mdlDeleteCollectionPaymentShow: boolean;
   public currentSoldUnit: string = "";
@@ -414,8 +393,8 @@ export class CollectionDetailComponent implements OnInit {
     btnOkCollectionPaymentDeleteModal.setAttribute("disabled", "disabled");
     btnCloseCollectionPaymentDeleteModal.setAttribute("disabled", "disabled");
 
-    this.collectionDetailService.deleteCollectionPayment(selectedCollectionPayment.Id);
-    this.collectionPaymentDeletedSub = this.collectionDetailService.collectionPaymentDeletedObservable.subscribe(
+    this.collectionService.deleteCollectionPayment(selectedCollectionPayment.Id);
+    this.collectionPaymentDeletedSub = this.collectionService.collectionPaymentDeletedObservable.subscribe(
       data => {
         if (data == 1) {
           this.toastr.success("Delete successful.");
@@ -453,18 +432,16 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public resetCollectionPaymentClick(): void {
-
     this.CollecitonPayment.Id = 0;
     this.CollecitonPayment.CollectionId = 0;
     this.CollecitonPayment.SoldUnitId = 0;
-    this.CollecitonPayment.PayType = "";
+    this.CollecitonPayment.PayType = 0;
     this.CollecitonPayment.Amount = 0;
     this.CollecitonPayment.CheckNumber = "";
     this.CollecitonPayment.CheckDate = new Date();
     this.CollecitonPayment.CheckBank = "";
     this.CollecitonPayment.OtherInformation = "";
   }
-
 
   ngOnDestroy() {
     if (this.cmbCustomersSub != null) this.cmbCustomersSub.unsubscribe();
@@ -473,5 +450,4 @@ export class CollectionDetailComponent implements OnInit {
     if (this.collectionLockedSub != null) this.cmbCustomersSub.unsubscribe();
     if (this.collectionUnlockedSub != null) this.collectionUnlockedSub.unsubscribe();
   }
-
 }
