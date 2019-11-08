@@ -72,7 +72,7 @@ export class SettingsService {
     // detail
     public getSettings(): void {
         let settings: SysSettings;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysSettings/Detail";
+        let url = "http://localhost:10136/api/SysSettings/Detail";
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -110,7 +110,7 @@ export class SettingsService {
 
     // detail operations
     public saveSettings(settings: SysSettings): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysSettings/Save";
+        let url = "http://localhost:10136/api/SysSettings/Save";
         this.http.put(url, JSON.stringify(settings), this.options).subscribe(
             response => {
                 this.settingsSavedSource.next(1);
@@ -123,7 +123,7 @@ export class SettingsService {
 
     // detail combo boxes
     public getUsers(): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstUser/List";
+        let url = "http://localhost:10136/api/MstUser/List";
         let users = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -149,7 +149,7 @@ export class SettingsService {
 
     // detail line1 (drop downs) list
     public getDropDowns(): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+        let url = "http://localhost:10136/api/SysDropDown/List";
         let dropDowns = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -173,7 +173,7 @@ export class SettingsService {
 
     // detail line1 (drop downs) list operations
     public deleteDropDowns(id: number): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/Delete/" + id;
+        let url = "http://localhost:10136/api/SysDropDown/Delete/" + id;
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.dropDownsDeletedSource.next(1);
@@ -185,7 +185,7 @@ export class SettingsService {
     }
     public saveDropDowns(dropDown: SysDropDown): void {
         if(dropDown.id == 0) {
-            let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/Add";
+            let url = "http://localhost:10136/api/SysDropDown/Add";
             this.http.post(url, JSON.stringify(dropDown), this.options).subscribe(
                 response => {
                     this.dropDownsSavedSource.next(1);
@@ -195,7 +195,7 @@ export class SettingsService {
                 }
             )
         } else {
-            let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/Save";
+            let url = "http://localhost:10136/api/SysDropDown/Save";
             this.http.put(url, JSON.stringify(dropDown), this.options).subscribe(
                 response => {
                     this.dropDownsSavedSource.next(1);

@@ -86,7 +86,7 @@ export class CustomerService {
 
     // customer list
     public getCustomers(): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/List";
+        let url = "http://localhost:10136/api/MstCustomer/List";
         let customers = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -155,7 +155,7 @@ export class CustomerService {
 
     // customer list operations
     public addCustomer(customer: MstCustomer, btnAddCustomer: Element): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/Add";
+        let url = "http://localhost:10136/api/MstCustomer/Add";
         this.http.post(url, JSON.stringify(customer), this.options).subscribe(
             response => {
                 var id = response.json();
@@ -178,7 +178,7 @@ export class CustomerService {
         )
     }
     public deleteCustomer(id : number) {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/Delete/" + id;
+        let url = "http://localhost:10136/api/MstCustomer/Delete/" + id;
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.customerDeletedSource.next(1);
@@ -192,7 +192,7 @@ export class CustomerService {
     // customer detail
     public getCustomer(id : number) {
         let customer: MstCustomer;
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/Detail/" + id;
+        let url = "http://localhost:10136/api/MstCustomer/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -261,7 +261,7 @@ export class CustomerService {
 
     // customer detail operations
     public saveCustomer(project: MstCustomer): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/Save";
+        let url = "http://localhost:10136/api/MstCustomer/Save";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 this.customerSavedSource.next(1);
@@ -272,7 +272,7 @@ export class CustomerService {
         )
     }
     public lockCustomer(project: MstCustomer): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/Lock";
+        let url = "http://localhost:10136/api/MstCustomer/Lock";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 this.customerLockedSource.next(1);
@@ -283,7 +283,7 @@ export class CustomerService {
         )
     }
     public unlockCustomer(project: MstCustomer): void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/Unlock";
+        let url = "http://localhost:10136/api/MstCustomer/Unlock";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
                 this.customerUnlockedSource.next(1);
@@ -294,7 +294,7 @@ export class CustomerService {
         )
     }
     public uploadCustomerPicture(file: File, fileName: string) : void {
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/Blob/Upload";
+        let url = "http://localhost:10136/api/Blob/Upload";
         let blob : SysBlob;
 
         var formData: FormData = new FormData();
@@ -329,7 +329,7 @@ export class CustomerService {
     // combo boxes
     public getDropDowns()  {
         let dropDowns  = new ObservableArray();
-        let url = "https://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+        let url = "http://localhost:10136/api/SysDropDown/List";
 
         this.http.get(url, this.options).subscribe(
             response => {
