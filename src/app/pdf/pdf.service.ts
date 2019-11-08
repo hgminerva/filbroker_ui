@@ -49,6 +49,12 @@ export class PDFService {
     public pdfSoldUnitEquityScheduleSource = new Subject<Blob>();
     public pdfSoldUnitEquityScheduleObservable = this.pdfSoldUnitEquityScheduleSource.asObservable();
 
+    public pdfSoldUnitReservationAgreementSource = new Subject<Blob>();
+    public pdfSoldUnitReservationAgreementObservable = this.pdfSoldUnitReservationAgreementSource.asObservable();
+
+    public pdfSoldUnitBuyersUndertakingSource = new Subject<Blob>();
+    public pdfSoldUnitBuyersUndertakingObservable = this.pdfSoldUnitBuyersUndertakingSource.asObservable();
+
     // =======
     // angular
     // =======
@@ -125,5 +131,21 @@ export class PDFService {
             this.pdfSoldUnitEquityScheduleSource.next(pdf);
         });
     }
-    
+    public getPDFSoldUnitReservationAgreement(id: number): void {
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/ReservationAgreement/" + id;
+
+        
+        this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
+            let pdf = new Blob([response.blob()], { type: 'application/pdf' });
+            this.pdfSoldUnitReservationAgreementSource.next(pdf);
+        });
+    }
+    public getPDFSoldUnitBuyersUndertaking(id: number) : void {
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/PDF/BuyersUndertaking/" + id;
+        
+        this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
+            let pdf = new Blob([response.blob()], { type: 'application/pdf' });
+            this.pdfSoldUnitBuyersUndertakingSource.next(pdf);
+        });
+    }
 }

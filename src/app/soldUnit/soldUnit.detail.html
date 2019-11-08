@@ -26,14 +26,26 @@
             <div class="card-header">
                 <table border="0" style="width: 100%;">
                     <tr>
-                        <td style="width: 39%;">
+                        <td style="width: 29%;">
                             <h4>{{title}}</h4>
                         </td>
                         <td style="width: 1%;"></td>
-                        <td style="width: 60%;" align="right">
-                            <button id="btnPrintSoldUnit" class="btn btn-primary" (click)="btnPrintSoldUnitClick()" id="btnPrintSoldUnit">
-                                <i class="fa fa-print fa-fw"></i> Print
-                            </button>
+                        <td style="width: 70%;" align="right">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" type="button" (click)="btnPrintSoldUnitClick()">
+                                    <i class="fa fa-print fa-fw"></i> Print
+                                </button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" routerLink="." (click)="btnPrintReservationAgreementClick()">Reservation Agreement</a>
+                                    <a class="dropdown-item" routerLink="." (click)="btnPrintBuyersUndertakingClick()">Buyer's
+                                        Undertaking</a>
+                                </div>
+                            </div>
+
                             <button id="btnLockSoldUnit" [disabled]="soldUnit.isLocked" class="btn btn-primary"
                                 (click)="btnLockSoldUnitClick()" id="btnLockSoldUnit">
                                 <i class="fa fa-lock fa-fw"></i> Lock
@@ -168,14 +180,14 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Selling Price</label>
                             <div class="col-sm-8">
-                                <wj-input-number [(value)]="soldUnit.price"[isDisabled]=true>
+                                <wj-input-number [(value)]="soldUnit.price" [isDisabled]=true>
                                 </wj-input-number>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">TCP</label>
                             <div class="col-sm-8">
-                                <wj-input-number [(value)]="soldUnit.tcp"[isDisabled]=true>
+                                <wj-input-number [(value)]="soldUnit.tcp" [isDisabled]=true>
                                 </wj-input-number>
                             </div>
                         </div>
@@ -196,9 +208,9 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label text-right">Financing Types</label>
                             <div class="col-sm-8">
-                                <wj-combo-box #cmbFinancingType [itemsSource]="cmbFinancingTypeData" [isEditable]="false"
-                                    [isRequired]="true" [displayMemberPath]="'value'" [selectedValuePath]="'value'"
-                                    [(ngModel)]="soldUnit.financingType">
+                                <wj-combo-box #cmbFinancingType [itemsSource]="cmbFinancingTypeData"
+                                    [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
+                                    [selectedValuePath]="'value'" [(ngModel)]="soldUnit.financingType">
                                 </wj-combo-box>
                             </div>
                         </div>
