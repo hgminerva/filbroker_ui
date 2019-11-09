@@ -184,6 +184,8 @@
                     <wj-flex-grid-column [header]="'CheckNumber'" [binding]="'CheckNumber'" [isReadOnly]="true"
                         [width]="'*'">
                     </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Check Date'" [binding]="'CheckDate'" [isReadOnly]="true" [width]="'*'">
+                    </wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'CheckBank'" [binding]="'CheckBank'" [isReadOnly]="true"
                         [width]="'*'">
                     </wj-flex-grid-column>
@@ -243,15 +245,6 @@
                                 <div class="col-sm-8">
                                     <wj-combo-box #cmbSoldUnit [itemsSource]="cmbSoldUnitData" [isRequired]="true"
                                         [displayMemberPath]="'SoldUnit'" [selectedValuePath]="'Id'"
-                                        [(ngModel)]="CollecitonPayment.SoldUnitId" style="width: 100%;">
-                                    </wj-combo-box>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-4 col-form-label text-right">Project</label>
-                                <div class="col-sm-8">
-                                    <wj-combo-box #cmbSoldUnitProject [itemsSource]="cmbSoldUnitData"
-                                        [isRequired]="true" [displayMemberPath]="'Project'" [selectedValuePath]="'Id'"
                                         [(ngModel)]="CollecitonPayment.SoldUnitId" style="width: 100%;">
                                     </wj-combo-box>
                                 </div>

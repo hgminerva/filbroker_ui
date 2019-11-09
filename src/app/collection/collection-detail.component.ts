@@ -8,7 +8,6 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { TrnCollectionModel } from '../model/model.trn.collection';
 import { CollectionService } from './collection.service';
 import { TrnCollectionPayment } from '../model/model.trn.collection.payment';
-import { DateTime } from '../../../wijmo/NpmImages/wijmo-amd-min/wijmo';
 
 @Component({
   selector: 'app-collection-detail',
@@ -246,7 +245,8 @@ export class CollectionDetailComponent implements OnInit {
     this.saveAction = "Add";
     this.mdlAddCollectionPaymentShow = true;
     this.CollecitonPayment.CollectionId = this.CollectionDetail.Id;
-    this.getCmbSoldUnits();
+
+    this.getCmbSoldUnitsAdd();
     this.getSysDropDown();
   }
 
@@ -267,8 +267,32 @@ export class CollectionDetailComponent implements OnInit {
     OtherInformation: "",
   }
 
-  public getCmbSoldUnits(): void {
-    this.collectionService.getSoldUnits();
+
+  public getCmbSoldUnits(soldUnitId: number): void {
+    this.collectionService.getSoldUnits(this.CollectionDetail.CustomerId);
+    this.cmbSoldUnitSub = this.collectionService.soldUnitsObservable.subscribe(
+      data => {
+        setTimeout(() => {
+        let soldUnitData = new ObservableArray();
+
+        if (data.length > 0) {
+          for (var i = 0; i <= data.length - 1; i++) {
+            soldUnitData.push({
+              Id: data[i].Id,
+              SoldUnit: data[i].SoldUnit,
+              Project: data[i].Project,
+            });
+          }
+        }
+        this.cmbSoldUnitData = soldUnitData;
+        this.CollecitonPayment.SoldUnitId = soldUnitId;
+        }, 1000);
+      }
+    );
+  }
+
+  public getCmbSoldUnitsAdd(): void {
+    this.collectionService.getSoldUnits(this.CollectionDetail.CustomerId);
     this.cmbSoldUnitSub = this.collectionService.soldUnitsObservable.subscribe(
       data => {
         let soldUnitData = new ObservableArray();
@@ -282,17 +306,11 @@ export class CollectionDetailComponent implements OnInit {
             });
           }
         }
-        this.cmbSoldUnitProjectData = soldUnitData;
         this.cmbSoldUnitData = soldUnitData;
       }
     );
   }
 
-  public cmbSoldUnitChange(): void {
-    let index = this.cmbSoldUnit["selectedIndex"];
-    let cmbSoldUnit = this.cmbSoldUnitData[index]["Id"];
-    this.CollecitonPayment.SoldUnitId = cmbSoldUnit;
-  }
 
   public getSysDropDown(): void {
     this.collectionService.getSysDropDown();
@@ -314,7 +332,7 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public btnSaveCollectionPaymentModalClick(): void {
-    if (this.saveAction == "Save") {
+    if (this.saveAction == "Add") {
       this.saveCollectionPayment();
     }
 
@@ -418,11 +436,10 @@ export class CollectionDetailComponent implements OnInit {
   public btnEditCollectionPaymentClick(): void {
     this.saveAction = "Edit";
     this.mdlAddCollectionPaymentShow = true;
-    this.getCmbSoldUnits();
+    this.getCmbSoldUnits(this.fgdCollectionPaymentCollectionView.currentItem.SoldUnitId);
     this.getSysDropDown();
     this.CollecitonPayment.Id = this.fgdCollectionPaymentCollectionView.currentItem.Id;
     this.CollecitonPayment.CollectionId = this.fgdCollectionPaymentCollectionView.currentItem.CollectionId;
-    this.CollecitonPayment.SoldUnitId = this.fgdCollectionPaymentCollectionView.currentItem.SoldUnitId;
     this.CollecitonPayment.PayType = this.fgdCollectionPaymentCollectionView.currentItem.PayType;
     this.CollecitonPayment.Amount = this.fgdCollectionPaymentCollectionView.currentItem.Amount;
     this.CollecitonPayment.CheckNumber = this.fgdCollectionPaymentCollectionView.currentItem.CheckNumber;

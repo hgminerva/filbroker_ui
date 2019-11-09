@@ -143,10 +143,10 @@ export class CollectionService {
     );
   }
 
-  public getSoldUnits(): void {
+  public getSoldUnits(customerId: number): void {
     let soldUnits = new ObservableArray();
 
-    let url = "http://localhost:10136/api/TrnCollectionPayment/SoldUnits";
+    let url = "http://localhost:10136/api/TrnCollectionPayment/SoldUnits/" + customerId;
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -154,8 +154,7 @@ export class CollectionService {
           for (var i = 0; i <= results.length - 1; i++) {
             soldUnits.push({
               Id: results[i].Id,
-              SoldUnit: results[i].SoldUnit,
-              Project: results[i].Project
+              SoldUnit: results[i].SoldUnitNumber + "-" + results[i].Project + "-" + results[i].UnitCode
             });
           }
           this.soldUnitsSource.next(soldUnits);
