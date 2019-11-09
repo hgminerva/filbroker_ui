@@ -1,0 +1,14 @@
+﻿/*!
+    *
+    * Wijmo Library 5.20192.631
+    * http://wijmo.com/
+    *
+    * Copyright(c) GrapeCity, Inc.  All rights reserved.
+    *
+    * Licensed under the GrapeCity Commercial License.
+    * sales@wijmo.com
+    * wijmo.com/products/wijmo-5/license/
+    *
+    */
+
+import{WjComponentBehavior}from"wijmo/wijmo.vue2.base";import*as VueModule from"vue";import*as wjcGauge from"wijmo/wijmo.gauge";import VueModuleDefault from"vue";export var Vue=VueModuleDefault||VueModule;class WjLinearGaugeBehavior extends WjComponentBehavior{}WjLinearGaugeBehavior.tag="wj-linear-gauge",WjLinearGaugeBehavior.props=["control","isDisabled","value","min","max","origin","isReadOnly","step","format","thickness","hasShadow","isAnimated","showText","showTicks","showTickText","showRanges","stackRanges","thumbSize","tickSpacing","getText","direction"],WjLinearGaugeBehavior.events=["initialized","gotFocus","lostFocus","refreshing","refreshed"],WjLinearGaugeBehavior.changeEvents={valueChanged:["value"]},WjLinearGaugeBehavior.classCtor=function(){return wjcGauge.LinearGauge};export var WjLinearGauge=WjLinearGaugeBehavior.register();class WjBulletGraphBehavior extends WjComponentBehavior{}WjBulletGraphBehavior.tag="wj-bullet-graph",WjBulletGraphBehavior.props=["control","isDisabled","value","min","max","origin","isReadOnly","step","format","thickness","hasShadow","isAnimated","showText","showTicks","showTickText","showRanges","stackRanges","thumbSize","tickSpacing","getText","direction","target","good","bad"],WjBulletGraphBehavior.events=["initialized","gotFocus","lostFocus","refreshing","refreshed"],WjBulletGraphBehavior.changeEvents={valueChanged:["value"]},WjBulletGraphBehavior.classCtor=function(){return wjcGauge.BulletGraph};export var WjBulletGraph=WjBulletGraphBehavior.register();class WjRadialGaugeBehavior extends WjComponentBehavior{}WjRadialGaugeBehavior.tag="wj-radial-gauge",WjRadialGaugeBehavior.props=["control","isDisabled","value","min","max","origin","isReadOnly","step","format","thickness","hasShadow","isAnimated","showText","showTicks","showTickText","showRanges","stackRanges","thumbSize","tickSpacing","getText","autoScale","startAngle","sweepAngle","needleShape","needleLength","needleElement"],WjRadialGaugeBehavior.events=["initialized","gotFocus","lostFocus","refreshing","refreshed"],WjRadialGaugeBehavior.changeEvents={valueChanged:["value"]},WjRadialGaugeBehavior.classCtor=function(){return wjcGauge.RadialGauge};export var WjRadialGauge=WjRadialGaugeBehavior.register();class WjRangeBehavior extends WjComponentBehavior{}WjRangeBehavior.tag="wj-range",WjRangeBehavior.parentProp="ranges",WjRangeBehavior.props=["wjProperty","control","color","min","max","name","thickness"],WjRangeBehavior.events=["initialized"],WjRangeBehavior.classCtor=function(){return wjcGauge.Range};export var WjRange=WjRangeBehavior.register();

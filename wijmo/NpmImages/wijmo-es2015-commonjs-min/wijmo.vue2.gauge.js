@@ -1,0 +1,14 @@
+﻿/*!
+    *
+    * Wijmo Library 5.20192.631
+    * http://wijmo.com/
+    *
+    * Copyright(c) GrapeCity, Inc.  All rights reserved.
+    *
+    * Licensed under the GrapeCity Commercial License.
+    * sales@wijmo.com
+    * wijmo.com/products/wijmo-5/license/
+    *
+    */
+
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});const wijmo_vue2_base_1=require("wijmo/wijmo.vue2.base"),VueModule=require("vue"),wjcGauge=require("wijmo/wijmo.gauge"),vue_1=require("vue");exports.Vue=vue_1.default||VueModule;class WjLinearGaugeBehavior extends wijmo_vue2_base_1.WjComponentBehavior{}WjLinearGaugeBehavior.tag="wj-linear-gauge",WjLinearGaugeBehavior.props=["control","isDisabled","value","min","max","origin","isReadOnly","step","format","thickness","hasShadow","isAnimated","showText","showTicks","showTickText","showRanges","stackRanges","thumbSize","tickSpacing","getText","direction"],WjLinearGaugeBehavior.events=["initialized","gotFocus","lostFocus","refreshing","refreshed"],WjLinearGaugeBehavior.changeEvents={valueChanged:["value"]},WjLinearGaugeBehavior.classCtor=function(){return wjcGauge.LinearGauge},exports.WjLinearGauge=WjLinearGaugeBehavior.register();class WjBulletGraphBehavior extends wijmo_vue2_base_1.WjComponentBehavior{}WjBulletGraphBehavior.tag="wj-bullet-graph",WjBulletGraphBehavior.props=["control","isDisabled","value","min","max","origin","isReadOnly","step","format","thickness","hasShadow","isAnimated","showText","showTicks","showTickText","showRanges","stackRanges","thumbSize","tickSpacing","getText","direction","target","good","bad"],WjBulletGraphBehavior.events=["initialized","gotFocus","lostFocus","refreshing","refreshed"],WjBulletGraphBehavior.changeEvents={valueChanged:["value"]},WjBulletGraphBehavior.classCtor=function(){return wjcGauge.BulletGraph},exports.WjBulletGraph=WjBulletGraphBehavior.register();class WjRadialGaugeBehavior extends wijmo_vue2_base_1.WjComponentBehavior{}WjRadialGaugeBehavior.tag="wj-radial-gauge",WjRadialGaugeBehavior.props=["control","isDisabled","value","min","max","origin","isReadOnly","step","format","thickness","hasShadow","isAnimated","showText","showTicks","showTickText","showRanges","stackRanges","thumbSize","tickSpacing","getText","autoScale","startAngle","sweepAngle","needleShape","needleLength","needleElement"],WjRadialGaugeBehavior.events=["initialized","gotFocus","lostFocus","refreshing","refreshed"],WjRadialGaugeBehavior.changeEvents={valueChanged:["value"]},WjRadialGaugeBehavior.classCtor=function(){return wjcGauge.RadialGauge},exports.WjRadialGauge=WjRadialGaugeBehavior.register();class WjRangeBehavior extends wijmo_vue2_base_1.WjComponentBehavior{}WjRangeBehavior.tag="wj-range",WjRangeBehavior.parentProp="ranges",WjRangeBehavior.props=["wjProperty","control","color","min","max","name","thickness"],WjRangeBehavior.events=["initialized"],WjRangeBehavior.classCtor=function(){return wjcGauge.Range},exports.WjRange=WjRangeBehavior.register();

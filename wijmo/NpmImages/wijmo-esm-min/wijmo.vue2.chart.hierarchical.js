@@ -1,0 +1,14 @@
+﻿/*!
+    *
+    * Wijmo Library 5.20192.631
+    * http://wijmo.com/
+    *
+    * Copyright(c) GrapeCity, Inc.  All rights reserved.
+    *
+    * Licensed under the GrapeCity Commercial License.
+    * sales@wijmo.com
+    * wijmo.com/products/wijmo-5/license/
+    *
+    */
+
+var __extends=this&&this.__extends||function(){var e=function(t,o){return(e=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var o in t)t.hasOwnProperty(o)&&(e[o]=t[o])})(t,o)};return function(t,o){function r(){this.constructor=t}e(t,o),t.prototype=null===o?Object.create(o):(r.prototype=o.prototype,new r)}}();import{WjComponentBehavior}from"wijmo/wijmo.vue2.base";import*as VueModule from"vue";import*as wjcChartHierarchical from"wijmo/wijmo.chart.hierarchical";import VueModuleDefault from"vue";export var Vue=VueModuleDefault||VueModule;var WjSunburstBehavior=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return __extends(t,e),t.prototype._updateControl=function(t,o){switch(t){case"tooltipContent":this.control.tooltip.content=o;break;case"labelContent":this.control.dataLabel.content=o;break;default:e.prototype._updateControl.call(this,t,o)}},t.tag="wj-sunburst",t.props=["control","isDisabled","binding","footer","header","selectionMode","palette","plotMargin","footerStyle","headerStyle","tooltipContent","itemsSource","bindingName","innerRadius","isAnimated","offset","reversed","startAngle","selectedIndex","selectedItemPosition","selectedItemOffset","itemFormatter","labelContent","childItemsPath"],t.events=["initialized","gotFocus","lostFocus","refreshing","refreshed","rendering","rendered","selectionChanged","itemsSourceChanging","itemsSourceChanged"],t.classCtor=function(){return wjcChartHierarchical.Sunburst},t}(WjComponentBehavior);export var WjSunburst=WjSunburstBehavior.register();var WjTreeMapBehavior=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return __extends(t,e),t.prototype._updateControl=function(t,o){switch(t){case"tooltipContent":this.control.tooltip.content=o;break;case"labelContent":this.control.dataLabel.content=o;break;default:e.prototype._updateControl.call(this,t,o)}},t.tag="wj-tree-map",t.props=["control","isDisabled","binding","footer","header","selectionMode","palette","plotMargin","footerStyle","headerStyle","tooltipContent","itemsSource","bindingName","maxDepth","type","labelContent","childItemsPath"],t.events=["initialized","gotFocus","lostFocus","refreshing","refreshed","rendering","rendered","selectionChanged","itemsSourceChanging","itemsSourceChanged"],t.classCtor=function(){return wjcChartHierarchical.TreeMap},t}(WjComponentBehavior);export var WjTreeMap=WjTreeMapBehavior.register();

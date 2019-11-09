@@ -1,0 +1,14 @@
+﻿/*!
+    *
+    * Wijmo Library 5.20192.631
+    * http://wijmo.com/
+    *
+    * Copyright(c) GrapeCity, Inc.  All rights reserved.
+    *
+    * Licensed under the GrapeCity Commercial License.
+    * sales@wijmo.com
+    * wijmo.com/products/wijmo-5/license/
+    *
+    */
+
+"use strict";var __extends=this&&this.__extends||function(){var e=function(t,i){return(e=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var i in t)t.hasOwnProperty(i)&&(e[i]=t[i])})(t,i)};return function(t,i){function n(){this.constructor=t}e(t,i),t.prototype=null===i?Object.create(i):(n.prototype=i.prototype,new n)}}();Object.defineProperty(exports,"__esModule",{value:!0});var wijmo_vue2_base_1=require("wijmo/wijmo.vue2.base"),VueModule=require("vue"),wjcChartFinance=require("wijmo/wijmo.chart.finance"),vue_1=require("vue");exports.Vue=vue_1.default||VueModule;var WjFinancialChartBehavior=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return __extends(t,e),t.prototype._updateControl=function(t,i){switch(t){case"tooltipContent":this.control.tooltip.content=i;break;case"labelContent":this.control.dataLabel.content=i;break;default:e.prototype._updateControl.call(this,t,i)}},t.tag="wj-financial-chart",t.props=["control","isDisabled","binding","footer","header","selectionMode","palette","plotMargin","footerStyle","headerStyle","tooltipContent","itemsSource","bindingX","interpolateNulls","legendToggle","symbolSize","options","selection","itemFormatter","labelContent","chartType"],t.events=["initialized","gotFocus","lostFocus","refreshing","refreshed","rendering","rendered","itemsSourceChanging","itemsSourceChanged","seriesVisibilityChanged"],t.changeEvents={selectionChanged:["selection"]},t.classCtor=function(){return wjcChartFinance.FinancialChart},t}(wijmo_vue2_base_1.WjComponentBehavior);exports.WjFinancialChart=WjFinancialChartBehavior.register();var WjFinancialChartSeriesBehavior=function(e){function t(){return null!==e&&e.apply(this,arguments)||this}return __extends(t,e),t.tag="wj-financial-chart-series",t.parentProp="series",t.siblingId="series",t.props=["wjProperty","control","axisX","axisY","binding","bindingX","cssClass","name","altStyle","symbolMarker","symbolSize","symbolStyle","visibility","itemsSource","interpolateNulls","tooltipContent","itemFormatter","chartType"],t.events=["initialized","rendering","rendered"],t.changeEvents={"chart.seriesVisibilityChanged":["visibility"]},t.classCtor=function(){return wjcChartFinance.FinancialSeries},t}(wijmo_vue2_base_1.WjComponentBehavior);exports.WjFinancialChartSeries=WjFinancialChartSeriesBehavior.register();
