@@ -37,12 +37,14 @@ export class CollectionDetailComponent implements OnInit {
   public collectionPaymentSub: any;
   public collectionPaymentSavedSub: any;
   public updateCollectionPaymentSub: any;
+  public collectionPaymentDeletedSub: any;
+
   public fgdCollectionPaymentData: ObservableArray;
   public fgdCollectionPaymentCollectionView: CollectionView;
   public mdlAddCollectionPaymentShow: boolean = false;
   public saveAction: string = "";
   public cmbCustomersData: ObservableArray;
-  public cmbUsersData: ObservableArray; 
+  public cmbUsersData: ObservableArray;
   public cmbSoldUnitData: ObservableArray;
   public cmbSoldUnitProjectData: ObservableArray;
   public cmbPayTypeData: ObservableArray;
@@ -251,8 +253,8 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public btnCloseCollectionPaymenteModalClick(): void {
-    this.mdlAddCollectionPaymentShow = false;
     this.resetCollectionPaymentClick();
+    this.mdlAddCollectionPaymentShow = false;
   }
 
   public CollecitonPayment: TrnCollectionPayment = {
@@ -268,25 +270,25 @@ export class CollectionDetailComponent implements OnInit {
   }
 
 
-  public getCmbSoldUnits(soldUnitId: number): void {
+  public getCmbSoldUnitEdit(soldUnitId: number): void {
     this.collectionService.getSoldUnits(this.CollectionDetail.CustomerId);
     this.cmbSoldUnitSub = this.collectionService.soldUnitsObservable.subscribe(
       data => {
         setTimeout(() => {
-        let soldUnitData = new ObservableArray();
+          let soldUnitData = new ObservableArray();
 
-        if (data.length > 0) {
-          for (var i = 0; i <= data.length - 1; i++) {
-            soldUnitData.push({
-              Id: data[i].Id,
-              SoldUnit: data[i].SoldUnit,
-              Project: data[i].Project,
-            });
+          if (data.length > 0) {
+            for (var i = 0; i <= data.length - 1; i++) {
+              soldUnitData.push({
+                Id: data[i].Id,
+                SoldUnit: data[i].SoldUnit,
+                Project: data[i].Project,
+              });
+            }
           }
-        }
-        this.cmbSoldUnitData = soldUnitData;
-        this.CollecitonPayment.SoldUnitId = soldUnitId;
-        }, 1000);
+          this.cmbSoldUnitData = soldUnitData;
+          this.CollecitonPayment.SoldUnitId = soldUnitId;
+        }, 5000);
       }
     );
   }
@@ -401,7 +403,6 @@ export class CollectionDetailComponent implements OnInit {
     this.mdlDeleteCollectionPaymentShow = false;
   }
 
-  public collectionPaymentDeletedSub: any;
   public btnOkCollectionPaymentDeleteModalClick(): void {
     let btnOkCollectionPaymentDeleteModal: Element = document.getElementById("btnOkCollectionPaymentDeleteModal");
     let btnCloseCollectionPaymentDeleteModal: Element = document.getElementById("btnCloseCollectionPaymentDeleteModal");
@@ -434,18 +435,19 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public btnEditCollectionPaymentClick(): void {
-    this.saveAction = "Edit";
-    this.mdlAddCollectionPaymentShow = true;
-    this.getCmbSoldUnits(this.fgdCollectionPaymentCollectionView.currentItem.SoldUnitId);
-    this.getSysDropDown();
-    this.CollecitonPayment.Id = this.fgdCollectionPaymentCollectionView.currentItem.Id;
-    this.CollecitonPayment.CollectionId = this.fgdCollectionPaymentCollectionView.currentItem.CollectionId;
-    this.CollecitonPayment.PayType = this.fgdCollectionPaymentCollectionView.currentItem.PayType;
-    this.CollecitonPayment.Amount = this.fgdCollectionPaymentCollectionView.currentItem.Amount;
-    this.CollecitonPayment.CheckNumber = this.fgdCollectionPaymentCollectionView.currentItem.CheckNumber;
-    this.CollecitonPayment.CheckDate = this.fgdCollectionPaymentCollectionView.currentItem.CheckDate;
-    this.CollecitonPayment.CheckBank = this.fgdCollectionPaymentCollectionView.currentItem.CheckBank;
-    this.CollecitonPayment.OtherInformation = this.fgdCollectionPaymentCollectionView.currentItem.OtherInformation;
+      let currentSoldUnit = this.fgdCollectionPaymentCollectionView.currentItem.SoldUnitId
+      this.saveAction = "Edit";
+      this.mdlAddCollectionPaymentShow = true;
+      this.getCmbSoldUnitEdit(currentSoldUnit);
+      this.getSysDropDown();
+      this.CollecitonPayment.Id = this.fgdCollectionPaymentCollectionView.currentItem.Id;
+      this.CollecitonPayment.CollectionId = this.fgdCollectionPaymentCollectionView.currentItem.CollectionId;
+      this.CollecitonPayment.PayType = this.fgdCollectionPaymentCollectionView.currentItem.PayType;
+      this.CollecitonPayment.Amount = this.fgdCollectionPaymentCollectionView.currentItem.Amount;
+      this.CollecitonPayment.CheckNumber = this.fgdCollectionPaymentCollectionView.currentItem.CheckNumber;
+      this.CollecitonPayment.CheckDate = this.fgdCollectionPaymentCollectionView.currentItem.CheckDate;
+      this.CollecitonPayment.CheckBank = this.fgdCollectionPaymentCollectionView.currentItem.CheckBank;
+      this.CollecitonPayment.OtherInformation = this.fgdCollectionPaymentCollectionView.currentItem.OtherInformation;
   }
 
   public resetCollectionPaymentClick(): void {
