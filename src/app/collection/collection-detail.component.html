@@ -125,6 +125,7 @@
             </div>
             <!--  <div class="card-body"> -->
         </div>
+        <br>
         <!-- <div class="card"> -->
         <div class="card">
             <!-- Collection Detail -->
@@ -136,7 +137,7 @@
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 40%;" align="right">
-                            <button class="btn btn-primary" id="btnAddCollectionPayment"
+                            <button class="btn btn-primary" id="btnAddCollectionPayment" [disabled]="CollectionDetail.IsLocked" 
                                 (click)="btnAddCollectionPaymentShowModalClick()">
                                 <i class="fa fa-plus fa-fw"></i> Add
                             </button>
@@ -149,7 +150,7 @@
                 <wj-flex-grid #fgdCollectionPayment [itemsSource]="fgdCollectionPaymentCollectionView"
                     [selectionMode]="3" [frozenColumns]="2">
                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                    <wj-flex-grid-column  *ngIf="!CollectionDetail.IsLocked" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                             <button class="btn btn-primary btn-xs btn-block" (click)="btnEditCollectionPaymentClick()"
                                 id="btnEditCollection">
@@ -157,7 +158,7 @@
                             </button>
                         </ng-template>
                     </wj-flex-grid-column>
-                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                    <wj-flex-grid-column *ngIf="!CollectionDetail.IsLocked" [header]="Delete" [isReadOnly]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                             <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteCollectionPaymentClick()"
                                 id="btnDeleteCollectionPayment">
