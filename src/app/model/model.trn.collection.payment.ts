@@ -2,7 +2,7 @@ export class TrnCollectionPayment {
     Id: number;
     CollectionId: number;
     SoldUnitId: number;
-    PayType: number;
+    PayType: string;
     Amount: number;
     CheckNumber: string;
     CheckDate: Date;

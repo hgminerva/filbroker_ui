@@ -74,8 +74,6 @@ export class CollectionDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-
     setTimeout(() => {
       this.getCollectionDetail();
     }, 3000);
@@ -249,7 +247,7 @@ export class CollectionDetailComponent implements OnInit {
     this.CollecitonPayment.CollectionId = this.CollectionDetail.Id;
 
     this.getCmbSoldUnitsAdd();
-    this.getSysDropDown();
+    this.getSysDropDown("");
   }
 
   public btnCloseCollectionPaymenteModalClick(): void {
@@ -261,7 +259,7 @@ export class CollectionDetailComponent implements OnInit {
     Id: 0,
     CollectionId: 0,
     SoldUnitId: 0,
-    PayType: 0,
+    PayType: "",
     Amount: 0,
     CheckNumber: "",
     CheckDate: new Date,
@@ -269,28 +267,28 @@ export class CollectionDetailComponent implements OnInit {
     OtherInformation: "",
   }
 
-
   public getCmbSoldUnitEdit(soldUnitId: number): void {
     this.collectionService.getSoldUnits(this.CollectionDetail.CustomerId);
     this.cmbSoldUnitSub = this.collectionService.soldUnitsObservable.subscribe(
       data => {
-        setTimeout(() => {
-          let soldUnitData = new ObservableArray();
-
-          if (data.length > 0) {
-            for (var i = 0; i <= data.length - 1; i++) {
-              soldUnitData.push({
-                Id: data[i].Id,
-                SoldUnit: data[i].SoldUnit,
-                Project: data[i].Project,
-              });
-            }
+        let soldUnitData = new ObservableArray();
+        if (data.length > 0) {
+          for (var i = 0; i <= data.length - 1; i++) {
+            soldUnitData.push({
+              Id: data[i].Id,
+              SoldUnit: data[i].SoldUnit,
+              Project: data[i].Project,
+            });
           }
-          this.cmbSoldUnitData = soldUnitData;
+        }
+        this.cmbSoldUnitData = soldUnitData;
+        setTimeout(() => {
           this.CollecitonPayment.SoldUnitId = soldUnitId;
-        }, 5000);
+        }, 100);
       }
     );
+    let payType = this.fgdCollectionPaymentCollectionView.currentItem.PayType;
+    this.getSysDropDown(payType);
   }
 
   public getCmbSoldUnitsAdd(): void {
@@ -313,8 +311,7 @@ export class CollectionDetailComponent implements OnInit {
     );
   }
 
-
-  public getSysDropDown(): void {
+  public getSysDropDown(payType: string): void {
     this.collectionService.getSysDropDown();
     this.cmbPayTypeSub = this.collectionService.sysDropDownSourceObservable.subscribe(
       data => {
@@ -329,8 +326,12 @@ export class CollectionDetailComponent implements OnInit {
           }
         }
         this.cmbPayTypeData = sysDropDownData;
+        setTimeout(() => {
+          this.CollecitonPayment.PayType = payType;
+        }, 100);
       }
     );
+    this.getCurrentPayment();
   }
 
   public btnSaveCollectionPaymentModalClick(): void {
@@ -435,26 +436,27 @@ export class CollectionDetailComponent implements OnInit {
   }
 
   public btnEditCollectionPaymentClick(): void {
-      let currentSoldUnit = this.fgdCollectionPaymentCollectionView.currentItem.SoldUnitId
-      this.saveAction = "Edit";
-      this.mdlAddCollectionPaymentShow = true;
-      this.getCmbSoldUnitEdit(currentSoldUnit);
-      this.getSysDropDown();
-      this.CollecitonPayment.Id = this.fgdCollectionPaymentCollectionView.currentItem.Id;
-      this.CollecitonPayment.CollectionId = this.fgdCollectionPaymentCollectionView.currentItem.CollectionId;
-      this.CollecitonPayment.PayType = this.fgdCollectionPaymentCollectionView.currentItem.PayType;
-      this.CollecitonPayment.Amount = this.fgdCollectionPaymentCollectionView.currentItem.Amount;
-      this.CollecitonPayment.CheckNumber = this.fgdCollectionPaymentCollectionView.currentItem.CheckNumber;
-      this.CollecitonPayment.CheckDate = this.fgdCollectionPaymentCollectionView.currentItem.CheckDate;
-      this.CollecitonPayment.CheckBank = this.fgdCollectionPaymentCollectionView.currentItem.CheckBank;
-      this.CollecitonPayment.OtherInformation = this.fgdCollectionPaymentCollectionView.currentItem.OtherInformation;
+    let currentSoldUnit = this.fgdCollectionPaymentCollectionView.currentItem.SoldUnitId;
+    this.saveAction = "Edit";
+    this.getCmbSoldUnitEdit(currentSoldUnit);
+  }
+
+  public getCurrentPayment(): void {
+    this.CollecitonPayment.Id = this.fgdCollectionPaymentCollectionView.currentItem.Id;
+    this.CollecitonPayment.CollectionId = this.fgdCollectionPaymentCollectionView.currentItem.CollectionId;
+    this.CollecitonPayment.Amount = this.fgdCollectionPaymentCollectionView.currentItem.Amount;
+    this.CollecitonPayment.CheckNumber = this.fgdCollectionPaymentCollectionView.currentItem.CheckNumber;
+    this.CollecitonPayment.CheckDate = this.fgdCollectionPaymentCollectionView.currentItem.CheckDate;
+    this.CollecitonPayment.CheckBank = this.fgdCollectionPaymentCollectionView.currentItem.CheckBank;
+    this.CollecitonPayment.OtherInformation = this.fgdCollectionPaymentCollectionView.currentItem.OtherInformation;
+    this.mdlAddCollectionPaymentShow = true;
   }
 
   public resetCollectionPaymentClick(): void {
     this.CollecitonPayment.Id = 0;
     this.CollecitonPayment.CollectionId = 0;
     this.CollecitonPayment.SoldUnitId = 0;
-    this.CollecitonPayment.PayType = 0;
+    this.CollecitonPayment.PayType = "";
     this.CollecitonPayment.Amount = 0;
     this.CollecitonPayment.CheckNumber = "";
     this.CollecitonPayment.CheckDate = new Date();

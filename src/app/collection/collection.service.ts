@@ -79,7 +79,7 @@ export class CollectionService {
           this.collectionListSource.next(collectionListObservableArray);
         } else {
           this.collectionListSource.next(collectionListObservableArray);
-          this.toastr.error("No commissions for this date range.");
+          this.toastr.error("No Collection.");
         }
       }
     );
@@ -243,7 +243,7 @@ export class CollectionService {
   }
 
   public saveCollection(collection: TrnCollectionModel): void {
-    let url = "http://localhost:10136/api/TrnCollection/Lock";
+    let url = "http://localhost:10136/api/TrnCollection/Save";
     this.http.put(url, JSON.stringify(collection), this.options).subscribe(
       response => {
         this.collectionSaveSource.next(1);
