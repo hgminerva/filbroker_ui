@@ -126,7 +126,9 @@ export class ReportsService {
                             createdBy: results[i].CreatedBy,
                             createdDateTime: results[i].CreatedDateTime,
                             updatedBy: results[i].UpdatedBy,
-                            updatedDateTime: results[i].UpdatedDateTime
+                            updatedDateTime: results[i].UpdatedDateTime,
+                            pricePayment: results[i].PricePayment,
+                            priceBalance: results[i].PriceBalance
                         });
                     }
                     this.soldUnitsSource.next(soldUnits);

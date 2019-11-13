@@ -79,7 +79,7 @@ export class CollectionDetailComponent implements OnInit {
     }, 3000);
   }
 
-  public getCmbCustomers(customerId: number): void {
+  public getCmbCustomers(collectionDetail: any): void {
     this.collectionService.getCustomers();
 
     this.cmbCustomersSub = this.collectionService.customersObservable.subscribe(
@@ -97,10 +97,12 @@ export class CollectionDetailComponent implements OnInit {
         }
         this.cmbCustomersData = collectionCustomerData;
         setTimeout(() => {
-          this.CollectionDetail.CustomerId = customerId;
+          this.CollectionDetail.CustomerId = collectionDetail.CustomerId;
         }, 100);
       }
     );
+    this.getCmbUser(collectionDetail);
+
   }
 
   public getCmbUser(user: any) {
@@ -150,8 +152,7 @@ export class CollectionDetailComponent implements OnInit {
         this.CollectionDetail.IsLocked = data.IsLocked;
         this.CollectionDetail.CreatedDateTime = data.CreatedDateTime;
         this.CollectionDetail.UpdatedDateTime = data.UpdatedDateTime;
-        this.getCmbUser(data);
-        this.getCmbCustomers(data.CustomerId);
+        this.getCmbCustomers(data);
       }
     );
 

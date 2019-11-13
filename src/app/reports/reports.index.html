@@ -121,7 +121,13 @@
                             <wj-flex-grid-column [header]="'Broker'" [binding]="'broker'" [isReadOnly]="true"
                                 [width]="'*'"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true"
-                                [width]="150"></wj-flex-grid-column>
+                                [width]="120"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Discount'" [binding]="'discount'" [isReadOnly]="true"
+                                [width]="120"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Payment'" [binding]="'pricePayment'"
+                                [isReadOnly]="true" [width]="120"></wj-flex-grid-column>
+                            <wj-flex-grid-column [header]="'Balance'" [binding]="'priceBalance'"
+                                [isReadOnly]="true" [width]="120"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50">
                             </wj-flex-grid-column>
                         </wj-flex-grid>
