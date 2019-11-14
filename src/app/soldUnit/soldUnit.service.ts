@@ -158,8 +158,8 @@ export class SoldUnitService {
 
     // list
     public getSoldUnitsPerDates(dateStart: string, dateEnd: string): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/ListPerDates/" + dateStart + "/" + dateEnd;
-        let url = "http://localhost:10136/api/TrnSoldUnit/ListPerDates/" + dateStart + "/" + dateEnd;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/ListPerDates/" + dateStart + "/" + dateEnd;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/ListPerDates/" + dateStart + "/" + dateEnd;
         let soldUnits = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -232,8 +232,8 @@ export class SoldUnitService {
     // detail
     public getSoldUnit(id: number): void {
         let soldUnit: TrnSoldUnit;
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Detail/" + id;
-        let url = "http://localhost:10136/api/TrnSoldUnit/Detail/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Detail/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -309,8 +309,8 @@ export class SoldUnitService {
 
     // detail line1 (checklist requirements) - new list and existing list
     public getNewSoldUnitRequirements(soldUnitId: number, checklistId: number): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirement/ListNewTrnSoldUnitRequirements/" + soldUnitId + "/" + checklistId;
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirement/ListNewTrnSoldUnitRequirements/" + soldUnitId + "/" + checklistId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirement/ListNewTrnSoldUnitRequirements/" + soldUnitId + "/" + checklistId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirement/ListNewTrnSoldUnitRequirements/" + soldUnitId + "/" + checklistId;
         let soldUnitRequirements = new ObservableArray();
 
         this.http.get(url, this.options).subscribe(
@@ -346,8 +346,8 @@ export class SoldUnitService {
         );
     }
     public getSoldUnitRequirements(soldUnitId: number): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirement/ListPerUnitSold/" + soldUnitId;
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirement/ListPerUnitSold/" + soldUnitId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirement/ListPerUnitSold/" + soldUnitId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirement/ListPerUnitSold/" + soldUnitId;
         let soldUnitRequirements = new ObservableArray();
 
         this.http.get(url, this.options).subscribe(
@@ -385,8 +385,8 @@ export class SoldUnitService {
 
     // detail line1 line1 (checklist requirement activities)
     public getSoldUnitRequirementActivities(soldUnitRequirementId: number): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/ListPerSoldUnitRequirement/" + soldUnitRequirementId;
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/ListPerSoldUnitRequirement/" + soldUnitRequirementId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/ListPerSoldUnitRequirement/" + soldUnitRequirementId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/ListPerSoldUnitRequirement/" + soldUnitRequirementId;
         let soldUnitRequirementActivities = new ObservableArray();
 
         this.http.get(url, this.options).subscribe(
@@ -415,8 +415,8 @@ export class SoldUnitService {
 
     // detail line2 (equity payment schedule)
     public getNewSoldUnitEquitySchedule(soldUnitId: number) {
-        // let url = "http://localhost:10136/api/TrnSoldUnitEquitySchedule/ListNewTrnSoldUnitEquitySchedule/" + soldUnitId;
-        let url = "http://localhost:10136/api/TrnSoldUnitEquitySchedule/ListNewTrnSoldUnitEquitySchedule/" + soldUnitId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitEquitySchedule/ListNewTrnSoldUnitEquitySchedule/" + soldUnitId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitEquitySchedule/ListNewTrnSoldUnitEquitySchedule/" + soldUnitId;
 
         let soldUnitEquitySchedule = new ObservableArray();
 
@@ -445,8 +445,8 @@ export class SoldUnitService {
         );
     }
     public getSoldUnitEquitySchedule(soldUnitId: number) {
-        // let url = "http://localhost:10136/api/TrnSoldUnitEquitySchedule/ListPerUnitSold/" + soldUnitId;
-        let url = "http://localhost:10136/api/TrnSoldUnitEquitySchedule/ListPerUnitSold/" + soldUnitId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitEquitySchedule/ListPerUnitSold/" + soldUnitId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitEquitySchedule/ListPerUnitSold/" + soldUnitId;
 
         let soldUnitEquitySchedule = new ObservableArray();
 
@@ -477,8 +477,8 @@ export class SoldUnitService {
 
     // detail combo boxes
     public getProjects(): void {
-        // let url = "http://localhost:10136/api/MstProject/List";
-        let url = "http://localhost:10136/api/MstProject/List";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/List";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/List";
 
         let projects = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -508,8 +508,8 @@ export class SoldUnitService {
     }
     public getDropDowns(): void {
         let dropDowns = new ObservableArray();
-        // let url = "http://localhost:10136/api/SysDropDown/List";
-        let url = "http://localhost:10136/api/SysDropDown/List";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
 
 
         this.http.get(url, this.options).subscribe(
@@ -534,8 +534,8 @@ export class SoldUnitService {
     }
 
     public getUnitsPerProject(projectId: number): void {
-        // let url = "http://localhost:10136/api/MstUnit/OpenListPerProjectId/" + projectId;
-        let url = "http://localhost:10136/api/MstUnit/OpenListPerProjectId/" + projectId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/OpenListPerProjectId/" + projectId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstUnit/OpenListPerProjectId/" + projectId;
 
         let units = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -574,8 +574,8 @@ export class SoldUnitService {
         );
     }
     public getChecklistsPerProject(projectId: number): void {
-        // let url = "http://localhost:10136/api/MstChecklist/ListPerProjectId/" + projectId;
-        let url = "http://localhost:10136/api/MstChecklist/ListPerProjectId/" + projectId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstChecklist/ListPerProjectId/" + projectId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstChecklist/ListPerProjectId/" + projectId;
 
         let checklists = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -607,8 +607,8 @@ export class SoldUnitService {
         );
     }
     public getCustomers(): void {
-        // let url = "http://localhost:10136/api/MstCustomer/List";
-        let url = "http://localhost:10136/api/MstCustomer/List";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/List";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstCustomer/List";
 
         let customers = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -629,8 +629,8 @@ export class SoldUnitService {
         );
     }
     public getBrokers(): void {
-        // let url = "http://localhost:10136/api/MstBroker/List";
-        let url = "http://localhost:10136/api/MstBroker/List";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstBroker/List";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstBroker/List";
 
         let brokers = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -652,8 +652,8 @@ export class SoldUnitService {
     }
     
     public getUsers(): void {
-        // let url = "http://localhost:10136/api/MstUser/List";
-        let url = "http://localhost:10136/api/MstUser/List";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstUser/List";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstUser/List";
 
         let users = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -676,8 +676,8 @@ export class SoldUnitService {
 
     // upload attachments
     public uploadSoldUnitAttachment(file: File, fileName: string): void {
-        // let url = "http://localhost:10136/api/Blob/Upload";
-        let url = "http://localhost:10136/api/Blob/Upload";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/Blob/Upload";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/Blob/Upload";
 
         let blob: SysBlob;
 
@@ -712,8 +712,8 @@ export class SoldUnitService {
 
     // list operations
     public addSoldUnit(soldUnit: TrnSoldUnit, btnAddSoldUnit: Element): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Add";
-        let url = "http://localhost:10136/api/TrnSoldUnit/Add";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Add";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Add";
 
         this.http.post(url, JSON.stringify(soldUnit), this.options).subscribe(
             response => {
@@ -737,8 +737,8 @@ export class SoldUnitService {
         )
     }
     public deleteSoldUnit(id: number): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Delete/" + id;
-        let url = "http://localhost:10136/api/TrnSoldUnit/Delete/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Delete/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Delete/" + id;
 
         this.http.delete(url, this.options).subscribe(
             response => {
@@ -750,8 +750,8 @@ export class SoldUnitService {
         )
     }
     public transferSoldUnit(soldUnit: TrnSoldUnit): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Transfer";
-        let url = "http://localhost:10136/api/TrnSoldUnit/Transfer";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Transfer";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Transfer";
 
         this.http.put(url, JSON.stringify(soldUnit), this.options).subscribe(
             response => {
@@ -776,8 +776,8 @@ export class SoldUnitService {
 
     // detail operations
     public saveSoldUnit(soldUnit: TrnSoldUnit): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Save";
-        let url = "http://localhost:10136/api/TrnSoldUnit/Save";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Save";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Save";
 
         this.http.put(url, JSON.stringify(soldUnit), this.options).subscribe(
             response => {
@@ -789,8 +789,8 @@ export class SoldUnitService {
         )
     }
     public lockSoldUnit(soldUnit: TrnSoldUnit): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Lock";
-        let url = "http://localhost:10136/api/TrnSoldUnit/Lock";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Lock";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Lock";
 
         this.http.put(url, JSON.stringify(soldUnit), this.options).subscribe(
             response => {
@@ -802,8 +802,8 @@ export class SoldUnitService {
         )
     }
     public unlockSoldUnit(soldUnit: TrnSoldUnit): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Unlock";
-        let url = "http://localhost:10136/api/TrnSoldUnit/Unlock";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Unlock";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Unlock";
 
         this.http.put(url, JSON.stringify(soldUnit), this.options).subscribe(
             response => {
@@ -815,8 +815,8 @@ export class SoldUnitService {
         )
     }
     public cancelSoldUnit(soldUnit: TrnSoldUnit): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnit/Cancel";
-        let url = "http://localhost:10136/api/TrnSoldUnit/Cancel";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Cancel";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/Cancel";
 
         this.http.put(url, JSON.stringify(soldUnit), this.options).subscribe(
             response => {
@@ -830,8 +830,8 @@ export class SoldUnitService {
 
     // detail line1 (checklist requirements) operations
     public saveSoldUnitRequirement(soldUnitRequirement: TrnSoldUnitRequirement): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirement/Save";
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirement/Save";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirement/Save";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirement/Save";
 
         this.http.put(url, JSON.stringify(soldUnitRequirement), this.options).subscribe(
             response => {
@@ -845,8 +845,8 @@ export class SoldUnitService {
 
     // detail line1 line (checklist requirement activities) operations
     public saveSoldUnitRequirementActivity(soldUnitRequirementActivity: TrnSoldUnitRequirementActivity): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/Save";
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/Save";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/Save";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/Save";
 
         this.http.put(url, JSON.stringify(soldUnitRequirementActivity), this.options).subscribe(
             response => {
@@ -858,8 +858,8 @@ export class SoldUnitService {
         )
     }
     public addSoldUnitRequirementActivity(soldUnitRequirementActivity: TrnSoldUnitRequirementActivity): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/Add";
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/Add";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/Add";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/Add";
 
         this.http.post(url, JSON.stringify(soldUnitRequirementActivity), this.options).subscribe(
             response => {
@@ -871,8 +871,8 @@ export class SoldUnitService {
         )
     }
     public deleteSoldUnitRequirementActivity(id: number): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/Delete/" + id;
-        let url = "http://localhost:10136/api/TrnSoldUnitRequirementActivity/Delete/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/Delete/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitRequirementActivity/Delete/" + id;
 
 
         this.http.delete(url, this.options).subscribe(
@@ -887,8 +887,8 @@ export class SoldUnitService {
 
     // detail line2 (equity payment schedule) operations
     public saveSoldUnitEquitySchedule(soldUnitEquitySchedule: TrnSoldUnitEquitySchedule): void {
-        // let url = "http://localhost:10136/api/TrnSoldUnitEquitySchedule/Save";
-        let url = "http://localhost:10136/api/TrnSoldUnitEquitySchedule/Save";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitEquitySchedule/Save";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnitEquitySchedule/Save";
 
         this.http.put(url, JSON.stringify(soldUnitEquitySchedule), this.options).subscribe(
             response => {
@@ -902,8 +902,8 @@ export class SoldUnitService {
 
     // List Co-Owner Customer
     public getSoldUnitCustomer(): void {
-        // let url = "http://localhost:10136/api/trnSoldUnitOwner/dropdown/customer/list";
-        let url = "http://localhost:10136/api/trnSoldUnitOwner/dropdown/customer/list";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/dropdown/customer/list";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/dropdown/customer/list";
 
         let customers = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -928,8 +928,8 @@ export class SoldUnitService {
 
     // List Co-Owner
     public getSoldUnitCoOwner(soldUnitId: number): void {
-        // let url = "http://localhost:10136/api/trnSoldUnitOwner/list/" + soldUnitId;
-        let url = "http://localhost:10136/api/trnSoldUnitOwner/list/" + soldUnitId;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/list/" + soldUnitId;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/list/" + soldUnitId;
 
         let coOwners = new ObservableArray();
         this.http.get(url, this.options).subscribe(
@@ -957,8 +957,8 @@ export class SoldUnitService {
 
     // Add Co-Owner
     public addSoldUnitCoOwner(objSoldUnitCoOwner: any): void {
-        // let url = "http://localhost:10136/api/trnSoldUnitOwner/add";
-        let url = "http://localhost:10136/api/trnSoldUnitOwner/add";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/add";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/add";
 
         this.http.post(url, JSON.stringify(objSoldUnitCoOwner), this.options).subscribe(
             response => {
@@ -972,8 +972,8 @@ export class SoldUnitService {
 
     // Update Co-Owner
     public updateSoldUnitCoOwner(objSoldUnitCoOwner: any): void {
-        // let url = "http://localhost:10136/api/trnSoldUnitOwner/update";
-        let url = "http://localhost:10136/api/trnSoldUnitOwner/update";
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/update";
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/update";
 
         this.http.put(url, JSON.stringify(objSoldUnitCoOwner), this.options).subscribe(
             response => {
@@ -987,8 +987,8 @@ export class SoldUnitService {
 
     // Delete Co-Owner
     public deleteSoldUnitCoOwner(id: number): void {
-        // let url = "http://localhost:10136/api/trnSoldUnitOwner/delete/" + id;
-        let url = "http://localhost:10136/api/trnSoldUnitOwner/delete/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/delete/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/trnSoldUnitOwner/delete/" + id;
 
         this.http.delete(url, this.options).subscribe(
             response => {

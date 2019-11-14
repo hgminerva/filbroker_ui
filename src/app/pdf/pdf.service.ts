@@ -71,8 +71,8 @@ export class PDFService {
     // ==============
 
     public getPDFCustomer(id: number): void {
-        // let url = "http://localhost:10136/api/PDF/Customer/" + id;
-        let url = "http://localhost:10136/api/PDF/Customer/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Customer/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Customer/" + id;
         
         console.log(url);
 
@@ -82,8 +82,8 @@ export class PDFService {
         });
     }
     public getPDFBroker(id: number): void {
-        // let url = "http://localhost:10136/api/PDF/Broker/" + id;
-        let url = "http://localhost:10136/api/PDF/Broker/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Broker/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Broker/" + id;
         
         console.log(url);
 
@@ -93,8 +93,8 @@ export class PDFService {
         });
     }
     public getPDFChecklist(id: number): void {
-        // let url = "http://localhost:10136/api/PDF/Checklist/" + id;
-        let url = "http://localhost:10136/api/PDF/Checklist/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Checklist/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/Checklist/" + id;
 
 
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
@@ -103,8 +103,8 @@ export class PDFService {
         });
     }
     public getPDFSoldUnitProposal(id: number): void {
-        // let url = "http://localhost:10136/api/PDF/SoldUnitProposal/" + id;
-        let url = "http://localhost:10136/api/PDF/SoldUnitProposal/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitProposal/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitProposal/" + id;
 
 
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
@@ -113,8 +113,8 @@ export class PDFService {
         });
     }
     public getPDFSoldUnitContract(id: number): void {
-        // let url = "http://localhost:10136/api/PDF/SoldUnitContract/" + id;
-        let url = "http://localhost:10136/api/PDF/SoldUnitContract/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitContract/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitContract/" + id;
 
         
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
@@ -123,8 +123,8 @@ export class PDFService {
         });
     }
     public getPDFSoldUnitEquitySchedule(id: number) : void {
-        // let url = "http://localhost:10136/api/PDF/SoldUnitEquitySchedule/" + id;
-        let url = "http://localhost:10136/api/PDF/SoldUnitEquitySchedule/" + id;
+        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitEquitySchedule/" + id;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/PDF/SoldUnitEquitySchedule/" + id;
         
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
             let pdf = new Blob([response.blob()], { type: 'application/pdf' });
