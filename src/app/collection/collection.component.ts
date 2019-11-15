@@ -79,7 +79,7 @@ export class CollectionComponent implements OnInit {
 
     setTimeout(() => {
       this.router.navigate(['/collectionDetail/', selectedCollection.Id]);
-    }, 1000);
+    }, 100);
   }
 
   public btnDeleteCollectionClick(): void {

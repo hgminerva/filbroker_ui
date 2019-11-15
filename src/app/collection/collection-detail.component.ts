@@ -73,10 +73,11 @@ export class CollectionDetailComponent implements OnInit {
     private toastr: ToastsManager,
   ) { }
 
+  public collectionId: number;
+
   ngOnInit() {
-    setTimeout(() => {
-      this.getCollectionDetail();
-    }, 3000);
+    this.collectionId = this.getIdParameter();
+    this.getCollectionDetail();
   }
 
   public getCmbCustomers(collectionDetail: any): void {
@@ -136,12 +137,11 @@ export class CollectionDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       id = params['id'];
     });
-
     return id;
   }
 
   private getCollectionDetail(): void {
-    this.collectionService.getCollectionDetail(this.getIdParameter());
+    this.collectionService.getCollectionDetail(this.collectionId);
 
     this.collectionDetailSub = this.collectionService.collectionDetailObservable.subscribe(
       data => {
@@ -155,8 +155,9 @@ export class CollectionDetailComponent implements OnInit {
         this.getCmbCustomers(data);
       }
     );
-
-    this.geCollectionPaymentList();
+    setTimeout(() => {
+      this.getCollectionPaymentList();
+    }, 100);
   }
 
   public btnSaveCollectionClick(): void {
@@ -227,7 +228,7 @@ export class CollectionDetailComponent implements OnInit {
     );
   }
 
-  public geCollectionPaymentList(): void {
+  public getCollectionPaymentList(): void {
     this.collectionService.getCollectionPayments(this.getIdParameter());
 
     this.collectionPaymentSub = this.collectionService.collectionPaymentSourceObservable.subscribe(
@@ -237,7 +238,7 @@ export class CollectionDetailComponent implements OnInit {
           this.fgdCollectionPaymentCollectionView = new CollectionView(this.fgdCollectionPaymentData);
           this.fgdCollectionPaymentCollectionView.pageSize = 15;
           this.fgdCollectionPaymentCollectionView.trackChanges = true;
-        }, 3000);
+        }, 100);
       }
     );
   }
@@ -248,7 +249,7 @@ export class CollectionDetailComponent implements OnInit {
     this.CollecitonPayment.CollectionId = this.CollectionDetail.Id;
 
     this.getCmbSoldUnitsAdd();
-    this.getSysDropDown("");
+    this.sysDropDown();
   }
 
   public btnCloseCollectionPaymenteModalClick(): void {
@@ -282,7 +283,9 @@ export class CollectionDetailComponent implements OnInit {
             });
           }
         }
+        
         this.cmbSoldUnitData = soldUnitData;
+        
         setTimeout(() => {
           this.CollecitonPayment.SoldUnitId = soldUnitId;
         }, 100);
@@ -327,12 +330,29 @@ export class CollectionDetailComponent implements OnInit {
           }
         }
         this.cmbPayTypeData = sysDropDownData;
-        setTimeout(() => {
-          this.CollecitonPayment.PayType = payType;
-        }, 100);
+        this.CollecitonPayment.PayType = payType;
       }
     );
     this.getCurrentPayment();
+  }
+
+  public sysDropDown(): void {
+    this.collectionService.getSysDropDown();
+    this.cmbPayTypeSub = this.collectionService.sysDropDownSourceObservable.subscribe(
+      data => {
+        let sysDropDownData = new ObservableArray();
+
+        if (data.length > 0) {
+          for (var i = 0; i <= data.length - 1; i++) {
+            sysDropDownData.push({
+              Id: data[i].Id,
+              Description: data[i].Description
+            });
+          }
+        }
+        this.cmbPayTypeData = sysDropDownData;
+      }
+    );
   }
 
   public btnSaveCollectionPaymentModalClick(): void {
@@ -358,8 +378,9 @@ export class CollectionDetailComponent implements OnInit {
           this.toastr.success("Saving successful.");
           btnSaveCollectionPaymentModal.removeAttribute("disabled");
           btnSaveCollectionPaymentModal.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
+          this.resetCollectionPaymentClick();
           this.mdlAddCollectionPaymentShow = false;
-          this.geCollectionPaymentList();
+          this.getCollectionPaymentList();
         } else if (data == 0) {
           this.toastr.error("Saving failed.");
           btnSaveCollectionPaymentModal.removeAttribute("disabled");
@@ -383,7 +404,8 @@ export class CollectionDetailComponent implements OnInit {
           btnSaveCollectionPaymentModal.removeAttribute("disabled");
           btnSaveCollectionPaymentModal.innerHTML = "<i class='fa fa-plus fa-fw'></i> Save";
           this.mdlAddCollectionPaymentShow = false;
-          this.geCollectionPaymentList();
+          this.getCollectionPaymentList();
+          this.resetCollectionPaymentClick();
         } else if (data == 0) {
           this.toastr.error("Saving failed.");
           btnSaveCollectionPaymentModal.removeAttribute("disabled");
@@ -420,15 +442,11 @@ export class CollectionDetailComponent implements OnInit {
         if (data == 1) {
           this.toastr.success("Delete successful.");
           this.fgdCollectionPaymentCollectionView.remove(selectedCollectionPayment);
-
           btnOkCollectionPaymentDeleteModal.removeAttribute("disabled");
           btnCloseCollectionPaymentDeleteModal.removeAttribute("disabled");
-
           this.mdlDeleteCollectionPaymentShow = false
-          this.resetCollectionPaymentClick();
         } else if (data == 0) {
           this.toastr.error("Delete failed.");
-
           btnOkCollectionPaymentDeleteModal.removeAttribute("disabled");
           btnCloseCollectionPaymentDeleteModal.removeAttribute("disabled");
         }
@@ -450,7 +468,9 @@ export class CollectionDetailComponent implements OnInit {
     this.CollecitonPayment.CheckDate = this.fgdCollectionPaymentCollectionView.currentItem.CheckDate;
     this.CollecitonPayment.CheckBank = this.fgdCollectionPaymentCollectionView.currentItem.CheckBank;
     this.CollecitonPayment.OtherInformation = this.fgdCollectionPaymentCollectionView.currentItem.OtherInformation;
-    this.mdlAddCollectionPaymentShow = true;
+    setTimeout(() => {
+      this.mdlAddCollectionPaymentShow = true;
+    }, 500);
   }
 
   public resetCollectionPaymentClick(): void {
