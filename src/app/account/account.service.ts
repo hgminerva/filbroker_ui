@@ -52,8 +52,8 @@ export class AccountService {
     }
 
     public login(username: string, password: string): void {
-        // let url = 'http://filbrokerwebsite-priland.azurewebsites.net/token';
-        let url = 'http://filbrokerwebsite-priland.azurewebsites.net/token';
+        // let url = 'http://localhost:10136/token';
+        let url = 'http://localhost:10136/token';
         let body = "username=" + username + "&password=" + password + "&grant_type=password";
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers })
@@ -75,8 +75,8 @@ export class AccountService {
     }
 
     public getUserRights(username: string): void {
-        // let url = 'http://filbrokerwebsite-priland.azurewebsites.net/api/MstUserRight/ListPerUserByUsername/' + username;
-        let url = 'http://filbrokerwebsite-priland.azurewebsites.net/api/MstUserRight/ListPerUserByUsername/' + username;
+        // let url = 'http://localhost:10136/api/MstUserRight/ListPerUserByUsername/' + username;
+        let url = 'http://localhost:10136/api/MstUserRight/ListPerUserByUsername/' + username;
         let headers = new Headers({
                                 'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
                                 'Content-Type': 'application/json'
@@ -126,8 +126,8 @@ export class AccountService {
         var passwordErrorMessageArray = new ObservableArray();
         var confirmPasswordErrorMessageArray = new ObservableArray();
 
-        // let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/account/register";
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/account/register";
+        // let url = "http://localhost:10136/api/account/register";
+        let url = "http://localhost:10136/api/account/register";
         this.http.post(url, JSON.stringify(regObj), this.options).subscribe(
             response => {
                 if (response != null) {

@@ -86,7 +86,7 @@ export class CommissionService {
 
     // list and detail
     public getCommissionsPerDates(dateStart: string, dateEnd: string): void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/ListPerDates/" + dateStart + "/" + dateEnd;
+        let url = "http://localhost:10136/api/TrnCommissionRequest/ListPerDates/" + dateStart + "/" + dateEnd;
         let commissionRequest = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -128,7 +128,7 @@ export class CommissionService {
     }
     public getCommission(id : number) : void {
         let commission: TrnCommissionRequest;
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/Detail/" + id;
+        let url = "http://localhost:10136/api/TrnCommissionRequest/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -171,7 +171,7 @@ export class CommissionService {
 
     // combo boxes
     public getSoldUnits(): void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnSoldUnit/List";
+        let url = "http://localhost:10136/api/TrnSoldUnit/List";
         let soldUnits = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -220,7 +220,7 @@ export class CommissionService {
         );
     }
     public getBrokers() : void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstBroker/List";
+        let url = "http://localhost:10136/api/MstBroker/List";
         let brokers = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -241,7 +241,7 @@ export class CommissionService {
         );
     }
     public getUsers() : void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstUser/List";
+        let url = "http://localhost:10136/api/MstUser/List";
         let users = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -262,7 +262,7 @@ export class CommissionService {
     }
     public getDropDowns() : void {
         let dropDowns  = new ObservableArray();
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+        let url = "http://localhost:10136/api/SysDropDown/List";
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -287,7 +287,7 @@ export class CommissionService {
 
     // list operations
     public addCommission(commission: TrnCommissionRequest, btnAddCommission: Element) : void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/Add";
+        let url = "http://localhost:10136/api/TrnCommissionRequest/Add";
         this.http.post(url, JSON.stringify(commission), this.options).subscribe(
             response => {
                 var id = response.json();
@@ -310,7 +310,7 @@ export class CommissionService {
         )
     }
     public deleteCommission(id: number) : void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/Delete/" + id;
+        let url = "http://localhost:10136/api/TrnCommissionRequest/Delete/" + id;
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.commissionDeletedSource.next(1);
@@ -323,7 +323,7 @@ export class CommissionService {
 
     // detail operations
     public saveCommission(commission: TrnCommissionRequest): void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/Save";
+        let url = "http://localhost:10136/api/TrnCommissionRequest/Save";
         this.http.put(url, JSON.stringify(commission), this.options).subscribe(
             response => {
                 this.commissionSavedSource.next(1);
@@ -334,7 +334,7 @@ export class CommissionService {
         )
     }
     public lockCommission(commission: TrnCommissionRequest): void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/Lock";
+        let url = "http://localhost:10136/api/TrnCommissionRequest/Lock";
         this.http.put(url, JSON.stringify(commission), this.options).subscribe(
             response => {
                 this.commissionLockedSource.next(1);
@@ -345,7 +345,7 @@ export class CommissionService {
         )
     }
     public unlockCommission(commission: TrnCommissionRequest): void {
-        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCommissionRequest/Unlock";
+        let url = "http://localhost:10136/api/TrnCommissionRequest/Unlock";
         this.http.put(url, JSON.stringify(commission), this.options).subscribe(
             response => {
                 this.commissionUnlockedSource.next(1);

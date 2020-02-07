@@ -53,7 +53,7 @@ export class CollectionService {
   public getCollectionList(dateStart: string, dateEnd: string): void {
     let collectionListObservableArray = new ObservableArray();
 
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/CollectionFillterByDate/" + dateStart + "/" + dateEnd;
+    let url = "http://localhost:10136/api/TrnCollection/CollectionFillterByDate/" + dateStart + "/" + dateEnd;
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -86,7 +86,7 @@ export class CollectionService {
   }
 
   public addCollection(btnAddCollection: Element): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/Add";
+    let url = "http://localhost:10136/api/TrnCollection/Add";
     this.http.post(url, JSON.stringify(""), this.options).subscribe(
       response => {
         var id = response.json();
@@ -110,7 +110,7 @@ export class CollectionService {
   }
 
   public deleteCollection(id: number): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/Delete/" + id;
+    let url = "http://localhost:10136/api/TrnCollection/Delete/" + id;
     this.http.delete(url, this.options).subscribe(
       response => {
         this.collectionDeletedSource.next(1);
@@ -124,7 +124,7 @@ export class CollectionService {
   public getCustomers(): void {
     let customers = new ObservableArray();
 
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/CustomerList";
+    let url = "http://localhost:10136/api/TrnCollection/CustomerList";
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -146,7 +146,7 @@ export class CollectionService {
   public getSoldUnits(customerId: number): void {
     let soldUnits = new ObservableArray();
 
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollectionPayment/SoldUnits/" + customerId;
+    let url = "http://localhost:10136/api/TrnCollectionPayment/SoldUnits/" + customerId;
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -168,7 +168,7 @@ export class CollectionService {
   public getSysDropDown(): void {
     let sysDropDown = new ObservableArray();
     
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollectionPayment/SysDropDown";
+    let url = "http://localhost:10136/api/TrnCollectionPayment/SysDropDown";
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -190,7 +190,7 @@ export class CollectionService {
   public getUsers(): void {
     let users = new ObservableArray();
 
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/UserList";
+    let url = "http://localhost:10136/api/TrnCollection/UserList";
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -212,7 +212,7 @@ export class CollectionService {
   public getCollectionDetail(id: number) {
     let collectionDetailData: TrnCollectionModel;
 
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/Detail/" + id;
+    let url = "http://localhost:10136/api/TrnCollection/Detail/" + id;
     this.http.get(url, this.options).subscribe(
       response => {
         var result = response.json();
@@ -243,7 +243,7 @@ export class CollectionService {
   }
 
   public saveCollection(collection: TrnCollectionModel): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/Save";
+    let url = "http://localhost:10136/api/TrnCollection/Save";
     this.http.put(url, JSON.stringify(collection), this.options).subscribe(
       response => {
         this.collectionSaveSource.next(1);
@@ -255,7 +255,7 @@ export class CollectionService {
   }
 
   public lockCollection(collection: TrnCollectionModel): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/Lock";
+    let url = "http://localhost:10136/api/TrnCollection/Lock";
     this.http.put(url, JSON.stringify(collection), this.options).subscribe(
       response => {
         this.collectionLockedSource.next(1);
@@ -268,7 +268,7 @@ export class CollectionService {
 
 
   public unLockCollection(collection: TrnCollectionModel): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/UnLock";
+    let url = "http://localhost:10136/api/TrnCollection/UnLock";
     this.http.put(url, JSON.stringify(collection), this.options).subscribe(
       response => {
         this.collectionUnLockedSource.next(1);
@@ -280,7 +280,7 @@ export class CollectionService {
   }
 
   public saveCollectionPayment(collection: TrnCollectionModel): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollection/Lock";
+    let url = "http://localhost:10136/api/TrnCollection/Lock";
     this.http.put(url, JSON.stringify(collection), this.options).subscribe(
       response => {
         this.collectionSaveSource.next(1);
@@ -294,7 +294,7 @@ export class CollectionService {
   public getCollectionPayments(collectionId: number): void {
     let collectionPayment = new ObservableArray();
 
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollectionPayment/CollectionPayment/" + collectionId;
+    let url = "http://localhost:10136/api/TrnCollectionPayment/CollectionPayment/" + collectionId;
     this.http.get(url, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
@@ -323,7 +323,7 @@ export class CollectionService {
   }
 
   public addCollectionPayment(collectionPayment: TrnCollectionPayment): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollectionPayment/Add";
+    let url = "http://localhost:10136/api/TrnCollectionPayment/Add";
     this.http.post(url, JSON.stringify(collectionPayment), this.options).subscribe(
       response => {
         this.saveCollectionPaymentSource.next(1);
@@ -335,7 +335,7 @@ export class CollectionService {
   }
 
   public deleteCollectionPayment(id: number): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollectionPayment/Delete/" + id;
+    let url = "http://localhost:10136/api/TrnCollectionPayment/Delete/" + id;
     this.http.delete(url, this.options).subscribe(
       response => {
         this.collectionPaymentDeletedSource.next(1);
@@ -347,7 +347,7 @@ export class CollectionService {
   }
 
   public updateCollectionPayment(collectionPayment: TrnCollectionPayment): void {
-    let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/TrnCollectionPayment/Update";
+    let url = "http://localhost:10136/api/TrnCollectionPayment/Update";
     this.http.put(url, JSON.stringify(collectionPayment), this.options).subscribe(
       response => {
         this.updateCollectionPaymentSource.next(1);

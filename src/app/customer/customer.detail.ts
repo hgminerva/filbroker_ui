@@ -162,17 +162,17 @@ export class CustomerDetail {
     }
 
     this.getUserRights();
-    
+
     if (!this.canPrint) {
       (<HTMLInputElement>document.getElementById("btnPrintCustomer")).hidden = true;
     }
     if (!this.canLock) {
       (<HTMLInputElement>document.getElementById("btnLockCustomer")).hidden = true;
     }
-    if (!this.canUnlock)  {
+    if (!this.canUnlock) {
       (<HTMLInputElement>document.getElementById("btnUnlockCustomer")).hidden = true;
     }
-    if (!this.canSave)  {
+    if (!this.canSave) {
       (<HTMLInputElement>document.getElementById("btnSaveCustomer")).hidden = true;
     }
   }
@@ -423,6 +423,14 @@ export class CustomerDetail {
   }
   public txtLastNameKeyup(): void {
     this.customer.fullName = this.customer.lastName + ", " + this.customer.firstName + " " + this.customer.middleName;
+  }
+
+  public btnPrintReservationAgreementClick(): void {
+    this.router.navigate(['/pdf', 'reservationagreement', this.customer.id]);
+  }
+
+  public btnPrintBuyersUndertakingClick(): void {
+    this.router.navigate(['/pdf', 'buyersundertaking', this.customer.id]);
   }
 
 }
