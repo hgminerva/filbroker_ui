@@ -433,4 +433,8 @@ export class CustomerDetail {
     this.router.navigate(['/pdf', 'buyersundertaking', this.customer.id]);
   }
 
+  public btnPrintComputationSheetClick(): void {
+    this.router.navigate(['/pdf', 'computationsheet', this.customer.id]);
+  }
+
 }

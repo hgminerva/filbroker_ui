@@ -22,6 +22,7 @@ export class PDFIndex {
   private pdfSoldUnitEquityScheduleSub : any;
   private pdfSoldUnitReservationAgreementSub : any;
   private pdfSoldUnitBuyersUndertakingSub : any;
+  public pdfComputationSheetSub: any;
 
   public title: string = "PDF";
   public report: string = "";
@@ -52,6 +53,7 @@ export class PDFIndex {
       if(this.report == "soldunitequityschedule") this.getPDFSoldUnitEquitySchedule(this.id);
       if(this.report == "reservationagreement") this.getPDFSoldUnitReservationAgreement(this.id);
       if(this.report == "buyersundertaking") this.getPDFSoldUnitBuyersUndertaking(this.id);
+      if(this.report == "computationsheet") this.getPDFComputationSheet(this.id);
     });
   }
   ngOnDestroy() {
@@ -61,6 +63,8 @@ export class PDFIndex {
     if( this.pdfSoldUnitProposalSub != null) this.pdfSoldUnitProposalSub.unsubscribe();
     if( this.pdfSoldUnitContractSub != null) this.pdfSoldUnitContractSub.unsubscribe();
     if( this.pdfSoldUnitEquityScheduleSub != null) this.pdfSoldUnitEquityScheduleSub.unsubscribe();
+    if( this.pdfComputationSheetSub != null) this.pdfComputationSheetSub.unsubscribe();
+
   }
 
   // ==============
@@ -147,6 +151,18 @@ export class PDFIndex {
   public getPDFSoldUnitBuyersUndertaking(id: number) : void {
     this.pdfService.getPDFSoldUnitBuyersUndertaking(id);
     this.pdfSoldUnitBuyersUndertakingSub = this.pdfService.pdfSoldUnitBuyersUndertakingObservable.subscribe(
+      data => {
+        this.pdfUrl = URL.createObjectURL(data);
+
+        let printPDF: Element = document.getElementById("printPDF");
+        printPDF.setAttribute("src",this.pdfUrl);
+      }
+    );
+  }
+
+  public getPDFComputationSheet(id: number) : void {
+    this.pdfService.getPDFComputationSheet(id);
+    this.pdfComputationSheetSub = this.pdfService.pdfComputationSheetObservable.subscribe(
       data => {
         this.pdfUrl = URL.createObjectURL(data);
 

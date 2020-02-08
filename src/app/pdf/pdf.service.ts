@@ -55,6 +55,9 @@ export class PDFService {
     public pdfSoldUnitBuyersUndertakingSource = new Subject<Blob>();
     public pdfSoldUnitBuyersUndertakingObservable = this.pdfSoldUnitBuyersUndertakingSource.asObservable();
 
+    public pdfComputationSheetSource = new Subject<Blob>();
+    public pdfComputationSheetObservable = this.pdfComputationSheetSource.asObservable();
+
     // =======
     // angular
     // =======
@@ -147,6 +150,14 @@ export class PDFService {
         this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
             let pdf = new Blob([response.blob()], { type: 'application/pdf' });
             this.pdfSoldUnitBuyersUndertakingSource.next(pdf);
+        });
+    }
+    public getPDFComputationSheet(id: number) : void {
+        let url = "http://localhost:10136/api/PDF/ComputationSheet/" + id;
+        
+        this.http.get(url, { responseType: ResponseContentType.Blob }).subscribe((response) => {
+            let pdf = new Blob([response.blob()], { type: 'application/pdf' });
+            this.pdfComputationSheetSource.next(pdf);
         });
     }
 }
