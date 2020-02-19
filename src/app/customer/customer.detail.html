@@ -41,16 +41,19 @@
                                     <a class="dropdown-item" routerLink="." (click)="btnPrintReservationAgreementClick()">Reservation Agreement</a>
                                     <a class="dropdown-item" routerLink="." (click)="btnPrintBuyersUndertakingClick()">Buyer's
                                         Undertaking</a>
-                                    <a class="dropdown-item" routerLink="." (click)="btnPrintComputationSheetClick()">Computatio Sheet</a>
+                                    <a class="dropdown-item" routerLink="." (click)="btnPrintComputationSheetClick()">Computation Sheet</a>
                                 </div>
                             </div>
-                            <button [disabled]="customer.isLocked" class="btn btn-primary" (click)="btnLockCustomerClick()" id="btnLockCustomer">
+                            <button [disabled]="customer.isLocked" class="btn btn-primary"
+                                (click)="btnLockCustomerClick()" id="btnLockCustomer">
                                 <i class="fa fa-lock fa-fw"></i> Lock
                             </button>
-                            <button [disabled]="!customer.isLocked" class="btn btn-primary" (click)="btnUnlockCustomerClick()" id="btnUnlockCustomer">
+                            <button [disabled]="!customer.isLocked" class="btn btn-primary"
+                                (click)="btnUnlockCustomerClick()" id="btnUnlockCustomer">
                                 <i class="fa fa-unlock fa-fw"></i> Unlock
                             </button>
-                            <button [disabled]="customer.isLocked" class="btn btn-primary" (click)="btnSaveCustomerClick()" id="btnSaveCustomer">
+                            <button [disabled]="customer.isLocked" class="btn btn-primary"
+                                (click)="btnSaveCustomerClick()" id="btnSaveCustomer">
                                 <i class="fa fa-save fa-fw"></i> Save
                             </button>
                             <button class="btn btn-danger" routerLink="/customer">
@@ -65,10 +68,12 @@
             <div class="card-body">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="">
-                        <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)" data-toggle="tab" role="tab">Customer Information</a>
+                        <a [ngClass]="{'active': tabDetail1[0], 'nav-link': true }" (click)="tabDetail1Click(0)"
+                            data-toggle="tab" role="tab">Customer Information</a>
                     </li>
                     <li class="">
-                        <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)" data-toggle="tab" role="tab">Employment Information</a>
+                        <a [ngClass]="{'active': tabDetail1[1], 'nav-link': true }" (click)="tabDetail1Click(1)"
+                            data-toggle="tab" role="tab">Employment Information</a>
                     </li>
                 </ul>
                 <br>
@@ -79,94 +84,110 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Code</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.customerCode" [disabled]=true type="text" class="form-control">
+                                        <input [(ngModel)]="customer.customerCode" [disabled]=true type="text"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Last Name</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.lastName" [disabled]="customer.isLocked" (input)="txtLastNameKeyup()" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.lastName" [disabled]="customer.isLocked"
+                                            (input)="txtLastNameKeyup()" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">First Name</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.firstName" [disabled]="customer.isLocked" (input)="txtFirstNameKeyup()" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.firstName" [disabled]="customer.isLocked"
+                                            (input)="txtFirstNameKeyup()" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Middle Name</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.middleName" [disabled]="customer.isLocked" (input)="txtLastNameKeyup()" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.middleName" [disabled]="customer.isLocked"
+                                            (input)="txtLastNameKeyup()" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Phone No.</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.telephoneNumber" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.telephoneNumber" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Mobile No.</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.mobileNumber" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.mobileNumber" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Street Address</label>
                                     <div class="col-sm-8">
-                                        <textarea [disabled]="customer.isLocked" [(ngModel)]="customer.address" rows="4" class="form-control">
+                                        <textarea [disabled]="customer.isLocked" [(ngModel)]="customer.address" rows="4"
+                                            class="form-control">
                                         </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">City</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.city" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.city" [disabled]="customer.isLocked" type="text"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Province</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.province" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.province" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Country</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.country" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.country" [disabled]="customer.isLocked" type="text"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Zip Code</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.zipCode" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.zipCode" [disabled]="customer.isLocked" type="text"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Status</label>
                                     <div class="col-sm-8">
-                                        <wj-combo-box #cmbStatus [itemsSource]="cmbStatusData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
-                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked" [(ngModel)]="customer.status">
+                                        <wj-combo-box #cmbStatus [itemsSource]="cmbStatusData" [isEditable]="false"
+                                            [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked"
+                                            [(ngModel)]="customer.status">
                                         </wj-combo-box>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Email Address</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.emailAddress" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.emailAddress" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Citizen</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.citizen" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.citizen" [disabled]="customer.isLocked" type="text"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Remarks</label>
                                     <div class="col-sm-8">
-                                        <textarea [disabled]="customer.isLocked" [(ngModel)]="customer.remarks" rows="8" class="form-control">
+                                        <textarea [disabled]="customer.isLocked" [(ngModel)]="customer.remarks" rows="8"
+                                            class="form-control">
                                         </textarea>
                                     </div>
                                 </div>
@@ -182,7 +203,9 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <label class="btn btn-primary pull-right" [hidden]="customer.isLocked">
-                                                    <input type="file" (change)="btnUploadPictureClick($event)" name="btnUploadPicture" accept="image/*" style="display:none;"> Upload
+                                                    <input type="file" (change)="btnUploadPictureClick($event)"
+                                                        name="btnUploadPicture" accept="image/*" style="display:none;">
+                                                    Upload
                                                 </label>
                                             </div>
                                         </div>
@@ -191,73 +214,86 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Civil Status</label>
                                     <div class="col-sm-8">
-                                        <wj-combo-box #cmbCivilStatus [itemsSource]="cmbCivilStatusData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
-                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked" [(ngModel)]="customer.civilStatus">
+                                        <wj-combo-box #cmbCivilStatus [itemsSource]="cmbCivilStatusData"
+                                            [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked"
+                                            [(ngModel)]="customer.civilStatus">
                                         </wj-combo-box>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Gender</label>
                                     <div class="col-sm-8">
-                                        <wj-combo-box #cmbGender [itemsSource]="cmbGenderData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
-                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked" [(ngModel)]="customer.gender">
+                                        <wj-combo-box #cmbGender [itemsSource]="cmbGenderData" [isEditable]="false"
+                                            [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked"
+                                            [(ngModel)]="customer.gender">
                                         </wj-combo-box>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Birth Date</label>
                                     <div class="col-sm-8">
-                                        <wj-input-date #calBirthDate [(text)]="customer.birthDate" [isDisabled]="customer.isLocked" format="M/d/yyyy">
+                                        <wj-input-date #calBirthDate [(text)]="customer.birthDate"
+                                            [isDisabled]="customer.isLocked" format="M/d/yyyy">
                                         </wj-input-date>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">TIN</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.tin" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.tin" [disabled]="customer.isLocked" type="text"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse Last Name</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.spouseLastName" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.spouseLastName" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse First Name</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.spouseFirstName" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.spouseFirstName" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse Middle Name</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.spouseMiddleName" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.spouseMiddleName" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse Birth Date</label>
                                     <div class="col-sm-8">
-                                        <wj-input-date #calBirthDate [(text)]="customer.spouseBirthDate" [isDisabled]="customer.isLocked" format="M/d/yyyy">
+                                        <wj-input-date #calBirthDate [(text)]="customer.spouseBirthDate"
+                                            [isDisabled]="customer.isLocked" format="M/d/yyyy">
                                         </wj-input-date>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse Citizen</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.spouseCitizen" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.spouseCitizen" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse Employer</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.spouseEmployer" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.spouseEmployer" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Spouse TIN</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.spouseTIN" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.spouseTIN" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -271,53 +307,63 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">ID Type</label>
                                     <div class="col-sm-8">
-                                        <wj-combo-box #cmbIDType [itemsSource]="cmbIDTypeData" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'value'"
-                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked" [(ngModel)]="customer.idType">
+                                        <wj-combo-box #cmbIDType [itemsSource]="cmbIDTypeData" [isEditable]="false"
+                                            [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked"
+                                            [(ngModel)]="customer.idType">
                                         </wj-combo-box>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">ID Number</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.idNumber" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.idNumber" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Employer</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employer" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employer" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Employer Industry</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerIndustry" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerIndustry" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">No. of Years Employed</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.noOfYearsEmployed" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.noOfYearsEmployed" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Position</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.position" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.position" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Employment Status</label>
                                     <div class="col-sm-8">
-                                        <wj-combo-box #cmbEmploymentStatus [itemsSource]="cmbEmploymentStatusData" [(ngModel)]="customer.employmentStatus" [isEditable]="false"
-                                            [isRequired]="true" [displayMemberPath]="'value'" [selectedValuePath]="'value'" [isDisabled]="customer.isLocked">
+                                        <wj-combo-box #cmbEmploymentStatus [itemsSource]="cmbEmploymentStatusData"
+                                            [(ngModel)]="customer.employmentStatus" [isEditable]="false"
+                                            [isRequired]="true" [displayMemberPath]="'value'"
+                                            [selectedValuePath]="'value'" [isDisabled]="customer.isLocked">
                                         </wj-combo-box>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Street Address</label>
                                     <div class="col-sm-8">
-                                        <textarea [disabled]="customer.isLocked" [(ngModel)]="customer.employerAddress" rows="4" class="form-control">
+                                        <textarea [disabled]="customer.isLocked" [(ngModel)]="customer.employerAddress"
+                                            rows="4" class="form-control">
                                         </textarea>
                                     </div>
                                 </div>
@@ -327,37 +373,43 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">City</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerCity" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerCity" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Province</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerProvince" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerProvince" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Country</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerCountry" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerCountry" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Zip Code</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerZipCode" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerZipCode" [disabled]="customer.isLocked"
+                                            type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Telephone No.</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerTelephoneNumber" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerTelephoneNumber"
+                                            [disabled]="customer.isLocked" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label text-right">Mobile No.</label>
                                     <div class="col-sm-8">
-                                        <input [(ngModel)]="customer.employerMobileNumber" [disabled]="customer.isLocked" type="text" class="form-control">
+                                        <input [(ngModel)]="customer.employerMobileNumber"
+                                            [disabled]="customer.isLocked" type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -380,3 +432,86 @@
 
 </div>
 <!-- <div class="content-wrapper"> -->
+
+<!-- delete customer modal -->
+<div id="mdlSoldUnit" class="modal fade" role="dialog"
+    [ngStyle]="{'display': mdlSoldUnitShow ? 'block' : 'none', 'opacity': 1}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Sold Unit</h4>
+            </div>
+            <div class="modal-body">
+                <wj-flex-grid #fgdSoldUnit [itemsSource]="listSoldUnitCollectionView" [selectionMode]="3"
+                    [frozenColumns]="1">
+                    <wj-flex-grid-filter></wj-flex-grid-filter>
+                    <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                        [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-primary btn-xs btn-block" (click)="printPDF()"
+                                id="btnPrintSoldUnit">
+                                <i class="fa fa-edit fa-fw"></i> Print
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Number'" [binding]="'soldUnitNumber'" [isReadOnly]="true"
+                        [width]="120"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Date'" [binding]="'soldUnitDate'" [isReadOnly]="true" [width]="100">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true" [width]="'*'">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Unit'" [binding]="'unit'" [isReadOnly]="true" [width]="100">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Customer'" [binding]="'customer'" [isReadOnly]="true" [width]="'*'">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Broker'" [binding]="'broker'" [isReadOnly]="true" [width]="'*'">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'TCP Discount'" [binding]="'tcpdiscount'" [isReadOnly]="true"
+                        [width]="150"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true" [width]="150">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true" [width]="100">
+                    </wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="col-sm-12 btn-group" style="margin-right: 300px;">
+                            <button type="button" class="btn btn-secondary"
+                                (click)="listSoldUnitCollectionView.moveToFirstPage()">
+                                <i class="fa fa-fast-backward"></i> First
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="listSoldUnitCollectionView.moveToPreviousPage()">
+                                <i class="fa fa-step-backward"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                                {{ listSoldUnitCollectionView.pageIndex + 1 }} /
+                                {{ listSoldUnitCollectionView.pageCount }}
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="listSoldUnitCollectionView.moveToNextPage()">
+                                Next
+                                <i class="fa fa-step-forward"></i>
+                            </button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="listSoldUnitCollectionView.moveToLastPage()">
+                                Last
+                                <i class="fa fa-fast-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button id="btnCloseSoldUnitModalModal" class="btn btn-danger" style="float: right;"
+                            (click)="btnCloseSoldUnitModalClick()">
+                            <i class="fa fa-close fa-fw"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

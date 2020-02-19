@@ -425,16 +425,65 @@ export class CustomerDetail {
     this.customer.fullName = this.customer.lastName + ", " + this.customer.firstName + " " + this.customer.middleName;
   }
 
+
+  public mdlSoldUnitShow: boolean;
+
+  public btnSoldUnitModal(): void {
+    this.getSoldUnits();
+
+    setTimeout(() => {
+      this.mdlSoldUnitShow = true;
+    }, 300);
+  }
+
+  public btnCloseSoldUnitModalClick(): void {
+    this.mdlSoldUnitShow = false;
+  }
+
+  public listSoldUnitObservableArray: ObservableArray = new ObservableArray();
+  public listSoldUnitCollectionView: CollectionView = new CollectionView(this.listSoldUnitObservableArray);
+  public printPreference: string = "Print";
+  public soldUnitsSub: any;
+
+  public getSoldUnits(): void {
+    let soldUnits = new ObservableArray();
+
+    this.customerService.getSoldUnitsList(this.customer.id);
+
+    this.soldUnitsSub = this.customerService.soldUnitsObservable.subscribe(
+      data => {
+        if (data.length > 0) {
+          this.listSoldUnitObservableArray = data;
+          console.log(data);
+          this.listSoldUnitCollectionView = new CollectionView(this.listSoldUnitObservableArray);
+          this.listSoldUnitCollectionView.pageSize = 15;
+          this.listSoldUnitCollectionView.trackChanges = true;
+        }
+        if (this.soldUnitsSub != null) this.soldUnitsSub.unsubscribe();
+      }
+    );
+  }
+
   public btnPrintReservationAgreementClick(): void {
-    this.router.navigate(['/pdf', 'reservationagreement', this.customer.id]);
+    this.printPreference = "ReservationAgreement";
+    this.btnSoldUnitModal();
   }
 
   public btnPrintBuyersUndertakingClick(): void {
-    this.router.navigate(['/pdf', 'buyersundertaking', this.customer.id]);
+    this.printPreference = "PrintBuyersUndertaking";
+    this.btnSoldUnitModal();
   }
 
   public btnPrintComputationSheetClick(): void {
-    this.router.navigate(['/pdf', 'computationsheet', this.customer.id]);
+    this.printPreference = "ComputationSheet";
+    this.btnSoldUnitModal();
   }
+
+  public printPDF(): void {
+    if (this.printPreference == "ReservationAgreement") { this.router.navigate(['/pdf', 'reservationagreement', this.customer.id]); }
+    if (this.printPreference == "PrintBuyersUndertaking") { this.router.navigate(['/pdf', 'buyersundertaking', this.customer.id]); }
+    if (this.printPreference == "ComputationSheet") { this.router.navigate(['/pdf', 'computationsheet', this.customer.id]); }
+  }
+
 
 }

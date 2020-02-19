@@ -352,4 +352,81 @@ export class CustomerService {
 
     }
 
+    // list (sold units)
+    public soldUnitsSource = new Subject<ObservableArray>();
+    public soldUnitsObservable = this.soldUnitsSource.asObservable();
+
+    // list
+    public getSoldUnitsList(id: number): void {
+        // let url = "http://localhost:10136/api/TrnSoldUnit/ListPerDates/" + dateStart + "/" + dateEnd;
+        let url = "http://localhost:10136/api/MstCustomer/list/soldunit/" + id;
+        let soldUnits = new ObservableArray();
+        this.http.get(url, this.options).subscribe(
+            response => {
+                var results = new ObservableArray(response.json());
+                if (results.length > 0) {
+                    for (var i = 0; i <= results.length - 1; i++) {
+                        soldUnits.push({
+                            id: results[i].Id,
+                            soldUnitNumber: results[i].SoldUnitNumber,
+                            soldUnitDate: results[i].SoldUnitDate,
+                            projectId: results[i].ProjectId,
+                            project: results[i].Project,
+                            unitId: results[i].UnitId,
+                            unit: results[i].Unit,
+                            customerId: results[i].CustomerId,
+                            customer: results[i].Customer,
+                            brokerId: results[i].BrokerId,
+                            broker: results[i].Broker,
+                            agent: results[i].Agent,
+                            brokerCoordinator: results[i].BrokerCoordinator,
+                            checklistId: results[i].ChecklistId,
+                            checklist: results[i].Checklist,
+                            price: results[i].Price,
+                            tcpdiscount: results[i].PriceDiscount,
+                            equityValue: results[i].EquityValue,
+                            equityPercent: results[i].EquityPercent,
+                            equitySpotPayment1: results[i].equitySpotPayment1,
+                            equitySpotPayment2: results[i].equitySpotPayment2,
+                            equitySpotPayment3: results[i].equitySpotPayment3,
+                            discount: results[i].Discount,
+                            discountedEquity: results[i].DiscountedEquity,
+                            reservation: results[i].Reservation,
+                            netEquity: results[i].NetEquity,
+                            netEquityBalance: results[i].NetEquityBalance,
+                            netEquityInterest: results[i].NetEquityInterest,
+                            netEquityNoOfPayments: results[i].NetEquityNoOfPayments,
+                            netEquityAmortization: results[i].NetEquityAmortization,
+                            balance: results[i].Balance,
+                            balanceInterest: results[i].BalanceInterest,
+                            balanceNoOfPayments: results[i].BalanceNoOfPayments,
+                            balanceAmortization: results[i].BalanceAmortization,
+                            totalInvestment: results[i].TotalInvestment,
+                            paymentOptions: results[i].PaymentOptions,
+                            financing: results[i].Financing,
+                            remarks: results[i].Remarks,
+                            financingType: results[i].FinancingType,
+                            preparedBy: results[i].PreparedBy,
+                            preparedByUser: results[i].PreparedByUser,
+                            checkedBy: results[i].CheckedBy,
+                            checkedByUser: results[i].CheckedByUser,
+                            approvedBy: results[i].ApprovedBy,
+                            approvedByUser: results[i].ApprovedByUser,
+                            status: results[i].Status,
+                            isLocked: results[i].IsLocked,
+                            createdBy: results[i].CreatedBy,
+                            createdDateTime: results[i].CreatedDateTime,
+                            updatedBy: results[i].UpdatedBy,
+                            updatedDateTime: results[i].UpdatedDateTime
+                        });
+                    }
+                    this.soldUnitsSource.next(soldUnits);
+                } else {
+                    this.soldUnitsSource.next(soldUnits);
+                    this.toastr.error("No sold units for this date range.");
+                }
+            }
+        );
+    }
+
 }
