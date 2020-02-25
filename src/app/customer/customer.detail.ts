@@ -480,9 +480,10 @@ export class CustomerDetail {
   }
 
   public printPDF(): void {
-    if (this.printPreference == "ReservationAgreement") { this.router.navigate(['/pdf', 'reservationagreement', this.customer.id]); }
-    if (this.printPreference == "PrintBuyersUndertaking") { this.router.navigate(['/pdf', 'buyersundertaking', this.customer.id]); }
-    if (this.printPreference == "ComputationSheet") { this.router.navigate(['/pdf', 'computationsheet', this.customer.id]); }
+    let selectedSoldUnit = this.listSoldUnitCollectionView.currentItem;
+    if (this.printPreference == "ReservationAgreement") { this.router.navigate(['/pdf', 'reservationagreement', selectedSoldUnit.id]); }
+    if (this.printPreference == "PrintBuyersUndertaking") { this.router.navigate(['/pdf', 'buyersundertaking', selectedSoldUnit.id]); }
+    if (this.printPreference == "ComputationSheet") { this.router.navigate(['/pdf', 'computationsheet', selectedSoldUnit.id]); }
   }
 
 

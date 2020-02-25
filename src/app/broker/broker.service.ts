@@ -82,7 +82,7 @@ export class BrokerService {
 
     // list
     public getBrokers(): void {
-        let url = "http://localhost:10136/api/MstBroker/List";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/List";
         let brokers = new ObservableArray();
         this.http.get(url, this.options).subscribe(
             response => {
@@ -143,7 +143,7 @@ export class BrokerService {
     // detail
     public getBroker(id: number): void {
         let broker: MstBroker;
-        let url = "http://localhost:10136/api/MstBroker/Detail/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -204,7 +204,7 @@ export class BrokerService {
     // detail combo boxes
     public getDropDowns() {
         let dropDowns = new ObservableArray();
-        let url = "http://localhost:10136/api/SysDropDown/List";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/SysDropDown/List";
 
         this.http.get(url, this.options).subscribe(
             response => {
@@ -229,7 +229,7 @@ export class BrokerService {
 
     // list operations 
     public addBroker(broker: MstBroker): void {
-        let url = "http://localhost:10136/api/MstBroker/Add";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/Add";
         this.http.post(url, JSON.stringify(broker), this.options).subscribe(
             response => {
                 var id = response.json();
@@ -249,7 +249,7 @@ export class BrokerService {
         )
     }
     public deleteBroker(id: number) {
-        let url = "http://localhost:10136/api/MstBroker/Delete/" + id;
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/Delete/" + id;
         this.http.delete(url, this.options).subscribe(
             response => {
                 this.brokerDeletedSource.next(1);
@@ -260,7 +260,7 @@ export class BrokerService {
         )
     }
     public uploadBrokerPicture(file: File, fileName: string) : void {
-        let url = "http://localhost:10136/api/Blob/Upload";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/Blob/Upload";
         let blob : SysBlob;
 
         var formData: FormData = new FormData();
@@ -294,7 +294,7 @@ export class BrokerService {
 
     // detail operations
     public saveBroker(broker: MstBroker): void {
-        let url = "http://localhost:10136/api/MstBroker/Save";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/Save";
         this.http.put(url, JSON.stringify(broker), this.options).subscribe(
             response => {
                 this.brokerSavedSource.next(1);
@@ -305,7 +305,7 @@ export class BrokerService {
         )
     }
     public lockBroker(broker: MstBroker): void {
-        let url = "http://localhost:10136/api/MstBroker/Lock";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/Lock";
         this.http.put(url, JSON.stringify(broker), this.options).subscribe(
             response => {
                 this.brokerLockedSource.next(1);
@@ -316,7 +316,7 @@ export class BrokerService {
         )
     }
     public unlockBroker(broker: MstBroker): void {
-        let url = "http://localhost:10136/api/MstBroker/Unlock";
+        let url = "https://filbrokerwebsite-greentech-api.azurewebsites.net/api/MstBroker/Unlock";
         this.http.put(url, JSON.stringify(broker), this.options).subscribe(
             response => {
                 this.brokerUnlockedSource.next(1);
