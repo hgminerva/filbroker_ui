@@ -16,6 +16,9 @@ import { SecurityService } from '../security/security.service';
 // model(s)
 import { MstUser } from '../model/model.mst.user';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
     templateUrl: './user.list.html'
 })
@@ -134,11 +137,21 @@ export class UserList {
     // ======
     // events
     // ======
+    userItemFormatter(panel, row, col, cell) {
+        if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+            cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+        }
+    }
+
+    userGridClick(s, e) {
+        if (wjcCore.hasClass(e.target, 'btn-edit')) {
+            this.btnEditUserClick();
+        }
+    }
 
     // list opertaions
     public btnEditUserClick(): void {
         let selectedUser = this.fgdUsersCollection.currentItem;
         this.router.navigate(['/user', selectedUser.id]);
     }
-
 }

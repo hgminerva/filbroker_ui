@@ -17,6 +17,9 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 // model(s)
 import { MstProject } from '../model/model.mst.project';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
     templateUrl: './project.list.html'
 })
@@ -80,6 +83,27 @@ export class ProjectList {
         private securityService: SecurityService
     ) {
         this.toastr.setRootViewContainerRef(viewContainer);
+    }
+
+    projectItemFormatter(panel, row, col, cell) {
+        if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+            cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+        }
+
+        if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+            cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+        }
+    }
+
+    projectGridClick(s, e) {
+        if (wjcCore.hasClass(e.target, 'btn-edit')) {
+            let selectedProject = this.fgdProjectsCollection.currentItem;
+            this.router.navigate(['/project', selectedProject.id]);
+        }
+
+        if (wjcCore.hasClass(e.target, 'btn-delete')) {
+            this.mdlProjectDeleteShow = true;
+        }
     }
 
     public getUserRights() {

@@ -17,6 +17,9 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 // model(s)
 import { MstUnit } from '../model/model.mst.unit';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   templateUrl: './unit.list.html'
 })
@@ -109,6 +112,26 @@ export class UnitList {
     private location: Location
   ) {
     this.toastr.setRootViewContainerRef(viewContainer);
+  }
+
+  unitItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  unitGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditUnitClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteUnitClick();
+    }
   }
 
   // ng

@@ -18,6 +18,9 @@ import { MstChecklist } from '../model/model.mst.checklist';
 import { MstChecklistRequirement } from '../model/model.mst.checklist.requirement';
 import { forEach } from '@angular/router/src/utils/collection';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   templateUrl: './checklist.detail.html'
 })
@@ -392,6 +395,27 @@ export class ChecklistDetail {
 
     this.getRequirementType("SECONDARY");
   }
+
+  checklistRequirementsItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  checklistRequirementsGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditChecklistRequirementsClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteChecklistRequirementsClick();
+    }
+  }
+
   public btnEditChecklistRequirementsClick(): void {
     let selectedChecklistRequirement = this.fgdChecklistRequirementsCollection.currentItem;
 

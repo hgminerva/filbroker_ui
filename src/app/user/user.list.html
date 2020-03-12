@@ -33,15 +33,17 @@
 
             <!-- flexgrid -->
             <div class="card-body">
-                <wj-flex-grid #fgdUsers [itemsSource]="fgdUsersCollection" [selectionMode]="3">
+                <wj-flex-grid #fgdUsers [itemsSource]="fgdUsersCollection" [selectionMode]="3" [itemFormatter]="userItemFormatter" #userGrid (click)="userGridClick(userGrid, $event)">
                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                    <wj-flex-grid-column *ngIf="canEdit" [header]="'Edit'" [isReadOnly]="true" [width]="70"></wj-flex-grid-column>
+                    
+                    <!-- <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                             <button class="btn btn-primary btn-xs btn-block" (click)="btnEditUserClick()" id="btnEditUser">
                                 <i class="fa fa-edit fa-fw"></i> Edit
                             </button>
                         </ng-template>
-                    </wj-flex-grid-column>
+                    </wj-flex-grid-column> -->
                     <wj-flex-grid-column [header]="'Username'" [binding]="'userName'" [isReadOnly]="true" [width]="300"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Fulllname'" [binding]="'fullname'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Status'" [binding]="'status'" [isReadOnly]="true" [width]="200"></wj-flex-grid-column>

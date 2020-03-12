@@ -36,22 +36,10 @@
 
             <!-- flexgrid -->
             <div class="card-body">
-                <wj-flex-grid #fgdProjects [itemsSource]="fgdProjectsCollection" [selectionMode]="3" [frozenColumns]="2">
+                <wj-flex-grid #fgdProjects [itemsSource]="fgdProjectsCollection" [selectionMode]="3" [frozenColumns]="2" [itemFormatter]="projectItemFormatter" #projectGrid (click)="projectGridClick(projectGrid, $event)">
                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
-                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-primary btn-xs btn-block" (click)="btnEditProjectClick()" id="btnEditProject">
-                                <i class="fa fa-edit fa-fw"></i> Edit
-                            </button>
-                        </ng-template>
-                    </wj-flex-grid-column>
-                    <wj-flex-grid-column  *ngIf="canDelete"[header]="Delete" [isReadOnly]="true" [width]="90">
-                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-danger btn-xs btn-block" (click)="btnDeleteProjectClick()" id="btnDeleteProject">
-                                <i class="fa fa-trash fa-fw"></i> Delete
-                            </button>
-                        </ng-template>
-                    </wj-flex-grid-column>
+                    <wj-flex-grid-column *ngIf="canEdit" [header]="'Edit'" [isReadOnly]="true" [width]="70"></wj-flex-grid-column>
+                    <wj-flex-grid-column *ngIf="canDelete" [header]="'Delete'" [isReadOnly]="true" [width]="90"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Code'" [binding]="'projectCode'" [isReadOnly]="true" [width]="'1.5*'"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Project'" [binding]="'project'" [isReadOnly]="true" [width]="'2*'"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Address'" [binding]="'address'" [isReadOnly]="true" [width]="'3*'"></wj-flex-grid-column>

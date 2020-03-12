@@ -17,6 +17,9 @@ import { SecurityService } from '../security/security.service';
 import { MstUser } from '../model/model.mst.user';
 import { MstUserRight } from '../model/model.mst.user.right';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   templateUrl: './user.detail.html'
 })
@@ -315,6 +318,27 @@ export class UserDetail {
   public btnCopyUserRightsClick(): void {
     this.mdlUserRightCopyShow = true;
   }
+
+  userRightsItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  userRightsGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditUserRightsClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteUserRightsClick();
+    }
+  }
+
   public btnEditUserRightsClick(): void {
     let selectedUserRight = this.fgdUserRightsCollection.currentItem;
 

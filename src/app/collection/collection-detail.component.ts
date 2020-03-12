@@ -9,6 +9,9 @@ import { TrnCollectionModel } from '../model/model.trn.collection';
 import { CollectionService } from './collection.service';
 import { TrnCollectionPayment } from '../model/model.trn.collection.payment';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   selector: 'app-collection-detail',
   templateUrl: './collection-detail.component.html',
@@ -283,9 +286,9 @@ export class CollectionDetailComponent implements OnInit {
             });
           }
         }
-        
+
         this.cmbSoldUnitData = soldUnitData;
-        
+
         setTimeout(() => {
           this.CollecitonPayment.SoldUnitId = soldUnitId;
         }, 100);
@@ -459,6 +462,27 @@ export class CollectionDetailComponent implements OnInit {
     this.saveAction = "Edit";
     this.getCmbSoldUnitEdit(currentSoldUnit);
   }
+
+  collectionPaymentItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  collectionPaymentGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditCollectionPaymentClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteCollectionPaymentClick();
+    }
+  }
+
 
   public getCurrentPayment(): void {
     this.CollecitonPayment.Id = this.fgdCollectionPaymentCollectionView.currentItem.Id;

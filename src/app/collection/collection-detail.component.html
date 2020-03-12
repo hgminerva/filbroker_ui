@@ -136,7 +136,8 @@
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 40%;" align="right">
-                            <button class="btn btn-primary" id="btnAddCollectionPayment" [disabled]="CollectionDetail.IsLocked" 
+                            <button class="btn btn-primary" id="btnAddCollectionPayment"
+                                [disabled]="CollectionDetail.IsLocked"
                                 (click)="btnAddCollectionPaymentShowModalClick()">
                                 <i class="fa fa-plus fa-fw"></i> Add
                             </button>
@@ -147,9 +148,16 @@
             <!-- flexgrid -->
             <div class="card-body">
                 <wj-flex-grid #fgdCollectionPayment [itemsSource]="fgdCollectionPaymentCollectionView"
-                    [selectionMode]="3" [frozenColumns]="2">
+                    [selectionMode]="3" [frozenColumns]="2" [itemFormatter]="collectionPaymentItemFormatter"
+                    #collectionPaymentGrid (click)="collectionPaymentGridClick(collectionPaymentGrid, $event)">
                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column  *ngIf="!CollectionDetail.IsLocked" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+
+                    <wj-flex-grid-column [header]="'Edit'" [isReadOnly]="true" [width]="70">
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Delete'" [isReadOnly]="true" [width]="90">
+                    </wj-flex-grid-column>
+
+                    <!-- <wj-flex-grid-column  *ngIf="!CollectionDetail.IsLocked" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                             <button class="btn btn-primary btn-xs btn-block" (click)="btnEditCollectionPaymentClick()"
                                 id="btnEditCollection">
@@ -164,7 +172,7 @@
                                 <i class="fa fa-trash fa-fw"></i> Delete
                             </button>
                         </ng-template>
-                    </wj-flex-grid-column>
+                    </wj-flex-grid-column> -->
                     <wj-flex-grid-column *ngIf="false" [header]="'Id'" [binding]="'Id'" [isReadOnly]="true"
                         [width]="'*'">
                     </wj-flex-grid-column>
@@ -184,7 +192,8 @@
                     <wj-flex-grid-column [header]="'Check No.'" [binding]="'CheckNumber'" [isReadOnly]="true"
                         [width]="'*'">
                     </wj-flex-grid-column>
-                    <wj-flex-grid-column [header]="'Check Date'" [binding]="'CheckDate'" [isReadOnly]="true" [width]="'*'">
+                    <wj-flex-grid-column [header]="'Check Date'" [binding]="'CheckDate'" [isReadOnly]="true"
+                        [width]="'*'">
                     </wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Check Bank'" [binding]="'CheckBank'" [isReadOnly]="true"
                         [width]="'*'">
@@ -271,7 +280,7 @@
                                 <label class="col-sm-4 col-form-label text-right">Check No.</label>
                                 <div class="col-sm-8">
                                     <input [(ngModel)]="CollecitonPayment.CheckNumber" type="text" class="form-control">
-                                </div> 
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-right">Check Date</label>
@@ -280,7 +289,7 @@
                                         [(text)]="CollecitonPayment.CheckDate" format="M/d/yyyy"
                                         [(ngModel)]="CollecitonPayment.CheckDate">
                                     </wj-input-date>
-                                </div> 
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label text-right">Check Bank</label>

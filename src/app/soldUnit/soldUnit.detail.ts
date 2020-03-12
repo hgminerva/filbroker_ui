@@ -25,6 +25,9 @@ import { TrnSoldUnitEquitySchedule } from '../model/model.trn.soldUnit.equitySch
 // components
 import { UnitQuery } from '../unit/unit.query';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   templateUrl: './soldUnit.detail.html'
 })
@@ -46,7 +49,7 @@ export class SoldUnitDetail {
   private soldUnitUnlockedSub: any;
   private soldUnitCancelSub: any;
   private soldUnitTransferSub: any;
-  
+
   // userrights
   private canEdit: boolean = false;
   private canSave: boolean = false;
@@ -286,14 +289,14 @@ export class SoldUnitDetail {
     var userRightsData = localStorage.getItem('userRights')
     var userRights = JSON.parse(userRightsData);
     for (var i = 0; i < userRights.length; i++) {
-        if (userRights[i].page == 'SOLD UNIT DETAIL') {
-            this.canEdit = userRights[i].canEdit;
-            this.canSave = userRights[i].canSave;
-            this.canLock = userRights[i].canLock;
-            this.canUnlock = userRights[i].canUnlock;
-            this.canPrint = userRights[i].canPrint;
-            this.canDelete = userRights[i].canDelete;
-        }
+      if (userRights[i].page == 'SOLD UNIT DETAIL') {
+        this.canEdit = userRights[i].canEdit;
+        this.canSave = userRights[i].canSave;
+        this.canLock = userRights[i].canLock;
+        this.canUnlock = userRights[i].canUnlock;
+        this.canPrint = userRights[i].canPrint;
+        this.canDelete = userRights[i].canDelete;
+      }
     }
   }
 
@@ -321,9 +324,9 @@ export class SoldUnitDetail {
     this.getUserRights();
 
     if (!this.canPrint) {
-      (<HTMLInputElement>document.getElementById("btnPrintSoldUnit")).hidden= true;
+      (<HTMLInputElement>document.getElementById("btnPrintSoldUnit")).hidden = true;
     }
-    
+
     if (!this.canLock) {
       (<HTMLInputElement>document.getElementById("btnLockSoldUnit")).hidden = true;
     }
@@ -334,7 +337,7 @@ export class SoldUnitDetail {
 
     if (!this.canSave) {
       (<HTMLInputElement>document.getElementById("btnSaveSoldUnit")).hidden = true;
-      (<HTMLInputElement>document.getElementById("btnSaveSoldUnitCoOwnerModal")).hidden= true;
+      (<HTMLInputElement>document.getElementById("btnSoldUnitCoOwnerModalSave")).hidden = true;
 
     }
 
@@ -537,10 +540,10 @@ export class SoldUnitDetail {
         this.cmbStatusData = statuses;
         this.cmbFinancingTypeData = financingTypes;
 
-        setTimeout(() => { 
+        setTimeout(() => {
           this.soldUnit.status = defaultValue.status;
           this.soldUnit.financingType = defaultValue.financingType
-         }, 100);
+        }, 100);
       }
     );
   }
@@ -827,6 +830,18 @@ export class SoldUnitDetail {
     }
   }
 
+  checkListItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+  }
+
+  checkListGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditSoldUnitRequirementClick();
+    }
+  }
+
   // detail line1 (checklist requirements) list operations
   public btnEditSoldUnitRequirementClick() {
     let selectedSoldUnitRequirement = this.fgdSoldUnitRequirementsCollection.currentItem;
@@ -1000,6 +1015,28 @@ export class SoldUnitDetail {
 
     this.mdlSoldUnitRequirementActivityModalShow = true;
   }
+
+  soldUnitRequirementActivitiesItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  soldUnitRequirementActivitiesGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditSoldUnitRequirementActivitiesClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteSoldUnitRequirementActivitiesClick();
+    }
+  }
+
+
   public btnEditSoldUnitRequirementActivitiesClick() {
     let selectedSoldUnitRequirementActivity = this.fgdSoldUnitRequirementActivitiesCollection.currentItem;
 
@@ -1096,6 +1133,18 @@ export class SoldUnitDetail {
     this.mdlSoldUnitRequirementActivityModalShow = false;
   }
 
+  soldUnitEquityScheduleItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+  }
+
+  soldUnitEquityScheduleGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditSoldUnitEquityScheduleClick();
+    }
+  }
+
   // open, edit, save equity payment schedule events
   public btnEditSoldUnitEquityScheduleClick(): void {
     let selectedSoldUnitEquitySchedule = this.fgdSoldUnitEquityScheduleCollection.currentItem;
@@ -1183,7 +1232,7 @@ export class SoldUnitDetail {
     this.computeDiscountedEquity();
     this.computeBalance();
   }
-  private computeDiscountedEquity() : void {
+  private computeDiscountedEquity(): void {
     this.soldUnit.discountedEquity = this.soldUnit.equityValue - this.soldUnit.discount;
     this.computeNetEquity();
   }
@@ -1481,7 +1530,7 @@ export class SoldUnitDetail {
     this.mdlSoldUnitCoOwnerModalShow = false;
   }
 
-  public btnSaveSoldUnitCoOwnerModalClick(): void {
+  public btnSoldUnitCoOwnerModalSaveClick(): void {
     let btnSoldUnitCoOwnerModalSave: Element = document.getElementById("btnSoldUnitCoOwnerModalSave");
     btnSoldUnitCoOwnerModalSave.setAttribute("disabled", "disabled");
     btnSoldUnitCoOwnerModalSave.innerHTML = "<i class='fa fa-save fa-fw'></i> Saving...";
@@ -1546,6 +1595,27 @@ export class SoldUnitDetail {
       );
     }
   }
+
+  soldUnitCoOwnerItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  soldUnitCoOwnerGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditSoldUnitCoOwnerClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteSoldUnitCoOwnerClick();
+    }
+  }
+
 
   public btnEditSoldUnitCoOwnerClick(): void {
     this.mdlSoldUnitCoOwnerModalShow = true;

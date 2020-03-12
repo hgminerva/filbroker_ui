@@ -16,6 +16,9 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 // model(s)
 import { MstBroker } from '../model/model.mst.broker';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   templateUrl: './broker.list.html'
 })
@@ -97,7 +100,7 @@ export class BrokerList {
   public fgdBrokerCollection: CollectionView;
 
   // modals
-  public mdlBrokerDeleteShow : boolean = false;
+  public mdlBrokerDeleteShow: boolean = false;
 
   // =======
   // angular
@@ -120,19 +123,19 @@ export class BrokerList {
     this.fgdBrokerData = new ObservableArray();
     this.fgdBrokerCollection = new CollectionView(this.fgdBrokerData);
 
-    if(this.securityService.openPage("BROKER LIST") == true) {
+    if (this.securityService.openPage("BROKER LIST") == true) {
       this.getBrokers();
     } else {
       this.toastr.error("No rights to open page.")
-      setTimeout(() => { this.location.back(); }, 1000);  
+      setTimeout(() => { this.location.back(); }, 1000);
     }
 
     this.getUserRights();
- 
+
   }
   ngOnDestroy() {
-    if( this.brokersSub != null) this.brokersSub.unsubscribe();
-    if( this.brokerDeletedSub != null) this.brokerDeletedSub.unsubscribe();
+    if (this.brokersSub != null) this.brokersSub.unsubscribe();
+    if (this.brokerDeletedSub != null) this.brokerDeletedSub.unsubscribe();
   }
 
   // ===============
@@ -166,7 +169,7 @@ export class BrokerList {
         this.fgdBrokerData = data;
         this.fgdBrokerCollection = new CollectionView(this.fgdBrokerData);
         this.fgdBrokerCollection.pageSize = 15;
-        this.fgdBrokerCollection.trackChanges = true;  
+        this.fgdBrokerCollection.trackChanges = true;
       }
     );
   }
@@ -184,6 +187,27 @@ export class BrokerList {
 
     this.brokerService.addBroker(this.broker);
   }
+
+  brokerItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  brokerGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditBrokerClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteBrokerClick();
+    }
+  }
+
   public btnEditBrokerClick(): void {
     let selectedBroker = this.fgdBrokerCollection.currentItem;
     this.router.navigate(['/broker', selectedBroker.id]);
@@ -193,13 +217,13 @@ export class BrokerList {
   }
 
   // delete broker modal operations
-  public btnOkBrokerDeleteModalClick():  void {
-    
+  public btnOkBrokerDeleteModalClick(): void {
+
     let btnOkBrokerDeleteModal: Element = document.getElementById("btnOkBrokerDeleteModal");
     let btnCloseBrokerDeleteModal: Element = document.getElementById("btnCloseBrokerDeleteModal");
 
-    btnOkBrokerDeleteModal.setAttribute("disabled","disabled");
-    btnCloseBrokerDeleteModal.setAttribute("disabled","disabled");
+    btnOkBrokerDeleteModal.setAttribute("disabled", "disabled");
+    btnCloseBrokerDeleteModal.setAttribute("disabled", "disabled");
 
     let selectedBroker = this.fgdBrokerCollection.currentItem;
 
@@ -209,7 +233,7 @@ export class BrokerList {
       data => {
         if (data == 1) {
           this.toastr.success("Delete successful.");
-          this.fgdBrokerCollection.remove​(selectedBroker);
+          this.fgdBrokerCollection.remove(selectedBroker);
 
           btnOkBrokerDeleteModal.removeAttribute("disabled");
           btnCloseBrokerDeleteModal.removeAttribute("disabled");

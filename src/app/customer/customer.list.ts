@@ -16,6 +16,9 @@ import { SecurityService } from '../security/security.service';
 // model(s)
 import { MstCustomer } from '../model/model.mst.customer';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
     templateUrl: './customer.list.html'
 })
@@ -142,6 +145,30 @@ export class CustomerList {
     ngOnDestroy() {
         if (this.customersSub != null) this.customersSub.unsubscribe();
         if (this.customersDeletedSub != null) this.customersDeletedSub.unsubscribe();
+    }
+
+    customerItemFormatter(panel, row, col, cell) {
+        if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+            cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+        }
+
+        if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+            cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+        }
+    }
+
+    customerGridClick(s, e) {
+        if (wjcCore.hasClass(e.target, 'btn-edit')) {
+            let selectedCustomer = this.fgdCustomersCollection.currentItem;
+            this.router.navigate(['/customer', selectedCustomer.id]);
+        }
+
+        if (wjcCore.hasClass(e.target, 'btn-delete')) {
+            this.mdlCustomerDeleteShow = true;
+            if (!this.canDelete) {
+                (<HTMLInputElement>document.getElementById("btnOkCustomerDeleteModal")).hidden = true;
+            }
+        }
     }
 
     //================

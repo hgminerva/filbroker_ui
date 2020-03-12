@@ -291,9 +291,12 @@
                 <div class="card">
                     <div class="card-body">
                         <wj-flex-grid #fgdSoldUnitRequirements [itemsSource]="fgdSoldUnitRequirementsCollection"
-                            [selectionMode]="3" [frozenColumns]="1">
+                            [selectionMode]="3" [frozenColumns]="1" [itemFormatter]="checkListItemFormatter"
+                            #checkListGrid (click)="checkListGridClick(checkListGrid, $event)">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                            <wj-flex-grid-column [header]="'Edit'" [isReadOnly]="true" [width]="70">
+                            </wj-flex-grid-column>
+                            <!-- <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
                                 [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                     <button [disabled]="soldUnit.isLocked" class="btn btn-primary btn-xs btn-block"
@@ -302,7 +305,7 @@
                                         <i class="fa fa-edit fa-fw"></i> Edit
                                     </button>
                                 </ng-template>
-                            </wj-flex-grid-column>
+                            </wj-flex-grid-column> -->
                             <wj-flex-grid-column [header]="'No'" [binding]="'checklistRequirementNo'"
                                 [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Requirement'" [binding]="'checklistRequirement'"
@@ -552,9 +555,13 @@
                     </div>
                     <div class="card-body">
                         <wj-flex-grid #fgdSoldUnitEquitySchedule [itemsSource]="fgdSoldUnitEquityScheduleCollection"
-                            [selectionMode]="3" [frozenColumns]="1">
+                            [selectionMode]="3" [frozenColumns]="1"
+                            [itemFormatter]="soldUnitEquityScheduleItemFormatter" #soldUnitEquityScheduleGrid
+                            (click)="soldUnitEquityScheduleGridClick(soldUnitEquityScheduleGrid, $event)">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                            <wj-flex-grid-column [header]="'Edit'" [isReadOnly]="true" [width]="70">
+                            </wj-flex-grid-column>
+                            <!-- <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
                                 [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                     <button class="btn btn-primary btn-xs btn-block"
@@ -563,7 +570,7 @@
                                         <i class="fa fa-edit fa-fw"></i> Edit
                                     </button>
                                 </ng-template>
-                            </wj-flex-grid-column>
+                            </wj-flex-grid-column> -->
                             <wj-flex-grid-column [header]="'Date'" [binding]="'paymentDate'" [isReadOnly]="true"
                                 [width]="120"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Amortization'" [binding]="'amortization'"
@@ -696,9 +703,16 @@
                     </div>
                     <div class="card-body">
                         <wj-flex-grid #fgdSoldUnitCoOwner [itemsSource]="fgdSoldUnitCoOwnerCollection"
-                            [selectionMode]="3" [frozenColumns]="2">
+                            [selectionMode]="3" [frozenColumns]="2" [itemFormatter]="soldUnitCoOwnerItemFormatter"
+                            #soldUnitCoOwnerGrid (click)="soldUnitCoOwnerGridClick(soldUnitCoOwnerGrid, $event)">
                             <wj-flex-grid-filter></wj-flex-grid-filter>
-                            <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+
+                            <wj-flex-grid-column *ngIf="canEdit" [header]="'Edit'" [isReadOnly]="true" [width]="70">
+                            </wj-flex-grid-column>
+                            <wj-flex-grid-column *ngIf="canDelete" [header]="'Delete'" [isReadOnly]="true" [width]="90">
+                            </wj-flex-grid-column>
+
+                            <!-- <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
                                 [width]="90">
                                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                     <button class="btn btn-primary btn-xs btn-block"
@@ -716,7 +730,7 @@
                                         <i class="fa fa-trash fa-fw"></i> Delete
                                     </button>
                                 </ng-template>
-                            </wj-flex-grid-column>
+                            </wj-flex-grid-column> -->
                             <wj-flex-grid-column [header]="'Co-Owner'" [binding]="'customer'" [isReadOnly]="true"
                                 [width]="'1*'"></wj-flex-grid-column>
                             <wj-flex-grid-column [header]="'Address'" [binding]="'address'" [isReadOnly]="true"
@@ -788,7 +802,7 @@
             </div>
             <div class="modal-footer" align="right">
                 <button type="button" id="btnSoldUnitCoOwnerModalSave" class="btn btn-success"
-                    (click)="btnSaveSoldUnitCoOwnerModalClick()" id="btnSaveSoldUnitCoOwnerModal">
+                    (click)="btnSoldUnitCoOwnerModalSaveClick()">
                     <i class="fa fa-save fa-fw"></i> Save
                 </button>
                 <button type="button" id="btnSoldUnitCoOwnerModalClose" class="btn btn-danger"
@@ -1038,9 +1052,16 @@
                             <div class="card-body">
                                 <wj-flex-grid #fgdSoldUnitRequirementActivities
                                     [itemsSource]="fgdSoldUnitRequirementActivitiesCollection" [selectionMode]="3"
-                                    [frozenColumns]="2">
+                                    [frozenColumns]="2" [itemFormatter]="soldUnitRequirementActivitiesItemFormatter"
+                                    #soldUnitRequirementActivitiesGrid
+                                    (click)="soldUnitRequirementActivitiesGridClick(soldUnitRequirementActivitiesGrid, $event)">
                                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
+                                    <wj-flex-grid-column *ngIf="canEdit" [header]="'Edit'" [isReadOnly]="true"
+                                        [width]="70"></wj-flex-grid-column>
+                                    <wj-flex-grid-column *ngIf="canDelete" [header]="'Delete'" [isReadOnly]="true"
+                                        [width]="90"></wj-flex-grid-column>
+
+                                    <!-- <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true"
                                         [width]="90">
                                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                                             <button class="btn btn-primary btn-xs btn-block"
@@ -1058,7 +1079,7 @@
                                                 <i class="fa fa-trash fa-fw"></i> Delete
                                             </button>
                                         </ng-template>
-                                    </wj-flex-grid-column>
+                                    </wj-flex-grid-column> -->
                                     <wj-flex-grid-column [header]="'Date'" [binding]="'activityDate'"
                                         [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
                                     <wj-flex-grid-column [header]="'Activity'" [binding]="'activity'"

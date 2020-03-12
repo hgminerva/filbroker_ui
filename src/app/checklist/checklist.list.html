@@ -55,9 +55,13 @@
 
             <!-- flexgrid -->
             <div class="card-body">
-                <wj-flex-grid #fgdChecklist [itemsSource]="fgdChecklistCollection" [selectionMode]="3" [frozenColumns]="2">
+                <wj-flex-grid #fgdChecklist [itemsSource]="fgdChecklistCollection" [selectionMode]="3" [frozenColumns]="2" [itemFormatter]="checklistItemFormatter" #checklistGrid (click)="checklistGridClick(checklistGrid, $event)">
                     <wj-flex-grid-filter></wj-flex-grid-filter>
-                    <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                    
+                    <wj-flex-grid-column *ngIf="canEdit" [header]="'Edit'" [isReadOnly]="true" [width]="70"></wj-flex-grid-column>
+                    <wj-flex-grid-column *ngIf="canDelete" [header]="'Delete'" [isReadOnly]="true" [width]="90"></wj-flex-grid-column>
+
+                    <!-- <wj-flex-grid-column *ngIf="canEdit" [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
                             <button class="btn btn-primary btn-xs btn-block" (click)="btnEditChecklistClick()" id="btnEditChecklist">
                                 <i class="fa fa-edit fa-fw"></i> Edit
@@ -70,7 +74,7 @@
                                 <i class="fa fa-trash fa-fw"></i> Delete
                             </button>
                         </ng-template>
-                    </wj-flex-grid-column>
+                    </wj-flex-grid-column> -->
                     <wj-flex-grid-column [header]="'Code'" [binding]="'checklistCode'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Checklist'" [binding]="'checklist'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
                     <wj-flex-grid-column [header]="'Date'" [binding]="'checklistDate'" [isReadOnly]="true" [width]="100"></wj-flex-grid-column>

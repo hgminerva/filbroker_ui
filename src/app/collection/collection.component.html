@@ -24,7 +24,8 @@
             </td>
             <td style="width: 1%;"></td>
             <td style="width: 40%;" align="right">
-              <button id="btnAddCollection" class="btn btn-primary" id="btnAddCollection" (click)="btnAddCollectionClick()">
+              <button id="btnAddCollection" class="btn btn-primary" id="btnAddCollection"
+                (click)="btnAddCollectionClick()">
                 <i class="fa fa-plus fa-fw"></i> Add
               </button>
               <button id="btnCloseCollection" class="btn btn-danger" routerLink="/menu">
@@ -66,10 +67,16 @@
       </div>
       <!-- flexgrid -->
       <div class="card-body">
-        <wj-flex-grid #fgdCollection [itemsSource]="fgdCollectionCollectionView" [selectionMode]="3"
-          [frozenColumns]="2">
+        <wj-flex-grid #fgdCollection [itemsSource]="fgdCollectionCollectionView" [selectionMode]="3" [frozenColumns]="2"
+          [itemFormatter]="collectionItemFormatter" #collectionGrid
+          (click)="collectionGridClick(collectionGrid, $event)">
           <wj-flex-grid-filter></wj-flex-grid-filter>
-          <wj-flex-grid-column  [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+
+          <wj-flex-grid-column [header]="'Edit'" [isReadOnly]="true" [width]="70"></wj-flex-grid-column>
+          <wj-flex-grid-column [header]="'Delete'" [isReadOnly]="true" [width]="90">
+          </wj-flex-grid-column>
+
+          <!-- <wj-flex-grid-column  [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
             <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
               <button class="btn btn-primary btn-xs btn-block" (click)="btnEditCollectionClick()"
                 id="btnEditCollection">
@@ -84,7 +91,7 @@
                 <i class="fa fa-trash fa-fw"></i> Delete
               </button>
             </ng-template>
-          </wj-flex-grid-column>
+          </wj-flex-grid-column> -->
           <wj-flex-grid-column *ngIf="false" [header]="'Id'" [binding]="'Id'" [isReadOnly]="true" [width]="'*'">
           </wj-flex-grid-column>
           <wj-flex-grid-column [header]="'Collect No.'" [binding]="'CollectionNumber'" [isReadOnly]="true"
@@ -132,21 +139,24 @@
 </div>
 
 <!-- delete sold unit modal -->
-<div id="mdlCollectionDelete" class="modal fade" role="dialog" [ngStyle]="{'display': mdlDeleteCollectionShow ? 'block' : 'none', 'opacity': 1}">
+<div id="mdlCollectionDelete" class="modal fade" role="dialog"
+  [ngStyle]="{'display': mdlDeleteCollectionShow ? 'block' : 'none', 'opacity': 1}">
   <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title">Delete Collection</h4>
-          </div>
-          <div class="modal-body">
-              Delete {{currentCollectionNumber}}?
-          </div>
-          <div class="modal-footer" align="right">
-              <button type="button" id="btnOkCollectionDeleteModal" class="btn btn-danger" (click)="btnOkCollectionDeleteModalClick()">
-                  <i class="fa fa-trash fa-fw"></i> Ok</button>
-              <button type="button" id="btnCloseCollectionDeleteModal" class="btn btn-primary" (click)="btnCloseCollectionDeleteModalClick()">
-                  <i class="fa fa-close fa-fw"></i> Close</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Collection</h4>
       </div>
+      <div class="modal-body">
+        Delete {{currentCollectionNumber}}?
+      </div>
+      <div class="modal-footer" align="right">
+        <button type="button" id="btnOkCollectionDeleteModal" class="btn btn-danger"
+          (click)="btnOkCollectionDeleteModalClick()">
+          <i class="fa fa-trash fa-fw"></i> Ok</button>
+        <button type="button" id="btnCloseCollectionDeleteModal" class="btn btn-primary"
+          (click)="btnCloseCollectionDeleteModalClick()">
+          <i class="fa fa-close fa-fw"></i> Close</button>
+      </div>
+    </div>
   </div>
 </div>

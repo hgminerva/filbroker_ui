@@ -16,6 +16,9 @@ import { SecurityService } from '../security/security.service';
 // model(s)
 import { TrnSoldUnit } from '../model/model.trn.soldUnit';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   templateUrl: './soldUnit.list.html'
 })
@@ -27,13 +30,13 @@ export class SoldUnitList {
   private currentDate = new Date();
   private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
-   // userrights
-   private canEdit: boolean = false;
-   private canSave: boolean = false;
-   private canLock: boolean = false;
-   private canUnlock: boolean = false;
-   private canPrint: boolean = false;
-   private canDelete: boolean = false;
+  // userrights
+  private canEdit: boolean = false;
+  private canSave: boolean = false;
+  private canLock: boolean = false;
+  private canUnlock: boolean = false;
+  private canPrint: boolean = false;
+  private canDelete: boolean = false;
 
   // list
   private soldUnitsSub: any;
@@ -186,6 +189,26 @@ export class SoldUnitList {
         this.fgdSoldUnitCollection.trackChanges = true;
       }
     );
+  }
+
+  soldUnitItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+  }
+
+  if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+  }
+  }
+
+  soldUnitGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditSoldUnitClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteSoldUnitClick();
+    }
   }
 
   // ======

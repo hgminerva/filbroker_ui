@@ -6,6 +6,9 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { CollectionService } from './collection.service';
 import { TrnCollectionModel } from '../model/model.trn.collection';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
@@ -72,6 +75,26 @@ export class CollectionComponent implements OnInit {
     btnAddCollection.innerHTML = "<i class='fa fa-plus fa-fw'></i> Adding...";
 
     this.collectionService.addCollection(btnAddCollection);
+  }
+
+  collectionItemFormatter(panel, row, col, cell) {
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Edit') {
+      cell.innerHTML = `<button class="btn-edit btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Edit</button>`
+    }
+
+    if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Delete') {
+      cell.innerHTML = `<button class="btn-delete btn btn-danger btn-xs btn-block"><i class="fa fa-trash fa-fw"></i> Delete</button>`
+    }
+  }
+
+  collectionGridClick(s, e) {
+    if (wjcCore.hasClass(e.target, 'btn-edit')) {
+      this.btnEditCollectionClick();
+    }
+
+    if (wjcCore.hasClass(e.target, 'btn-delete')) {
+      this.btnDeleteCollectionClick();
+    }
   }
 
   public btnEditCollectionClick(): void {
