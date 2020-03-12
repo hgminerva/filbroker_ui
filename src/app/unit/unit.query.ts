@@ -14,6 +14,9 @@ import { WjComboBox } from 'wijmo/wijmo.angular2.input';
 // model(s)
 import { MstUnit } from '../model/model.mst.unit';
 
+import * as wjcCore from 'wijmo/wijmo';
+import * as wjcGrid from 'wijmo/wijmo.grid';
+
 @Component({
     selector: 'unit-query',
     templateUrl: './unit.query.html'
@@ -140,6 +143,17 @@ export class UnitQuery {
     // ======
     // events
     // ======
+    unitItemFormatter(panel, row, col, cell) {
+        if (panel.cellType === wjcGrid.CellType.Cell && panel.columns[col].header === 'Pick') {
+            cell.innerHTML = `<button class="btn-pick btn btn-primary btn-xs btn-block"><i class="fa fa-edit fa-fw"></i> Pick</button>`
+        }
+    }
+
+    unitGridClick(s, e) {
+        if (wjcCore.hasClass(e.target, 'btn-pick')) {
+            this.btnPickUnitClick();
+        }
+    }
 
     private btnPickUnitClick(): void {
         this.isShowing = false;
